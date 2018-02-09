@@ -29,7 +29,9 @@ const getEntryFileContent = (entryPath, vueFilePath) => {
     entryContents = entryContents.replace(/weex\.init/, match => `${contents}${match}`);
     contents = ''
   }
-  contents += `\nimport App from '${relativeVuePath}';\n`;
+  // https://github.com/alibaba/weex-ui/issues/135
+  // contents += `\nimport App from '${relativeVuePath}';\n`;
+  contents += `\nconst App = require('${relativeVuePath}');\n`
   contents += `App.el = '#root';\n`;
   contents += `new Vue(App);\n`;
   // console.log(entryContents)
@@ -101,7 +103,7 @@ const webConfig = {
    * See: http://webpack.github.io/docs/configuration.html#module
    */
   module: {
-    // webpack 2.0 
+    // webpack 2.0
     rules: [{
       test: /\.js$/,
       use: [{

@@ -7,6 +7,8 @@
     <text class="message" @click="jump2('views/home/home')">helper</text>
     <text class="message" @click="jump3('views/home/home')">helper url native</text>
     <text class="message" @click="jump4('views/home/home')">helper url html</text>
+    <text class="message" @click="jump2('views/test/weex-ui')">weex ui</text>
+    <text class="message" @click="jump3('views/test/weex-ui')">weex ui native</text>
   </div>
 </template>
 
