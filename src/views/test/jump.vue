@@ -13,8 +13,8 @@
 </template>
 
 <script>
-  import helper from './utils/helper';
-  import { DOMAIN, DIST } from './config';
+  import helper from '../../utils/helper';
+  import { DOMAIN, DIST } from '../../config';
 
   const navigator = weex.requireModule('navigator');
   const modal = weex.requireModule('modal');

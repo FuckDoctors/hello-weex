@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <nav-bar></nav-bar>
+    <nav-bar title="Hello Weex"></nav-bar>
     <tab-bar></tab-bar>
   </div>
 </template>

@@ -1,6 +1,9 @@
 <template>
   <div class="wrapper">
-    <nav-bar :left-button="leftButton" :left-button-click="back"></nav-bar>
+    <nav-bar title="Hello" :left-button="leftButton" :left-button-click="back"></nav-bar>
+    <div>
+      <text>。。。</text>
+    </div>
   </div>
 </template>
 
