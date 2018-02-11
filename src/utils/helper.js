@@ -49,7 +49,7 @@ function getHash(url) {
   return result;
 }
 
-function _push(to, params, isNavi) {
+function _push(to, params, isNavi, callback) {
   const baseUrl = getBaseUrl(isNavi);
   const query = getQueryData(weex.config.bundleUrl);
 
@@ -71,22 +71,23 @@ function _push(to, params, isNavi) {
       url: `${baseUrl}${to}.js${allQuery}`,
       animated: 'true'
     }, event => {
-      modal.alert({
-        message: event
-      });
+      callback && callback();
+      // modal.alert({
+      //   message: event
+      // });
     });
   }
 }
 
-function push(to, params) {
-  _push(to, params, true);
+function push(to, params, callback) {
+  _push(to, params, true, callback);
 }
 
-function gotoTab(to, params) {
-  _push(to, params, false);
+function gotoTab(to, params, callback) {
+  _push(to, params, false, callback);
 }
 
-function gotoH5(url, params) {
+function gotoH5(url, params, callback) {
   const query = getQueryData(url);
 
   let allQuery = createQuery(query);
@@ -107,9 +108,10 @@ function gotoH5(url, params) {
       url: `${target}${allQuery}`,
       animated: 'true'
     }, event => {
-      modal.alert({
-        message: `${target}${allQuery}`
-      });
+      callback && callback();
+      // modal.alert({
+      //   message: `${target}${allQuery}`
+      // });
     });
   }
 }
@@ -117,7 +119,8 @@ function gotoH5(url, params) {
 function back() {
   if (WXEnvironment.platform === 'Web' || typeof window === 'object') {
     // web
-    window.history.go(-1);
+    // window.history.go(-1);
+    window.history.back();
   } else {
     // native
     navigator.pop();

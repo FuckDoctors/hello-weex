@@ -2,7 +2,7 @@
   <div class="tab-bar-wrapper">
     <wxc-tab-bar ref="wxc-tab-bar" :tab-titles="tabTitles"
                 :tab-styles="tabStyles"
-                :isTabView="true"
+                :is-tab-view="true"
                 title-type="icon"
                 @wxcTabBarCurrentTabSelected="wxcTabBarCurrentTabSelected">
       <div class="item-container"
