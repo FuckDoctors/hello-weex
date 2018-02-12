@@ -1,6 +1,8 @@
 # Demo
 
-[Demo](http://zhaobc.coding.me/weex/preview.html?page=index.js)
+* [Demo on github](http://fuckdoctors.github.io/hello-weex/preview.html?page=index.js)
+
+* [Demo on coding.net](http://zhaobc.coding.me/weex/preview.html?page=index.js)
 
 公司没有WIFI，Playground上无法确认，暂时放到公网上，然后用手机上的Playground扫描确认。手动滑稽(￣▽￣)"
 
