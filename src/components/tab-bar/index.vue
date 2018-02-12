@@ -27,8 +27,6 @@
   .item-container {
     width: 750px;
     background-color: #f2f3f4;
-    align-items: center;
-    justify-content: center;
   }
 </style>
 

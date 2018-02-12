@@ -1,5 +1,5 @@
 <template>
-  <tab-bar-comp ref="tab-bar" style="flex: 1;"
+  <tab-bar-comp ref="tab-bar" class="tab-bar-comp"
             :selected="3"
             :tab-titles="tabTitles"
             :tab-styles="tabStyles">

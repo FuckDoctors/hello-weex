@@ -1,7 +1,12 @@
-export const HOST = 'http://192.168.1.86:8081';
-export const JS_BUNDLE_PREFIX = `${HOST}/dist`;
+// const ip = require('ip').address();
+const ip = '192.168.202.84';
+// const ip = '192.168.1.86';
 
-export const DOMAIN = '192.168.1.86:8081';
+// export const HOST = `http://${ip}:8081`;
+// export const JS_BUNDLE_PREFIX = `${HOST}/dist`;
+
+// export const DOMAIN = `zhaobc.coding.me/weex`;
+export const DOMAIN = `${ip}:8081`;
 export const DIST = 'dist';
 
 export const APP_NAME = 'WeexDemo';
