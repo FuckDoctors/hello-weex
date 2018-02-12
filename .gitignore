@@ -19,5 +19,5 @@ build/*.map
 platforms/*
 .temp/*
 .wx/*
-dist
-release
+/dist/*
+release/*
