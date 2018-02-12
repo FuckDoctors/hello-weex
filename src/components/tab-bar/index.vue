@@ -68,6 +68,9 @@
     }),
     created () {
       const tabPageHeight = Utils.env.getPageHeight();
+      // const { env } = weex.config;
+      // const pageHeight = env.deviceHeight / env.deviceWidth * 750;
+      // const tabPageHeight = pageHeight;
       const { tabStyles } = this;
       this.contentStyle = { height: (tabPageHeight - tabStyles.height) + 'px' };
     },

@@ -1,3 +1,13 @@
+# Demo
+
+[Demo](http://zhaobc.coding.me/weex/preview.html?page=index.js)
+
+公司没有WIFI，Playground上无法确认，暂时放到公网上，然后用手机上的Playground扫描确认。手动滑稽(￣▽￣)"
+
+现在刚开始学习，难免会遇到一些问题，Demo用来向别人更直观的展示问题。
+
+所以，Demo是有错的，希望以后慢慢解决。。。
+
 ## Commands
 
 ### npm start
