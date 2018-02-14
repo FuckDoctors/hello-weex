@@ -1,21 +1,26 @@
 <template>
   <div class="wrapper">
-   </div>
+    <nav-bar title="Hello Weex"></nav-bar>
+    <tab-bar></tab-bar>
+  </div>
 </template>
 
 <script>
-import helper from './utils/helper';
+import NavBar from './components/nav-bar';
+import TabBar from './views/tab-bar';
 
 export default {
+  components: {
+    NavBar,
+    TabBar
+  },
   data() {
-    return {
-    };
+    return {};
   },
   mounted() {
-    helper.push('app');
+
   },
-  methods: {
-  }
+  methods: {}
 };
 </script>
 

@@ -62,9 +62,9 @@ function _push(to, params, isNavi, callback) {
     // web
     window.location.href = `${baseUrl}${to}.html${allQuery}`;
   } else {
-    modal.alert({
-      message: `${baseUrl}${to}.js${allQuery}`
-    });
+    // modal.alert({
+    //   message: `${baseUrl}${to}.js${allQuery}`
+    // });
     // native
     navigator.push({
       // route.url为相对地址时，为原生或者绝对地址时需要再单独处理
