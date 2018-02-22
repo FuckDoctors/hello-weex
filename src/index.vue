@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-   </div>
+  </div>
 </template>
 
 <script>

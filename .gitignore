@@ -21,3 +21,4 @@ platforms/*
 .wx/*
 /dist/*
 release/*
+coverage
