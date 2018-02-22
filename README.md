@@ -2,7 +2,7 @@
 
 * [Demo on github](http://fuckdoctors.github.io/hello-weex/preview.html?page=index.js)
 
-* [Demo on coding.net](http://zhaobc.coding.me/weex/preview.html?page=index.js)
+* [Demo on coding.net](http://zhaobc.coding.me/weex/preview.html?page=index.js) ***(备用地址，更新不及时)***
 
 公司没有WIFI，Playground上无法确认，暂时放到公网上，然后用手机上的Playground扫描确认。手动滑稽(￣▽￣)"
 
@@ -11,6 +11,10 @@
 所以，Demo是有错的，希望以后慢慢解决。。。
 
 ## Commands
+
+### npm run build:docs
+
+发布Demo，需要修改src/config/index.js里的`DOMAIN`。
 
 ### npm start
 
