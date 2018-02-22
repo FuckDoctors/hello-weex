@@ -77,6 +77,11 @@ const plugins = [
     banner: '// { "framework": "Vue"} \n',
     raw: true,
     exclude: 'Vue'
+  }),
+
+  new webpack.optimize.CommonsChunkPlugin({
+    async: 'shared-module',
+    minChunks: (module, count) => count >= 2
   })
 ];
 

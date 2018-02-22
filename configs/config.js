@@ -60,6 +60,18 @@ const config = {
     cssSourceMap: true,
     productionSourceMap: true
   },
+  docs: {
+    env: JSON.stringify('docs'),
+    /**
+     * Source Maps
+     */
+
+    productionSourceMap: true,
+    // https://webpack.js.org/configuration/devtool/#production
+    devtool: '#source-map',
+    cssSourceMap: true,
+    productionSourceMap: true
+  },
   nodeConfiguration: {
     global: false,
     Buffer: false,
