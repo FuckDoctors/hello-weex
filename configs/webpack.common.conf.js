@@ -10,6 +10,13 @@ const vueWebTemp = helper.rootNode(config.templateDir);
 const hasPluginInstalled = fs.existsSync(helper.rootNode(config.pluginFilePath));
 const isWin = /^win/.test(process.platform);
 
+const os = require('os');
+const HappyPack = require('happypack');
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
+HappyPack.SERIALIZABLE_OPTIONS = HappyPack.SERIALIZABLE_OPTIONS.concat([
+  'postcss'
+]);
+
 // Wraping the entry file for web.
 const getEntryFileContent = (entryPath, vueFilePath) => {
   let relativeVuePath = path.relative(path.join(entryPath, '../'), vueFilePath);
@@ -68,6 +75,25 @@ getEntryFile();
  * Plugins for webpack configuration.
  */
 const plugins = [
+
+  new webpack.optimize.CommonsChunkPlugin({
+    async: 'shared-module',
+    minChunks: (module, count) => count >= 2
+  }),
+
+  new HappyPack({
+    id: 'babel',
+    verbose: true,
+    loaders: ['babel-loader'],
+    threadPool: happyThreadPool
+  }),
+  new HappyPack({
+    id: 'css',
+    verbose: true,
+    loaders: ['postcss-loader'],
+    threadPool: happyThreadPool
+  }),
+
   /*
    * Plugin: BannerPlugin
    * Description: Adds a banner to the top of each generated chunk.
@@ -77,11 +103,6 @@ const plugins = [
     banner: '// { "framework": "Vue"} \n',
     raw: true,
     exclude: 'Vue'
-  }),
-
-  new webpack.optimize.CommonsChunkPlugin({
-    async: 'shared-module',
-    minChunks: (module, count) => count >= 2
   })
 ];
 
@@ -111,10 +132,15 @@ const webConfig = {
     // webpack 2.0
     rules: [{
       test: /\.js$/,
-      use: [{
-        loader: 'babel-loader'
-      }],
+      // use: [{
+      //   loader: 'babel-loader'
+      // }],
+      use: 'happypack/loader?id=babel',
       exclude: /node_modules(?!(\/|\\).*(weex).*)/
+    },
+    {
+      test: /\.css$/,
+      use: 'happypack/loader?id=css'
     },
     {
       test: /\.vue(\?[^?]+)?$/,
@@ -126,6 +152,9 @@ const webConfig = {
            * inline style prefixing.
            */
           optimizeSSR: false,
+          loaders: {
+            js: 'happypack/loader?id=babel'
+          },
           compilerModules: [{
             postTransformNode: el => {
               el.staticStyle = `$processStyle(${el.staticStyle})`
@@ -163,9 +192,14 @@ const weexConfig = {
   module: {
     rules: [{
       test: /\.js$/,
-      use: [{
-        loader: 'babel-loader'
-      }]
+      // use: [{
+      //   loader: 'babel-loader'
+      // }]
+      use: 'happypack/loader?id=babel'
+    },
+    {
+      test: /\.css$/,
+      use: 'happypack/loader?id=css'
     },
     {
       test: /\.vue(\?[^?]+)?$/,

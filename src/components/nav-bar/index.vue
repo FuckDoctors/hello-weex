@@ -1,7 +1,7 @@
 <template>
   <div class="nav-wrapper">
     <wxc-minibar :title="title"
-                  :background-color="backgroudColor"
+                  :background-color="backgroundColor"
                   :text-color="textColor"
                   :left-button="leftButton"
                   @wxcMinibarLeftButtonClicked="minibarLeftButtonClick"
@@ -25,7 +25,7 @@ export default {
       type: String,
       default: 'Title here...'
     },
-    backgroudColor: {
+    backgroundColor: {
       type: String,
       default: '#009ff0'
     },
