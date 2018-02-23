@@ -23,7 +23,9 @@ export default function getBaseURL(isnav) {
     // 下面处理是得到//之后，/之前的东西，比如，第一个得到//192.168.1.1:xxxx/，第二个得到分组192.168.1.1:xxxx
     var matches = /\/\/([^\/]+?)\//.exec(weex.config.bundleUrl);
     if (matches && matches.length >= 2) {
-      host = matches[1];
+      const colonIndex = matches[1].indexOf(':') ;
+      const _bundleHost = colonIndex > 0 ? matches[1].substr(0, colonIndex) : matches[1];
+      host = host.indexOf(_bundleHost) > -1 ? host : matches[1];
     }
 
     nativeBase = `http://${host}/${config.DIST}/`;

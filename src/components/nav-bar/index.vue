@@ -1,5 +1,5 @@
 <template>
-  <div class="nav-wrapper">
+  <div class="nav-wrapper" :style="wrapperStyle">
     <wxc-minibar :title="title"
                   :background-color="backgroundColor"
                   :text-color="textColor"
@@ -14,7 +14,8 @@
 </template>
 
 <script>
-import { WxcMinibar } from 'weex-ui';
+import { WxcMinibar, Utils } from 'weex-ui';
+import utils from '../../utils';
 
 export default {
   components: {
@@ -48,6 +49,13 @@ export default {
   },
   data() {
     return {};
+  },
+  created() {
+    this.wrapperStyle = {
+      backgroundColor: this.backgroundColor,
+      height: Utils.env.isWeb() ? 'auto' : utils.getNavHeight(),
+      paddingTop: Utils.env.isWeb() ? 0: utils.getNavHeight() - 90
+    };
   },
   methods: {
     minibarLeftButtonClick () {
