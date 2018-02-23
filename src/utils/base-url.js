@@ -33,7 +33,7 @@ export default function getBaseURL(isnav) {
   }
 
   //此处需注意一下,tabbar 用的直接是jsbundle 的路径,但是navigator是直接跳转到新页面上的.
-  var h5Base = isnav ? `http://${config.DOMAIN}/` : `/`;
+  h5Base = isnav ? `http://${config.DOMAIN}/` : `/`;
 
   // in Native
   var base = nativeBase;

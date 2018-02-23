@@ -22,7 +22,9 @@ function createQuery(obj) {
  * @param {*} url
  */
 function getQueryData(url) {
-  url = url.substring(url.indexOf('.js?') + 3);
+  // ?_wx_tpl=xxx的要除外，这个是用来做Native的。
+  // url = url.substring(url.indexOf('.js?') + 3);
+  url = url.substring(url.indexOf('?_wx_tpl'));
   var result = {};
   if (url.indexOf("?") != -1) {
     var str = url.substr(1);
