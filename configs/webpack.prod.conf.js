@@ -19,7 +19,7 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 
 /**
  * Generate multiple entrys
- * @param {Array} entry 
+ * @param {Array} entry
  */
 const generateMultipleEntrys = (entry) => {
   const entrys = Object.keys(entry);
@@ -91,7 +91,7 @@ const productionConfig = webpackMerge(commonConfig[0], {
   plugins: [
     /**
      * Plugin: webpack.DefinePlugin
-     * Description: The DefinePlugin allows you to create global constants which can be configured at compile time. 
+     * Description: The DefinePlugin allows you to create global constants which can be configured at compile time.
      *
      * See: https://webpack.js.org/plugins/define-plugin/
      */
@@ -205,5 +205,10 @@ webpack(weexConfig, (err, stats) => {
     console.err('COMPILE ERROR:', err.stack)
   }
 })
+
+if (config.prod.bundleAnalyzerReport) {
+  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+  productionConfig.plugins.push(new BundleAnalyzerPlugin())
+}
 
 module.exports = productionConfig
