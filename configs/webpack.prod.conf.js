@@ -30,7 +30,8 @@ const generateMultipleEntrys = (entry) => {
       isDevServer: true,
       chunksSortMode: 'dependency',
       inject: true,
-      chunks: [name],
+      // chunks: [name],
+      chunks: ['vendor', 'manifest', 'common', name],
       // production
       minimize: true
     })
@@ -146,7 +147,38 @@ const productionConfig = webpackMerge(commonConfig[0], {
         drop_console: true,
         drop_debugger: true
       }
-    })
+    }),
+
+    // 使用webpack.optimize.CommonsChunkPlugin虽然能分开打包，但是页面没显示出来。
+    // 只有index.html里引入了vendor, manifest这些公共包，其他html里没有引入。
+    // 自己从之前的vue工程里配置直接copy过来的居然不行，不懂webpack，调查了一上午，配置上没问题。。。
+    // 还是自己本身知识有限的问题。
+    // 解决方案：在generateMultipleEntrys里的HtmlWebpackPlugin里手动加上vendor,common等bundle的引用。
+    // split vendor js into its own file
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: function (module, count) {
+        // any required modules inside node_modules are extracted to vendor
+        return (
+          module.resource &&
+          /\.js$/.test(module.resource) &&
+          module.resource.indexOf(
+            path.join(__dirname, '../node_modules')
+          ) === 0
+        )
+      }
+    }),
+    // extract webpack runtime and module manifest to its own file in order to
+    // prevent vendor hash from being updated whenever app bundle is updated
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      chunks: ['vendor']
+    }),
+
+    new webpack.optimize.CommonsChunkPlugin({
+      async: 'common',
+      minChunks: (module, count) => count >= 2
+    }),
   ]
 });
 
