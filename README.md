@@ -12,7 +12,7 @@
 
 ## Screenshots
 
-<img src="./static/img/web.png" style="width: 30%; height: 30%" /><img src="./static/img/iPhone8P.png" style="width: 30%; height: 30%" /><img src="./static/img/iPhoneX.png" style="width: 30%; height: 30%" />
+<img src="./static/img/web.png" width="30%" height="30%" /><img src="./static/img/iPhone8P.png" width="30%" height="30%" /><img src="./static/img/iPhoneX.png" width="30%" height="30%" />
 
 ## Commands
 
