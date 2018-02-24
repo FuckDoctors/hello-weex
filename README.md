@@ -10,6 +10,10 @@
 
 所以，Demo是有错的，希望以后慢慢解决。。。
 
+## Screenshots
+
+<img src="./static/img/web.png" style="width: 30%; height: 30%" /><img src="./static/img/iPhone8P.png" style="width: 30%; height: 30%" /><img src="./static/img/iPhoneX.png" style="width: 30%; height: 30%" />
+
 ## Commands
 
 ### npm run build:docs (新增命令)
