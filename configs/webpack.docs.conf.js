@@ -265,6 +265,17 @@ const weexConfig = webpackMerge(commonConfig[1], {
         drop_console: true,
         drop_debugger: true
       }
+    }),
+
+    /*
+     * Plugin: BannerPlugin
+     * Description: Adds a banner to the top of each generated chunk.
+     * See: https://webpack.js.org/plugins/banner-plugin/
+     */
+    new webpack.BannerPlugin({
+      banner: '// { "framework": "Vue"} \n',
+      raw: true,
+      exclude: 'Vue'
     })
   ]
 })

@@ -227,6 +227,25 @@ const weexConfig = webpackMerge(commonConfig[1], {
         drop_console: true,
         drop_debugger: true
       }
+    }),
+
+    // npm start打包后，本地用WeexPlayground能正常显示，
+    // npm run build:prod之后发布到github pages上不能显示，猜测是打包出问题了。
+    // 后来试了把npm start后得到的未压缩的dist/app.js放到公网上，用WeexPlayground可以正常显示。
+    // 验证了上面打包出错的猜测。
+    // 然后回头去看weex ui，它打包后的js能正常显示，查看打包后的js，发现上头有下面的banner，
+    // 忽然想起自己打包的没有这句，而这句对weex是必须的。所以，添加进来。
+    // 但是，这个插件在webpack.common.conf.js里已经配置了，而且webpack.prod.conf.js也引用common了。
+    // 并且上面用webpackMerge进行了合并，应该也不用再引入了才对，难道是执行顺序的问题？
+    /*
+     * Plugin: BannerPlugin
+     * Description: Adds a banner to the top of each generated chunk.
+     * See: https://webpack.js.org/plugins/banner-plugin/
+     */
+    new webpack.BannerPlugin({
+      banner: '// { "framework": "Vue"} \n',
+      raw: true,
+      exclude: 'Vue'
     })
   ]
 })
