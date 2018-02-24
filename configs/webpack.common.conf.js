@@ -76,10 +76,33 @@ getEntryFile();
  */
 const plugins = [
 
-  new webpack.optimize.CommonsChunkPlugin({
-    async: 'shared-module',
-    minChunks: (module, count) => count >= 2
-  }),
+  // 使用webpack.optimize.CommonsChunkPlugin虽然能分开打包，但是页面没显示出来。
+  // 只有index.html里引入了vendor, manifest这些公共包，其他html里没有引入。
+  // // split vendor js into its own file
+  // new webpack.optimize.CommonsChunkPlugin({
+  //   name: 'vendor',
+  //   minChunks: function (module, count) {
+  //     // any required modules inside node_modules are extracted to vendor
+  //     return (
+  //       module.resource &&
+  //       /\.js$/.test(module.resource) &&
+  //       module.resource.indexOf(
+  //         path.join(__dirname, '../node_modules')
+  //       ) === 0
+  //     )
+  //   }
+  // }),
+  // // extract webpack runtime and module manifest to its own file in order to
+  // // prevent vendor hash from being updated whenever app bundle is updated
+  // new webpack.optimize.CommonsChunkPlugin({
+  //   name: 'manifest',
+  //   chunks: ['vendor']
+  // }),
+
+  // new webpack.optimize.CommonsChunkPlugin({
+  //   async: 'common',
+  //   minChunks: (module, count) => count >= 2
+  // }),
 
   new HappyPack({
     id: 'babel',
@@ -177,6 +200,7 @@ const webConfig = {
    */
   plugins: plugins
 };
+
 // Config for compile jsbundle for native.
 const weexConfig = {
   entry: weexEntry,

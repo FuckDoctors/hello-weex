@@ -199,16 +199,24 @@ const weexConfig = webpackMerge(commonConfig[1], {
   ]
 })
 
+if (config.prod.bundleAnalyzerReport) {
+  // 开启webpack-bundle-analyzer
+  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+  // web端
+  productionConfig.plugins.push(new BundleAnalyzerPlugin());
+  // native端
+  weexConfig.plugins.push(new BundleAnalyzerPlugin({
+    // 同时开启两个webpack-bundle-analyzer，为了防止端口冲突修改了默认配置。
+    analyzerPort: 8889,
+    reportFilename: 'report-native.html'
+  }));
+}
+
 // build source to weex_bundle with watch mode.
 webpack(weexConfig, (err, stats) => {
   if (err) {
     console.err('COMPILE ERROR:', err.stack)
   }
 })
-
-if (config.prod.bundleAnalyzerReport) {
-  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-  productionConfig.plugins.push(new BundleAnalyzerPlugin())
-}
 
 module.exports = productionConfig
