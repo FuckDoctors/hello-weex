@@ -1,5 +1,4 @@
 <template>
-  <div></div>
 </template>
 
 <script>
@@ -9,6 +8,7 @@ export default {
   },
   created() {
     try {
+      // 这种方式可以隐藏Playground的导航栏，但是状态栏还在。
       // ios
       const navigationBar = weex.requireModule('navigationBar');
       if (navigationBar && navigationBar.showTitleBar) {
@@ -27,6 +27,5 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
 

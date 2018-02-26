@@ -3,7 +3,7 @@
     <no-pg-navbar />
     <nav-bar title="Hello" :left-button="leftButton" :left-button-click="back"></nav-bar>
     <div>
-      <text>。。。</text>
+      <text>在Weex Playground中，此页的Weex Playground的导航栏应该不显示。（Android版测试通过）</text>
     </div>
   </div>
 </template>
