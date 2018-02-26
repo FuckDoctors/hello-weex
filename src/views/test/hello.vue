@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    <no-pg-navbar />
     <nav-bar title="Hello" :left-button="leftButton" :left-button-click="back"></nav-bar>
     <div>
       <text>。。。</text>
@@ -10,10 +11,13 @@
 <script>
 import NavBar from '../../components/nav-bar';
 import helper from '../../utils/helper';
+// weex里必须加后缀.vue，不然报错。
+import NoPgNavbar from '../../components/modules/no-pg-navbar.vue';
 
 export default {
   components: {
-    NavBar
+    NavBar,
+    NoPgNavbar
   },
   data() {
     return {
