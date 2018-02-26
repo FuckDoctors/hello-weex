@@ -1,5 +1,5 @@
-import Vue from 'vue'
-import app from '@/app'
+import Vue from 'vue';
+import app from '@/app';
 
 describe('app.vue', () => {
   it('should render correct contents', () => {

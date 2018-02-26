@@ -20,7 +20,7 @@
 
 发布Demo，需要修改src/config/index.js里的`DOMAIN`。
 
-### npm run build:prod-report (新增命令)
+### npm run build:report (新增命令)
 
 Webpack Bundle Analyzer
 

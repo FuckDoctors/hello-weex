@@ -1,19 +1,26 @@
-import getBaseUrl from './base-url.js';
-import { DIST } from '../config';
+/* eslint no-underscore-dangle: ["error", { "allow": ["_push", "_url"] }] */
+
+import getBaseUrl from './base-url';
 
 const navigator = weex.requireModule('navigator');
-const modal = weex.requireModule('modal');
+// const modal = weex.requireModule('modal');
 
 /**
  * object 转 URL 参数，已拼接问号“？”。
  */
 function createQuery(obj) {
   let url = '?';
-  for (let key in obj) {
+  // for (const key in obj) {
+  //   if (obj[key] !== null) {
+  //     url += (`${key}=${encodeURIComponent(obj[key])}&`);
+  //   }
+  // }
+  Object.keys(obj).forEach((key) => {
     if (obj[key] !== null) {
-      url += (key + '=' + encodeURIComponent(obj[key]) + '&');
+      url += (`${key}=${encodeURIComponent(obj[key])}&`);
     }
-  }
+  });
+
   return url.substring(0, url.lastIndexOf('&'));
 }
 
@@ -24,13 +31,13 @@ function createQuery(obj) {
 function getQueryData(url) {
   // ?_wx_tpl=xxx的要除外，这个是用来做Native的。
   // url = url.substring(url.indexOf('.js?') + 3);
-  url = url.substring(url.indexOf('?_wx_tpl'));
-  var result = {};
-  if (url.indexOf("?") != -1) {
-    var str = url.substr(1);
-    var strs = str.split("&");
-    for (var i = 0; i < strs.length; i++) {
-      result[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
+  const _url = url.substring(url.indexOf('?_wx_tpl'));
+  const result = {};
+  if (_url.indexOf('?') !== -1) {
+    const str = _url.substr(1);
+    const strs = str.split('&');
+    for (let i = 0; i < strs.length; i += 1) {
+      result[strs[i].split('=')[0]] = decodeURIComponent(strs[i].split('=')[1]);
     }
   }
   return result;
@@ -43,10 +50,10 @@ function getQueryData(url) {
 function getHash(url) {
   /* get hash */
   const hashIndex = url.indexOf('#');
-  const hash = hashIndex > 0 ? url.substring(hashIndex, url.length) : "";
+  const hash = hashIndex > 0 ? url.substring(hashIndex, url.length) : '';
 
-  const queryIndex = url.indexOf("?");
-  let result = queryIndex > 0 ? hash.substring(0, queryIndex) : hash;
+  const queryIndex = url.indexOf('?');
+  const result = queryIndex > 0 ? hash.substring(0, queryIndex) : hash;
 
   return result;
 }
@@ -71,9 +78,11 @@ function _push(to, params, isNavi, callback) {
     navigator.push({
       // route.url为相对地址时，为原生或者绝对地址时需要再单独处理
       url: `${baseUrl}${to}.js${allQuery}`,
-      animated: 'true'
-    }, event => {
-      callback && callback();
+      animated: 'true',
+    }, (event) => {
+      if (callback) {
+        callback(event);
+      }
       // modal.alert({
       //   message: event
       // });
@@ -97,7 +106,7 @@ function gotoH5(url, params, callback) {
     allQuery = createQuery(Object.assign({}, query, params));
   }
 
-  const queryIndex = url.indexOf("?");
+  const queryIndex = url.indexOf('?');
   const target = queryIndex > 0 ? url.substring(0, queryIndex) : url;
 
   if (WXEnvironment.platform === 'Web' || typeof window === 'object') {
@@ -108,9 +117,11 @@ function gotoH5(url, params, callback) {
     navigator.push({
       // route.url为相对地址时，为原生或者绝对地址时需要再单独处理
       url: `${target}${allQuery}`,
-      animated: 'true'
-    }, event => {
-      callback && callback();
+      animated: 'true',
+    }, (event) => {
+      if (callback) {
+        callback(event);
+      }
       // modal.alert({
       //   message: `${target}${allQuery}`
       // });

@@ -31,61 +31,61 @@
 </style>
 
 <script>
-  import { WxcTabBar, Utils } from 'weex-ui';
-  // import Config from './config';
-  export default {
-    props: {
-      tabTitles: {
-        type: Array,
-        default: () => ([])
-      },
-      tabStyles: {
-        type: Object,
-        default: () => ({
-          bgColor: '#FFFFFF',
-          titleColor: '#666666',
-          activeTitleColor: '#3D3D3D',
-          activeBgColor: '#FFFFFF',
-          isActiveTitleBold: true,
-          iconWidth: 70,
-          iconHeight: 70,
-          width: 160,
-          height: 120,
-          fontSize: 24,
-          textPaddingLeft: 10,
-          textPaddingRight: 10
-        })
-      },
-      selected: {
-        type: Number,
-        default: 0
-      }
+import { WxcTabBar, Utils } from 'weex-ui';
+// import Config from './config';
+export default {
+  props: {
+    tabTitles: {
+      type: Array,
+      default: () => ([]),
     },
-    components: { WxcTabBar },
-    data: () => ({
-      // tabTitles: Config.tabTitles,
-      // tabStyles: Config.tabStyles
-    }),
-    created () {
-      const tabPageHeight = Utils.env.getPageHeight();
-      // const { env } = weex.config;
-      // const pageHeight = env.deviceHeight / env.deviceWidth * 750;
-      // const tabPageHeight = pageHeight;
-      const { tabStyles } = this;
-      this.contentStyle = { height: (tabPageHeight - tabStyles.height) + 'px' };
+    tabStyles: {
+      type: Object,
+      default: () => ({
+        bgColor: '#FFFFFF',
+        titleColor: '#666666',
+        activeTitleColor: '#3D3D3D',
+        activeBgColor: '#FFFFFF',
+        isActiveTitleBold: true,
+        iconWidth: 70,
+        iconHeight: 70,
+        width: 160,
+        height: 120,
+        fontSize: 24,
+        textPaddingLeft: 10,
+        textPaddingRight: 10,
+      }),
     },
-    mounted() {
-      if (this.tabTitles && this.tabTitles.length > 0 && this.selected) {
-        this.setPage(this.selected, null, false);
-      }
+    selected: {
+      type: Number,
+      default: 0,
     },
-    methods: {
-      setPage (page, url = null, animated = true) {
-        this.$refs['wxc-tab-bar'].setPage(page, url, animated);
-      },
-      wxcTabBarCurrentTabSelected (e) {
-        this.$emit('currentTabSelected', e);
-      }
+  },
+  components: { WxcTabBar },
+  data: () => ({
+    // tabTitles: Config.tabTitles,
+    // tabStyles: Config.tabStyles
+  }),
+  created() {
+    const tabPageHeight = Utils.env.getPageHeight();
+    // const { env } = weex.config;
+    // const pageHeight = env.deviceHeight / env.deviceWidth * 750;
+    // const tabPageHeight = pageHeight;
+    const { tabStyles } = this;
+    this.contentStyle = { height: `${tabPageHeight - tabStyles.height}px` };
+  },
+  mounted() {
+    if (this.tabTitles && this.tabTitles.length > 0 && this.selected) {
+      this.setPage(this.selected, null, false);
     }
-  };
+  },
+  methods: {
+    setPage(page, url = null, animated = true) {
+      this.$refs['wxc-tab-bar'].setPage(page, url, animated);
+    },
+    wxcTabBarCurrentTabSelected(e) {
+      this.$emit('currentTabSelected', e);
+    },
+  },
+};
 </script>

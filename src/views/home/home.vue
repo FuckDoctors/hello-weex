@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import helper from "../../utils/helper";
-import { DOMAIN, DIST } from "../../config";
+import helper from '../../utils/helper';
+import { DOMAIN, DIST } from '../../config';
 
 export default {
   data() {
@@ -17,12 +17,12 @@ export default {
   methods: {
     jump(to) {
       if (WXEnvironment.platform === 'Web') {
-        helper.gotoH5(`http://${DOMAIN}/${to}.html`)
+        helper.gotoH5(`http://${DOMAIN}/${to}.html`);
       } else {
         helper.gotoH5(`http://${DOMAIN}/${DIST}/${to}.js`);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

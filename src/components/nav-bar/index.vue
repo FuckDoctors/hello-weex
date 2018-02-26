@@ -19,32 +19,32 @@ import utils from '../../utils';
 
 export default {
   components: {
-    WxcMinibar
+    WxcMinibar,
   },
   props: {
     title: {
       type: String,
-      default: 'Title here...'
+      default: 'Title here...',
     },
     backgroundColor: {
       type: String,
-      default: '#009ff0'
+      default: '#009ff0',
     },
     textColor: {
       type: String,
-      default: '#FFFFFF'
+      default: '#FFFFFF',
     },
     leftButton: {
       type: String,
-      default: ''
+      default: '',
     },
     rightButton: {
       type: String,
-      default: ''
+      default: '',
     },
     rightText: {
       type: String,
-      default: ''
+      default: '',
     },
   },
   data() {
@@ -54,17 +54,17 @@ export default {
     this.wrapperStyle = {
       backgroundColor: this.backgroundColor,
       height: Utils.env.isWeb() ? 'auto' : utils.getNavHeight(),
-      paddingTop: Utils.env.isWeb() ? 0: utils.getNavHeight() - 90
+      paddingTop: Utils.env.isWeb() ? 0 : utils.getNavHeight() - 90,
     };
   },
   methods: {
-    minibarLeftButtonClick () {
+    minibarLeftButtonClick() {
       this.$emit('leftButtonClick');
     },
-    minibarRightButtonClick () {
+    minibarRightButtonClick() {
       this.$emit('rightButtonClick');
-    }
-  }
+    },
+  },
 };
 </script>
 

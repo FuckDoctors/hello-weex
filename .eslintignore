@@ -1,7 +1,10 @@
 # do not lint test case source files
 node_modules
+/configs/
+webpack.config.js
 dist
 .temp
 web/build
 platforms
 plugins
+/test/unit/coverage/

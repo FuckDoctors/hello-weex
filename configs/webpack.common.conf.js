@@ -36,12 +36,8 @@ const getEntryFileContent = (entryPath, vueFilePath) => {
     entryContents = entryContents.replace(/weex\.init/, match => `${contents}${match}`);
     contents = ''
   }
-  // https://github.com/alibaba/weex-ui/issues/135
-  // contents += `\nimport App from '${relativeVuePath}';\n`;
-  contents += `\nconst App = require('${relativeVuePath}');\n`
-  contents += `App.el = '#root';\n`;
-  contents += `new Vue(App);\n`;
-  // console.log(entryContents)
+  contents += `\nconst App = require('${relativeVuePath}');\n`;
+  contents += `new Vue(Vue.util.extend({el: '#root'}, App));\n`;
   return entryContents + contents;
 }
 
@@ -57,8 +53,8 @@ const getEntryFile = (dir) => {
       const name = path.join(dir, path.basename(file, extname));
       if (extname === '.vue') {
         const entryFile = path.join(vueWebTemp, dir, path.basename(file, extname) + '.js');
-        fs.outputFileSync(path.join(entryFile), getEntryFileContent(entryFile, fullpath));
-        webEntry[name] = path.join(entryFile) + '?entry=true';
+        fs.outputFileSync(entryFile, getEntryFileContent(entryFile, fullpath));
+        webEntry[name] = entryFile;
       }
       weexEntry[name] = fullpath + '?entry=true';
     }
@@ -71,6 +67,18 @@ const getEntryFile = (dir) => {
 
 // Generate an entry file array before writing a webpack configuration
 getEntryFile();
+
+const createLintingRule = () => ({
+  test: /\.(js|vue)$/,
+  loader: 'eslint-loader',
+  enforce: 'pre',
+  include: [helper.rootNode('src'), helper.rootNode('test')],
+  options: {
+    formatter: require('eslint-friendly-formatter'),
+    emitWarning: !config.dev.showEslintErrorsInOverlay
+  }
+})
+
 /**
  * Plugins for webpack configuration.
  */
@@ -103,7 +111,11 @@ const plugins = [
 
 // Config for compile jsbundle for web.
 const webConfig = {
-  entry: webEntry,
+  entry: {
+    ...webEntry,
+    'phantom-limb': [path.resolve('node_modules/phantom-limb/index.js')]
+  },
+  // entry: webEntry,
   output: {
     path: helper.rootNode('./dist'),
     filename: '[name].web.js'
@@ -115,7 +127,7 @@ const webConfig = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      '@': helper.resolve('src'),
+      '@': helper.resolve('src')
     }
   },
   /*
@@ -125,7 +137,9 @@ const webConfig = {
    */
   module: {
     // webpack 2.0
-    rules: [{
+    rules: [
+    ...(config.dev.useEslint ? [createLintingRule()] : []),
+    {
       test: /\.js$/,
       // use: [{
       //   loader: 'babel-loader'
@@ -179,6 +193,16 @@ const weexConfig = {
   output: {
     path: path.join(__dirname, '../dist'),
     filename: '[name].js'
+  },
+  /**
+   * Options affecting the resolving of modules.
+   * See http://webpack.github.io/docs/configuration.html#resolve
+   */
+  resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      '@': helper.resolve('src')
+    }
   },
   /*
    * Options affecting the resolving of modules.

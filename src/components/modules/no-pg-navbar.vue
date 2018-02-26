@@ -1,6 +1,3 @@
-<template>
-</template>
-
 <script>
 export default {
   data() {
@@ -21,9 +18,10 @@ export default {
         titleBar.showTitleBar('false');
       }
     } catch (error) {
+      // 出错
     }
-  }
-}
+  },
+};
 </script>
 
 <style scoped>

@@ -7,6 +7,7 @@ const config = {
   // webpack-dev-server
   pluginConfigPath: 'plugins/plugins.json',
   pluginFilePath: 'plugins/plugins.js',
+  // router
   // common
   templateDir: '.temp',
   entryFilePath: './src/entry.js',
@@ -16,14 +17,21 @@ const config = {
     host: ip,
     port: 8081,
     historyApiFallback: true,
-    open:true,
+    open: true,
     watchContentBase: true,
-    openPage: 'web/preview.html?page=index.js',
+    openPage: 'web/preview.html',
     watchOptions: {
       ignored: /node_modules/,
       aggregateTimeout: 300,
       poll: false
     },
+    // Use Eslint Loader?
+    // If true, your code will be linted during bundling and
+    // linting errors and warnings will be shown in the console.
+    useEslint: true,
+    // If true, eslint errors and warnings will also be shown in the error overlay
+    // in the browser.
+    showEslintErrorsInOverlay: false,
     /**
      * Source Maps
      */
@@ -43,7 +51,24 @@ const config = {
     proxyTable: {},
     autoOpenBrowser: false,
     errorOverlay: true,
-    notifyOnErrors: true
+    notifyOnErrors: true,
+    htmlOptions: {
+      devScripts: `
+        <script>
+          window.addEventListener('load', function () {
+            var is_touch_device = function () {
+              return 'ontouchstart' in window // works on most browsers
+                  || 'onmsgesturechange' in window; // works on ie10
+            };
+            if(!is_touch_device()) {
+              if (window.parent === window) { // not in iframe.
+                window.phantomLimb.stop()
+              }
+            }
+          })
+        </script>
+        `
+    }
   },
   test: {
     env: JSON.stringify('test')
@@ -53,7 +78,6 @@ const config = {
     /**
      * Source Maps
      */
-
     productionSourceMap: true,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
@@ -68,7 +92,6 @@ const config = {
     /**
      * Source Maps
      */
-
     productionSourceMap: true,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
@@ -117,4 +140,4 @@ const config = {
     zlib: false
   }
 }
-module.exports  = config;
+module.exports = config;

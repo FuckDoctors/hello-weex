@@ -8,7 +8,6 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-touch-fullscreen" content="yes">
   <meta name="format-detection" content="telephone=no, email=no">
-  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="./assets/preview.css">
   <script src="./assets/qrcode.js"></script>
 </head>
@@ -27,21 +26,30 @@
         <div class="home-btn"></div>
       </div>
       <div class="qrcode-box">
+        <div style="text-align:center">Native</div>
         <a class="qrcode" id="qrcode" target="_blank"></a>
+        <p class="qrcode-tips">Use <a target="_blank" href="https://weex-project.io/playground.html">Weex playground app</a> to scan it.</p>
+      </div>
+      <div class="qrcode-box">
+        <div style="text-align:center">H5</div>
+        <a class="qrcode" id="qrcode2" target="_blank"></a>
         <p class="qrcode-tips">Use <a target="_blank" href="https://weex-project.io/playground.html">Weex playground app</a> to scan it.</p>
       </div>
     </main>
   </div>
+  <div class="pages-box">
+  </div>
   <script>
     (function(){
       const page = getUrlParam('page');
+      const entrys = getUrlParam('entrys');
       function getUrlParam (key) {
         var reg = new RegExp('[?|&]' + key + '=([^&]+)')
         var match = location.search.match(reg)
         return match && match[1]
       }
       function createQRCode (url) {
-        var $QR = document.getElementById('qrcode')
+        var $QR = document.querySelector('#qrcode')
         var QR = qrcode(0, 'L')
         url += '?_wx_tpl=' + url
         $QR.setAttribute('href', url)
@@ -49,12 +57,39 @@
         QR.make()
         $QR.innerHTML = QR.createImgTag(6, 12)
       }
+      function createQRCode2 (h5, native) {
+        var $QR = document.getElementById('qrcode2')
+        var QR = qrcode(0, 'L')
+        var url = h5;
+        url += '?_wx_tpl=' + encodeURIComponent(native);
+        $QR.setAttribute('href', url)
+        QR.addData(url)
+        QR.make()
+        $QR.innerHTML = QR.createImgTag(6, 12)
+      }
       if (page) {
-        var $preview = document.getElementById('preview')
-        $preview.src = `/${page.replace('.js', '')}.html`;
+        var $preview = document.querySelector('#preview')
+        $preview.src = `/${page.replace('.js', '.html')}`;
+      }
+      if (entrys) {
+        var pageEntrys = JSON.parse(decodeURI(entrys));
+        var $pages = document.querySelector('.pages-box');
+        var contents = '';
+        pageEntrys.forEach(function(entry){
+          console.log(entry, getUrlParam('page'))
+          if (entry === getUrlParam('page').replace('.js', '')) {
+            contents += `<a href="?page=${entry}.js&entrys=${entrys}" class="page-item active">${entry}</a>`
+          }
+          else {
+            contents += `<a href="?page=${entry}.js&entrys=${entrys}" class="page-item">${entry}</a>`
+          }
+        })
+        $pages.innerHTML = contents;
       }
       var host = window.location.host;
-      createQRCode(`http://${host}/dist/${page || 'index.js'}`)
+      createQRCode(`http://${host}/dist/${page || 'index.js'}`);
+      // downgrade ???
+      createQRCode2(`http://${host}/${(page || 'index.js').replace('.js', '')}.html`, `http://${host}/dist/${page || 'index.js'}`);
     })();
   </script>
 </body>

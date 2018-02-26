@@ -24,13 +24,15 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
  * @param {Array} entry
  */
 const generateMultipleEntrys = (entry) => {
-  const entrys = Object.keys(entry);
-  const htmlPlugin = entrys
+  let entrys = Object.keys(entry);
+  // exclude phantom-limb entry.
+  entrys = entrys
+    .filter(entry => entry !== 'phantom-limb')
     .filter(name => {
       // components下面的不生成html
       return /^(?!components)/.test(name);
-    })
-    .map(name => {
+    });
+  const htmlPlugin = entrys.map(name => {
       return new HtmlWebpackPlugin({
         filename: name + '.html',
         template: helper.rootNode(`web/index.html`),
@@ -38,7 +40,7 @@ const generateMultipleEntrys = (entry) => {
         chunksSortMode: 'dependency',
         inject: true,
         // chunks: [name],
-        chunks: ['vendor', 'manifest', 'common', name],
+        chunks: ['vendor', 'manifest', 'common', name, 'phantom-limb'],
         // production
         minimize: true
       });
@@ -47,7 +49,7 @@ const generateMultipleEntrys = (entry) => {
 }
 
 /**
- * Webpack configuration for browser.
+ * Webpack configuration for web.
  */
 const docsConfig = webpackMerge(commonConfig[0], {
   /**

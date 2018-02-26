@@ -37,16 +37,19 @@
       </div>
     </main>
   </div>
+  <div class="pages-box">
+  </div>
   <script>
     (function(){
       const page = getUrlParam('page');
+      const entrys = getUrlParam('entrys');
       function getUrlParam (key) {
         var reg = new RegExp('[?|&]' + key + '=([^&]+)')
         var match = location.search.match(reg)
         return match && match[1]
       }
       function createQRCode (url) {
-        var $QR = document.getElementById('qrcode')
+        var $QR = document.querySelector('#qrcode')
         var QR = qrcode(0, 'L')
         url += '?_wx_tpl=' + url
         $QR.setAttribute('href', url)
@@ -65,8 +68,23 @@
         $QR.innerHTML = QR.createImgTag(6, 12)
       }
       if (page) {
-        var $preview = document.getElementById('preview')
-        $preview.src = `/hello-weex/${page.replace('.js', '')}.html`;
+        var $preview = document.querySelector('#preview')
+        $preview.src = `/hello-weex/${page.replace('.js', '.html')}`;
+      }
+      if (entrys) {
+        var pageEntrys = JSON.parse(decodeURI(entrys));
+        var $pages = document.querySelector('.pages-box');
+        var contents = '';
+        pageEntrys.forEach(function(entry){
+          console.log(entry, getUrlParam('page'))
+          if (entry === getUrlParam('page').replace('.js', '')) {
+            contents += `<a href="?page=${entry}.js&entrys=${entrys}" class="page-item active">${entry}</a>`
+          }
+          else {
+            contents += `<a href="?page=${entry}.js&entrys=${entrys}" class="page-item">${entry}</a>`
+          }
+        })
+        $pages.innerHTML = contents;
       }
       var host = window.location.host;
       createQRCode(`http://${host}/hello-weex/dist/${page || 'index.js'}`);
@@ -76,5 +94,5 @@
   </script>
 </body>
 <!-- Webpack Dev Server reload -->
-<!-- <script src="/webpack-dev-server.js"></script> -->
+<script src="/webpack-dev-server.js"></script>
 </html>

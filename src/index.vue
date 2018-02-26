@@ -15,7 +15,7 @@ export default {
     helper.push('app');
   },
   methods: {
-  }
+  },
 };
 </script>
 

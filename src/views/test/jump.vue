@@ -13,40 +13,40 @@
 </template>
 
 <script>
-  import helper from '../../utils/helper';
-  import { DOMAIN, DIST } from '../../config';
+import helper from '../../utils/helper';
+import { DOMAIN, DIST } from '../../config';
 
-  const navigator = weex.requireModule('navigator');
-  const modal = weex.requireModule('modal');
+const navigator = weex.requireModule('navigator');
+const modal = weex.requireModule('modal');
 
-  export default {
-    data () {
-      return {
-        logo: 'https://gw.alicdn.com/tfs/TB1yopEdgoQMeJjy1XaXXcSsFXa-640-302.png',
-      }
-    },
-    methods: {
-      jump(url) {
-        navigator.push({
-          url: 'http://192.168.1.86:8081/dist/views/home/home.js', // OK
-          animated: 'true'
-        }, event => {
-          modal.alert({
-            message: event
-          });
+export default {
+  data() {
+    return {
+      logo: 'https://gw.alicdn.com/tfs/TB1yopEdgoQMeJjy1XaXXcSsFXa-640-302.png',
+    };
+  },
+  methods: {
+    jump() {
+      navigator.push({
+        url: 'http://192.168.1.86:8081/dist/views/home/home.js', // OK
+        animated: 'true',
+      }, (event) => {
+        modal.alert({
+          message: event,
         });
-      },
-      jump2(to) {
-        helper.push(to);
-      },
-      jump3(to) {
-        helper.gotoH5(`http://${DOMAIN}/${DIST}/${to}.js`);
-      },
-      jump4(to) {
-        helper.gotoH5(`http://${DOMAIN}/${to}.html`);
-      }
-    }
-  }
+      });
+    },
+    jump2(to) {
+      helper.push(to);
+    },
+    jump3(to) {
+      helper.gotoH5(`http://${DOMAIN}/${DIST}/${to}.js`);
+    },
+    jump4(to) {
+      helper.gotoH5(`http://${DOMAIN}/${to}.html`);
+    },
+  },
+};
 </script>
 
 <style scoped>

@@ -12,7 +12,7 @@ import TabBar from './views/tab-bar';
 export default {
   components: {
     NavBar,
-    TabBar
+    TabBar,
   },
   data() {
     return {};
@@ -20,7 +20,7 @@ export default {
   mounted() {
 
   },
-  methods: {}
+  methods: {},
 };
 </script>
 

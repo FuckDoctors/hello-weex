@@ -12,22 +12,22 @@
 </template>
 
 <script>
-  import { WxcButton, WxcPopup } from 'weex-ui';
-  // 或者分开引用（不是很推荐）
-  // import WxcButton from 'weex-ui/packages/wxc-button';
-  // import WxcPopup from 'weex-ui/packages/wxc-popup';
-  module.exports = {
-    components: { WxcButton, WxcPopup },
-    data: () => ({
-      isShow: false
-    }),
-    methods: {
-      buttonClicked () {
-        this.isShow = true;
-      },
-      overlayClicked () {
-        this.isShow = false;
-      }
-    }
-  };
+import { WxcButton, WxcPopup } from 'weex-ui';
+// 或者分开引用（不是很推荐）
+// import WxcButton from 'weex-ui/packages/wxc-button';
+// import WxcPopup from 'weex-ui/packages/wxc-popup';
+module.exports = {
+  components: { WxcButton, WxcPopup },
+  data: () => ({
+    isShow: false,
+  }),
+  methods: {
+    buttonClicked() {
+      this.isShow = true;
+    },
+    overlayClicked() {
+      this.isShow = false;
+    },
+  },
+};
 </script>

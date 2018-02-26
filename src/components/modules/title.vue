@@ -26,15 +26,15 @@
 </style>
 
 <script>
-  import { LOGO } from '../../config';
+import { LOGO } from '../../config';
 
-  export default {
-    props: {
-      logo: {
-        type: String,
-        default: LOGO
-      },
-      title: String
-    }
-  };
+export default {
+  props: {
+    logo: {
+      type: String,
+      default: LOGO,
+    },
+    title: String,
+  },
+};
 </script>
