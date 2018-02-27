@@ -1,8 +1,11 @@
 os: osx
 language: node_js
+# 初次使用travis ci，做了下面的配置，以为是限制nodejs的版本，#
+# 结果travis ci跑了两个build job，分别安装了一个最新的node和一个8的node。
+# 所以这里只配置一个就可以了。
 node_js:
   - "node"
-  - "8"
+  # - "8"
 branches:
   only:
     - dev
@@ -13,21 +16,28 @@ install:
 script:
   - npm run build:docs
 after_success:
+  # 注释掉下面的命令，build完后，git push出错了。
+  # remote: Anonymous access to FuckDoctors/hello-weex.git denied.
+  # fatal: Authentication failed for 'https://@github.com/FuckDoctors/hello-weex.git/'
+  - git init
+  - git config --global user.name "ujn-bin"
+  - git config --global user.email "zhbchwin@163.com"
+
   # 更新docs
-  # - git init
-  # - git config --global user.name "FuckDoctors"
-  # - git config --global user.email "zhbchwin@163.com"
   - git add .
   - git commit -m "Updated by travis-ci at $(date)"
   - git push --force https://$DEPLOY_TOKEN@github.com/FuckDoctors/hello-weex.git dev:dev
 
-  # 同步zhaobc.coding.me/helle-weex
+  # 哪个地方没设置好，卡在Enter passphrase for id_rsa:
+  # 当时生成的时候有没有passphrase忘了。。。加个sshpass -p passphrase试试。
   - echo -e "$SSH_KEY" > id_rsa
   - chmod 600 id_rsa
   - eval $(ssh-agent -s)
-  - ssh-add id_rsa
+  - sshpass -p passphrase ssh-add id_rsa
   - rm -rf id_rsa
   - ssh -o "StrictHostKeyChecking no" git.coding.net
+
+  # 同步zhaobc.coding.me/helle-weex
   - rm -rf ~/coding.net
   - mkdir ~/coding.net
   - cd ~/coding.net
