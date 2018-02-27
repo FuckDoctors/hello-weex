@@ -35,13 +35,17 @@ after_success:
   - eval $(ssh-agent -s)
   - sshpass -p passphrase ssh-add id_rsa
   - rm -rf id_rsa
-  - ssh -o "StrictHostKeyChecking no" git.coding.net
+  # Warning: Permanently added xxx to the list of known hosts.
+  # Permission denied (publickey).
+  # - ssh -o "StrictHostKeyChecking no" git.coding.net
+  - ssh -o "StrictHostKeyChecking no" -o UserKnownHostsFile=/dev/null -o LogLevel=quiet git.coding.net
 
   # 同步zhaobc.coding.me/helle-weex
   - rm -rf ~/coding.net
   - mkdir ~/coding.net
   - cd ~/coding.net
   - git clone https://git.coding.net/zhaobc/zhaobc.coding.me.git
+  - cd ./zhaobc.coding.me
   - rm -rf ./hello-weex
   - cp -R ${TRAVIS_BUILD_DIR}/docs ./hello-weex
   - sed -i '' "s/fuckdoctors.github.io/zhaobc.coding.me/g" `grep "fuckdoctors.github.io" -rl ./hello-weex`
