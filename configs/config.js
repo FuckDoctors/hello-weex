@@ -85,7 +85,11 @@ const config = {
     // Run the build command with an extra argument to
     // View the bundle analyzer report after build finishes:
     // Set to `true` or `false` to always turn it on or off
-    bundleAnalyzerReport: process.env.npm_config_report
+    bundleAnalyzerReport: process.env.npm_config_report,
+    server: {
+      domain: 'fuckdoctors.github.io/hello-weex',
+      enableHttps: true
+    }
   },
   docs: {
     env: JSON.stringify('docs'),
@@ -95,7 +99,11 @@ const config = {
     productionSourceMap: true,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
-    cssSourceMap: true
+    cssSourceMap: true,
+    server: {
+      domain: 'fuckdoctors.github.io/hello-weex',
+      enableHttps: true
+    }
   },
   nodeConfiguration: {
     global: false,

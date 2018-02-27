@@ -87,12 +87,12 @@
         $pages.innerHTML = contents;
       }
       var host = window.location.host;
-      createQRCode(`http://${host}/hello-weex/dist/${page || 'index.js'}`);
+      createQRCode(`${document.location.protocol}//${host}/hello-weex/dist/${page || 'index.js'}`);
       // downgrade ???
-      createQRCode2(`http://${host}/hello-weex/${(page || 'index.js').replace('.js', '')}.html`, `http://${host}/hello-weex/dist/${page || 'index.js'}`);
+      createQRCode2(`${document.location.protocol}//${host}/hello-weex/${(page || 'index.js').replace('.js', '')}.html`, `${document.location.protocol}//${host}/hello-weex/dist/${page || 'index.js'}`);
     })();
   </script>
 </body>
 <!-- Webpack Dev Server reload -->
-<script src="/webpack-dev-server.js"></script>
+<!-- <script src="/webpack-dev-server.js"></script> -->
 </html>

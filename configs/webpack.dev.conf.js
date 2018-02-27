@@ -96,7 +96,10 @@ const devWebpackConfig = webpackMerge(commonConfig[0], {
      */
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': config.dev.env
+        'NODE_ENV': config.dev.env,
+        // 追加部分，不想每次都修改发布的domain
+        'DOMAIN': JSON.stringify(`${config.dev.host}:${config.dev.port}`),
+        'ENABLE_HTTPS': JSON.stringify(false)
       }
     }),
     /*
@@ -151,7 +154,28 @@ const devWebpackConfig = webpackMerge(commonConfig[0], {
  * Webpack configuration for weex.
  */
 const weexConfig = webpackMerge(commonConfig[1], {
-  watch: true
+  watch: true,
+  /*
+   * Add additional plugins to the compiler.
+   *
+   * See: http://webpack.github.io/docs/configuration.html#plugins
+   */
+  plugins: [
+    /**
+     * Plugin: webpack.DefinePlugin
+     * Description: The DefinePlugin allows you to create global constants which can be configured at compile time.
+     *
+     * See: https://webpack.js.org/plugins/define-plugin/
+     */
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': config.prod.env,
+        // 追加部分，不想每次都修改发布的domain
+        'DOMAIN': JSON.stringify(`${config.dev.host}:${config.dev.port}`),
+        'ENABLE_HTTPS': JSON.stringify(false)
+      }
+    })
+  ]
 })
 
 // build source to weex_bundle with watch mode.

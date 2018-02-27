@@ -23,7 +23,10 @@ const webpackConfig = merge(baseWebpackConfig[0], {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': config.test.env
+        'NODE_ENV': config.test.env,
+        // 追加部分，不想每次都修改发布的domain
+        'DOMAIN': JSON.stringify(`${config.dev.host}:${config.dev.port}`),
+        'ENABLE_HTTPS': JSON.stringify(false)
       }
     })
   ]

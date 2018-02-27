@@ -2,6 +2,6 @@ const ip = require('ip').address();
 
 describe('ip', () => {
   it('get ip', () => {
-    expect(ip).to.equal('192.168.202.84');
+    expect(ip).to.equal('192.168.1.86');
   });
 });

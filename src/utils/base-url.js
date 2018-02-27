@@ -28,12 +28,12 @@ export default function getBaseURL(isnav) {
       host = host.indexOf(bundleHost) > -1 ? host : matches[1];
     }
 
-    nativeBase = `http://${host}/${config.DIST}/`;
-    h5Base = `http://${host}`;
+    nativeBase = `http${config.ENABLE_HTTPS ? 's' : ''}://${host}/${config.DIST}/`;
+    h5Base = `http${config.ENABLE_HTTPS ? 's' : ''}://${host}`;
   }
 
   // 此处需注意一下,tabbar 用的直接是jsbundle 的路径,但是navigator是直接跳转到新页面上的.
-  h5Base = isnav ? `http://${config.DOMAIN}/` : '/';
+  h5Base = isnav ? `http${config.ENABLE_HTTPS ? 's' : ''}://${config.DOMAIN}/` : '/';
 
   // in Native
   let base = nativeBase;

@@ -18,7 +18,13 @@
 
 ### npm run build:docs (新增命令)
 
-发布Demo，需要修改src/config/index.js里的`DOMAIN`。
+发布Demo，需要修改configs/config.js里的下面的内容。
+```
+server: {
+  domain: 'fuckdoctors.github.io/hello-weex',
+  enableHttps: true
+}
+```
 
 ### npm run build:report (新增命令)
 

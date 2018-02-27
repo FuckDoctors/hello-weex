@@ -143,7 +143,10 @@ const docsConfig = webpackMerge(commonConfig[0], {
      */
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': config.docs.env
+        'NODE_ENV': config.docs.env,
+        // 追加部分，不想每次都修改发布的domain
+        'DOMAIN': JSON.stringify(config.docs.server.domain),
+        'ENABLE_HTTPS': JSON.stringify(config.docs.server.enableHttps)
       }
     }),
     /*
@@ -252,6 +255,21 @@ const weexConfig = webpackMerge(commonConfig[1], {
    * See: http://webpack.github.io/docs/configuration.html#plugins
    */
   plugins: [
+    /**
+     * Plugin: webpack.DefinePlugin
+     * Description: The DefinePlugin allows you to create global constants which can be configured at compile time.
+     *
+     * See: https://webpack.js.org/plugins/define-plugin/
+     */
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': config.prod.env,
+        // 追加部分，不想每次都修改发布的domain
+        'DOMAIN': JSON.stringify(config.prod.server.domain),
+        'ENABLE_HTTPS': JSON.stringify(config.prod.server.enableHttps)
+      }
+    }),
+
     /*
      * Plugin: UglifyJsparallelPlugin
      * Description: Identical to standard uglify webpack plugin
