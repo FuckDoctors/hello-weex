@@ -11,7 +11,7 @@ before_script:
 install:
   - npm install
 script:
-  - nmp run build:docs
+  - npm run build:docs
 after_success:
   # 更新docs
   # - git init
