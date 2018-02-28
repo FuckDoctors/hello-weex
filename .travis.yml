@@ -19,8 +19,10 @@ before_script:
   # SSH KEY
   # 哪个地方没设置好，卡在Enter passphrase for id_rsa:
   # 当时生成的时候有没有passphrase忘了。。。加个sshpass -p passphrase试试。
+  # https://stackoverflow.com/questions/41774464/travis-ci-ssh-add-asking-for-my-passphrase
   # 试了下不行
   # /Users/travis/.travis/job_stages: line 57: sshpass: command not found
+  # 试试里面说的newline -> \\n
   # 加密文件的方式看下面的资料：
   # https://zespia.tw/blog/2015/01/21/continuous-deployment-to-github-with-travis/
   # SSH private key
@@ -28,8 +30,8 @@ before_script:
   - chmod 600 id_rsa
   # start the ssh-agent in the background
   - eval $(ssh-agent -s)
-  # - passphrase ssh-add id_rsa
-  - sshpass -p "" ssh-add id_rsa
+  # - sshpass -p "" ssh-add id_rsa
+  - ssh-add id_rsa
   - rm -rf id_rsa
   # Warning: Permanently added xxx to the list of known hosts.
   # Permission denied (publickey).
