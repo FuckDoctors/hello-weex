@@ -20,8 +20,8 @@ after_success:
   # remote: Anonymous access to FuckDoctors/hello-weex.git denied.
   # fatal: Authentication failed for 'https://@github.com/FuckDoctors/hello-weex.git/'
   # - git init
-  # - git config --global user.name "ujn-bin"
-  # - git config --global user.email "zhbchwin@163.com"
+  - git config --global user.name "FuckDoctors"
+  - git config --global user.email "zhbchwin@163.com"
 
   # 更新docs
   - git add .
