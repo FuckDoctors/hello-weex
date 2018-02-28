@@ -83,11 +83,11 @@ after_success:
   - rm -rf ./hello-weex
   - cp -R ${TRAVIS_BUILD_DIR}/docs ./hello-weex
   - sed -i '' "s/fuckdoctors.github.io/zhaobc.coding.me/g" `grep "fuckdoctors.github.io" -rl ./hello-weex`
-  - git add hellow-weex
+  - git add hello-weex
   - git commit -m "Updated by travis-ci at $(date)"
   # - git push --force https://git.coding.net/zhaobc/zhaobc.coding.me.git master:master
   # https方式报错，改成ssh方式
   # - git push --force git@git.coding.net:zhaobc/zhaobc.coding.me.git master:master
   # 使用访问令牌方式
-  - git push --force https://zhbchwin@163.com:$CODING_TOKEN@git.coding.net/zhaobc/zhaobc.coding.me.git
+  - git push --force https://zhaobc:$CODING_TOKEN@git.coding.net/zhaobc/zhaobc.coding.me.git
 
