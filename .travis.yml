@@ -24,8 +24,19 @@ after_success:
   - git config --global user.email "zhbchwin@163.com"
 
   # 更新docs
+  # 解决Detached head问题
+  - git stash
+  - git checkout dev
+  - git stash pop
   - git add .
   - git commit -m "Updated by travis-ci at $(date)"
+  # 发现每次都没提交上来，Everything up-to-date。
+  # 后来又仔细看了下log，发现git commit时有[detached HEAD 21a6281]
+  # 搜了下，知道了原因。
+  # https://stackoverflow.com/questions/10228760/fix-a-git-detached-head
+  # Detached head means:
+  # (1) You are no longer on a branch,
+  # (2) You have checked out a single commit in the history
   - git push --force https://$DEPLOY_TOKEN@github.com/FuckDoctors/hello-weex.git dev:dev
 
   # 哪个地方没设置好，卡在Enter passphrase for id_rsa:
@@ -43,6 +54,7 @@ after_success:
   - ssh -o "StrictHostKeyChecking no" -o UserKnownHostsFile=/dev/null -o LogLevel=quiet git.coding.net
 
   # 同步zhaobc.coding.me/helle-weex
+  # fatal: Authentication failed for 'https://git.coding.net/zhaobc/zhaobc.coding.me.git/'
   - rm -rf ~/coding.net
   - mkdir ~/coding.net
   - cd ~/coding.net
