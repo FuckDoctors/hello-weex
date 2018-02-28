@@ -30,10 +30,12 @@ after_success:
 
   # 哪个地方没设置好，卡在Enter passphrase for id_rsa:
   # 当时生成的时候有没有passphrase忘了。。。加个sshpass -p passphrase试试。
+  # 试了下不行
+  # /Users/travis/.travis/job_stages: line 57: sshpass: command not found
   - echo -e "$SSH_KEY" > id_rsa
   - chmod 600 id_rsa
   - eval $(ssh-agent -s)
-  - sshpass -p passphrase ssh-add id_rsa
+  - passphrase ssh-add id_rsa
   - rm -rf id_rsa
   # Warning: Permanently added xxx to the list of known hosts.
   # Permission denied (publickey).
