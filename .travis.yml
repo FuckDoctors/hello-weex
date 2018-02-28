@@ -19,9 +19,9 @@ after_success:
   # 注释掉下面的命令，build完后，git push出错了。
   # remote: Anonymous access to FuckDoctors/hello-weex.git denied.
   # fatal: Authentication failed for 'https://@github.com/FuckDoctors/hello-weex.git/'
-  - git init
-  - git config --global user.name "ujn-bin"
-  - git config --global user.email "zhbchwin@163.com"
+  # - git init
+  # - git config --global user.name "ujn-bin"
+  # - git config --global user.email "zhbchwin@163.com"
 
   # 更新docs
   - git add .
