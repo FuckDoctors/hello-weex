@@ -10,6 +10,27 @@ branches:
   only:
     - dev
 before_script:
+  # SSH KEY
+  # 哪个地方没设置好，卡在Enter passphrase for id_rsa:
+  # 当时生成的时候有没有passphrase忘了。。。加个sshpass -p passphrase试试。
+  # 试了下不行
+  # /Users/travis/.travis/job_stages: line 57: sshpass: command not found
+  # 加密文件的方式看下面的资料：
+  # https://zespia.tw/blog/2015/01/21/continuous-deployment-to-github-with-travis/
+  # SSH private key
+  - echo -e "$SSH_KEY" > id_rsa
+  - chmod 600 id_rsa
+  # start the ssh-agent in the background
+  - eval $(ssh-agent -s)
+  # - passphrase ssh-add id_rsa
+  - ssh-add id_rsa
+  - rm -rf id_rsa
+  # Warning: Permanently added xxx to the list of known hosts.
+  # Permission denied (publickey).
+  # - ssh -o "StrictHostKeyChecking no" git.coding.net
+  - ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=quiet git@git.coding.net
+
+  # 项目依赖
   - npm install -g weex-toolkit
 install:
   - npm install
@@ -28,7 +49,9 @@ after_success:
   - git stash
   - git checkout dev
   - git stash pop
-  - git add .
+  # 限定只更新docs，其他不更新，降低影响范围
+  # - git add .
+  - git add docs
   - git commit -m "Updated by travis-ci at $(date)"
   # 发现每次都没提交上来，Everything up-to-date。
   # 后来又仔细看了下log，发现git commit时有[detached HEAD 21a6281]
@@ -38,20 +61,6 @@ after_success:
   # (1) You are no longer on a branch,
   # (2) You have checked out a single commit in the history
   - git push --force https://$DEPLOY_TOKEN@github.com/FuckDoctors/hello-weex.git dev:dev
-
-  # 哪个地方没设置好，卡在Enter passphrase for id_rsa:
-  # 当时生成的时候有没有passphrase忘了。。。加个sshpass -p passphrase试试。
-  # 试了下不行
-  # /Users/travis/.travis/job_stages: line 57: sshpass: command not found
-  - echo -e "$SSH_KEY" > id_rsa
-  - chmod 600 id_rsa
-  - eval $(ssh-agent -s)
-  - passphrase ssh-add id_rsa
-  - rm -rf id_rsa
-  # Warning: Permanently added xxx to the list of known hosts.
-  # Permission denied (publickey).
-  # - ssh -o "StrictHostKeyChecking no" git.coding.net
-  - ssh -o "StrictHostKeyChecking no" -o UserKnownHostsFile=/dev/null -o LogLevel=quiet git.coding.net
 
   # 同步zhaobc.coding.me/helle-weex
   # fatal: Authentication failed for 'https://git.coding.net/zhaobc/zhaobc.coding.me.git/'
@@ -63,4 +72,7 @@ after_success:
   - rm -rf ./hello-weex
   - cp -R ${TRAVIS_BUILD_DIR}/docs ./hello-weex
   - sed -i '' "s/fuckdoctors.github.io/zhaobc.coding.me/g" `grep "fuckdoctors.github.io" -rl ./hello-weex`
-  - git push --force https://git.coding.net/zhaobc/zhaobc.coding.me.git master:master
+  # - git push --force https://git.coding.net/zhaobc/zhaobc.coding.me.git master:master
+  # https方式报错，改成ssh方式
+  - git push --force git@git.coding.net:zhaobc/zhaobc.coding.me.git master:master
+
