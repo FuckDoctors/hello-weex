@@ -6,6 +6,12 @@ language: node_js
 node_js:
   - "node"
   # - "8"
+
+# Travis-CI Caching
+cache:
+  directories:
+    - node_modules
+
 branches:
   only:
     - dev
@@ -23,7 +29,7 @@ before_script:
   # start the ssh-agent in the background
   - eval $(ssh-agent -s)
   # - passphrase ssh-add id_rsa
-  - ssh-add id_rsa
+  - sshpass -p "" ssh-add id_rsa
   - rm -rf id_rsa
   # Warning: Permanently added xxx to the list of known hosts.
   # Permission denied (publickey).
