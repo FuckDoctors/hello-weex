@@ -1,8 +1,8 @@
 # Demo
 
-* [Demo on github](http://fuckdoctors.github.io/hello-weex/preview.html?page=index.js)
+* [Demo on github](https://fuckdoctors.github.io/hello-weex/preview.html?page=index.js)
 
-* [Demo on coding.net](http://zhaobc.coding.me/hello-weex/preview.html?page=index.js) (dev分支，开发时实时预览用)
+* [Demo on dever.site](https://dever.site/hello-weex/preview.html?page=index.js) (dev分支，开发时实时预览用)
 
 公司没有WIFI，Playground上无法确认，暂时放到公网上，然后用手机上的Playground扫描确认。手动滑稽(￣▽￣)"
 
