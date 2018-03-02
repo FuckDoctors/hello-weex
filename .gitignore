@@ -23,3 +23,4 @@ platforms/*
 release/*
 coverage
 .vscode
+docs
