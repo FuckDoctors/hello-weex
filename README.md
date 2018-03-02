@@ -1,4 +1,8 @@
-# Demo
+# Hello Weex
+
+[![Build Status](https://travis-ci.org/FuckDoctors/hello-weex.svg?branch=dev)](https://travis-ci.org/FuckDoctors/hello-weex)
+
+## Demo
 
 * [Demo on github](https://fuckdoctors.github.io/hello-weex/preview.html?page=index.js) (master分支)
 
