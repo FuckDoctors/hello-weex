@@ -18,7 +18,6 @@
 
 <img src="./static/img/web.png" width="30%" height="30%" /><img src="./static/img/iPhone8P.png" width="30%" height="30%" /><img src="./static/img/iPhoneX.png" width="30%" height="30%" />
 
-
 ## Tips & Questions
 
 * Android加了intent-filter，`npm run android`执行时，`navigator.push`也不跳转。
