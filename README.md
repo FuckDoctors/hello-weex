@@ -35,7 +35,8 @@
 ### npm run build:docs (新增命令)
 
 发布Demo，需要修改configs/config.js里的下面的内容。
-```
+
+``` json
 server: {
   domain: 'fuckdoctors.github.io/hello-weex',
   enableHttps: true

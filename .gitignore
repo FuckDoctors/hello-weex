@@ -22,3 +22,4 @@ platforms/*
 /dist/*
 release/*
 coverage
+.vscode
