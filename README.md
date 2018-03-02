@@ -1,8 +1,8 @@
 # Demo
 
-* [Demo on github](http://fuckdoctors.github.io/hello-weex/preview.html?page=index.js)
+* [Demo on github](https://fuckdoctors.github.io/hello-weex/preview.html?page=index.js) (master分支)
 
-* [Demo on coding.net](http://zhaobc.coding.me/hello-weex/preview.html?page=index.js) (dev分支，开发时实时预览用)
+* [Demo on dever.site](https://dever.site/hello-weex/preview.html?page=index.js) (dev分支，开发时实时预览用)
 
 公司没有WIFI，Playground上无法确认，暂时放到公网上，然后用手机上的Playground扫描确认。手动滑稽(￣▽￣)"
 
@@ -17,7 +17,7 @@
 
 ## Tips & Questions
 
-- Android加了intent-filter，`npm run android`执行时，`navigator.push`也不跳转。
+* Android加了intent-filter，`npm run android`执行时，`navigator.push`也不跳转。
 
   解决方法：
 
@@ -25,17 +25,18 @@
 
   2. 或者，自己实现`IActivityNavBarSetter`，然后通过`WXSDKEngine.setActivityNavBarSetter(new MyNavigator())`引入进来。
 
-- 为了使用dev和prod两套发布地址，把发布的地址配到了process.env中，hot-reload时，process.env中的东西会丢失？？？
+* 为了使用dev和prod两套发布地址，把发布的地址配到了process.env中，hot-reload时，process.env中的东西会丢失？？？
   暂时解决办法：还是把自己的ip配置到`src/config/index.js`中。。。
 
-- 后面再加。。。
+* 后面再加。。。
 
 ## Commands
 
 ### npm run build:docs (新增命令)
 
 发布Demo，需要修改configs/config.js里的下面的内容。
-```
+
+``` json
 server: {
   domain: 'fuckdoctors.github.io/hello-weex',
   enableHttps: true
