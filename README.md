@@ -1,4 +1,4 @@
-# Hello Wexx
+# Hello Weex
 
 [![Build Status](https://travis-ci.org/FuckDoctors/hello-weex.svg?branch=master)](https://travis-ci.org/FuckDoctors/hello-weex)
 
@@ -17,7 +17,6 @@
 ## Screenshots
 
 <img src="./static/img/web.png" width="30%" height="30%" /><img src="./static/img/iPhone8P.png" width="30%" height="30%" /><img src="./static/img/iPhoneX.png" width="30%" height="30%" />
-
 
 ## Tips & Questions
 
