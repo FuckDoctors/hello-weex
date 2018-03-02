@@ -20,6 +20,29 @@
 
 ## Tips & Questions
 
+* Android platform，gradle v2 -> v3(v4)，修改build.gradle.
+  修改内容：
+  1. defaultConfig中加入以下内容：
+
+    ``` gradle
+    javaCompileOptions {
+        annotationProcessorOptions {
+            includeCompileClasspath true
+        }
+    }
+    ```
+
+  2. outputFile修改
+
+    ``` gradle
+    // https://stackoverflow.com/questions/44239235/android-gradle-3-0-0-alpha2-plugin-cannot-set-the-value-of-read-only-property
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = "../weex-app.apk"
+        }
+    }
+    ```
+
 * Android加了intent-filter，`npm run android`执行时，`navigator.push`也不跳转。
 
   解决方法：
