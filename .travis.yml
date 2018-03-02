@@ -69,12 +69,13 @@ after_success:
   # # (1) You are no longer on a branch,
   # # (2) You have checked out a single commit in the history
   # - git push --force https://$DEPLOY_TOKEN@github.com/FuckDoctors/hello-weex.git dev:dev
-  # 发布到gh-pages分支上
-  - cd docs
-  - git init
-  - git add .
-  - git commit -m "Updated by travis-ci at $(date)"
-  - git push --force https://$DEPLOY_TOKEN@github.com/FuckDoctors/hello-weex.git master:gh-pages
+  # master分支发布gh-pages，dev分支就不发布了
+  # # 发布到gh-pages分支上
+  # - cd docs
+  # - git init
+  # - git add .
+  # - git commit -m "Updated by travis-ci at $(date)"
+  # - git push --force https://$DEPLOY_TOKEN@github.com/FuckDoctors/hello-weex.git master:gh-pages
 
   # 同步zhaobc.coding.me/helle-weex
   # fatal: Authentication failed for 'https://git.coding.net/zhaobc/zhaobc.coding.me.git/'
@@ -93,5 +94,6 @@ after_success:
   # https方式报错，改成ssh方式
   # - git push --force git@git.coding.net:zhaobc/zhaobc.coding.me.git master:master
   # 使用访问令牌方式
-  - git push --force https://zhaobc:$CODING_TOKEN@git.coding.net/zhaobc/zhaobc.coding.me.git
+  # - git push --force https://zhaobc:$CODING_TOKEN@git.coding.net/zhaobc/zhaobc.coding.me.git
+  - git push https://zhaobc:$CODING_TOKEN@git.coding.net/zhaobc/zhaobc.coding.me.git
 

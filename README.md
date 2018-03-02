@@ -1,6 +1,6 @@
 # Demo
 
-* [Demo on github](https://fuckdoctors.github.io/hello-weex/preview.html?page=index.js)
+* [Demo on github](https://fuckdoctors.github.io/hello-weex/preview.html?page=index.js) (master分支)
 
 * [Demo on dever.site](https://dever.site/hello-weex/preview.html?page=index.js) (dev分支，开发时实时预览用)
 
@@ -17,7 +17,7 @@
 
 ## Tips & Questions
 
-- Android加了intent-filter，`npm run android`执行时，`navigator.push`也不跳转。
+* Android加了intent-filter，`npm run android`执行时，`navigator.push`也不跳转。
 
   解决方法：
 
@@ -25,10 +25,10 @@
 
   2. 或者，自己实现`IActivityNavBarSetter`，然后通过`WXSDKEngine.setActivityNavBarSetter(new MyNavigator())`引入进来。
 
-- 为了使用dev和prod两套发布地址，把发布的地址配到了process.env中，hot-reload时，process.env中的东西会丢失？？？
+* 为了使用dev和prod两套发布地址，把发布的地址配到了process.env中，hot-reload时，process.env中的东西会丢失？？？
   暂时解决办法：还是把自己的ip配置到`src/config/index.js`中。。。
 
-- 后面再加。。。
+* 后面再加。。。
 
 ## Commands
 
