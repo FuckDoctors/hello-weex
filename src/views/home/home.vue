@@ -16,6 +16,7 @@ export default {
   },
   methods: {
     jump(to) {
+      // 有时候views/test/hello页面显示空白页，不知道哪个地方出问题了。。。
       if (WXEnvironment.platform === 'Web') {
         helper.gotoH5(`http${ENABLE_HTTPS ? 's' : ''}://${DOMAIN}/${to}.html`);
       } else {

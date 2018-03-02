@@ -2,7 +2,7 @@
 
 * [Demo on github](http://fuckdoctors.github.io/hello-weex/preview.html?page=index.js)
 
-* [Demo on coding.net](http://zhaobc.coding.me/hello-weex/preview.html?page=index.js) (备用地址，更新不及时)
+* [Demo on coding.net](http://zhaobc.coding.me/hello-weex/preview.html?page=index.js) (dev分支，开发时实时预览用)
 
 公司没有WIFI，Playground上无法确认，暂时放到公网上，然后用手机上的Playground扫描确认。手动滑稽(￣▽￣)"
 
@@ -13,6 +13,22 @@
 ## Screenshots
 
 <img src="./static/img/web.png" width="30%" height="30%" /><img src="./static/img/iPhone8P.png" width="30%" height="30%" /><img src="./static/img/iPhoneX.png" width="30%" height="30%" />
+
+
+## Tips & Questions
+
+- Android加了intent-filter，`npm run android`执行时，`navigator.push`也不跳转。
+
+  解决方法：
+
+  1. 在Android里集成Weex SDK，使用原生导航栏做跳转，其他页面用Weex来做。
+
+  2. 或者，自己实现`IActivityNavBarSetter`，然后通过`WXSDKEngine.setActivityNavBarSetter(new MyNavigator())`引入进来。
+
+- 为了使用dev和prod两套发布地址，把发布的地址配到了process.env中，hot-reload时，process.env中的东西会丢失？？？
+  暂时解决办法：还是把自己的ip配置到`src/config/index.js`中。。。
+
+- 后面再加。。。
 
 ## Commands
 
