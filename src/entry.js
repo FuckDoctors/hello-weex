@@ -1,3 +1,4 @@
+// weex-vue-render 0.12.x
 import Vue from 'vue';
 
 import weex from 'weex-vue-render';
@@ -26,3 +27,19 @@ import weex from 'weex-vue-render';
 // Vue.mixin(mixins);
 
 weex.init(Vue);
+
+// // weex-vue-render v1.x
+// // import vue runtime.
+// // const Vue = require('vue/dist/vue.runtime.common').default;
+// const Vue = require('vue/dist/vue.runtime.common').default;
+// // import weex-vue-render
+// const weex = require('weex-vue-render');
+// // init the weex instance.
+// weex.init(Vue);
+
+// // // import your .vue App.
+// // const App = require('App.vue');
+// // // must have a '#root' element in your html body.
+// // App.$el = '#root';
+// // // instantiate
+// // new App();

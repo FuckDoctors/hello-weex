@@ -52,7 +52,14 @@
   2. 或者，自己实现`IActivityNavBarSetter`，然后通过`WXSDKEngine.setActivityNavBarSetter(new MyNavigator())`引入进来。
 
 * 为了使用dev和prod两套发布地址，把发布的地址配到了process.env中，hot-reload时，process.env中的东西会丢失？？？
+
   暂时解决办法：还是把自己的ip配置到`src/config/index.js`中。。。
+
+* weex-vue-render由v0.12.x升级为v1.x的问题
+
+  一开始没照模板生成，而是自己把weex和vue相关依赖直接升级成最新的，但各种错，各种折腾后，还是按照生成的模板用的。。。（自己不懂还是别瞎折腾了，要相信别人~囧~~~）
+
+  貌似官方的weex-vue-render给的引入方式不行，还是用原来的import的方式。
 
 * 后面再加。。。
 

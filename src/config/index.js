@@ -1,4 +1,4 @@
-export const DEV_DOMAIN = 'your_ip';
+export const DEV_DOMAIN = 'your_ip:port';
 // hot reload之后，DOMAIN为undefined，process.env内容丢失？
 export const DOMAIN = process.env.DOMAIN || DEV_DOMAIN;
 export const ENABLE_HTTPS = process.env.ENABLE_HTTPS;
