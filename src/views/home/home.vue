@@ -20,7 +20,7 @@ export default {
       if (WXEnvironment.platform === 'Web') {
         helper.gotoH5(`http${ENABLE_HTTPS ? 's' : ''}://${DOMAIN}/${to}.html`);
       } else {
-        helper.gotoH5(`http${ENABLE_HTTPS ? 's' : ''}://${DOMAIN}/${DIST}/${to}.js`);
+        helper.gotoH5(`http${ENABLE_HTTPS ? 's' : ''}://${DOMAIN}${DIST}/${to}.js`);
       }
     },
   },
