@@ -5,6 +5,9 @@
     <div>
       <text>在Weex Playground中，此页的Weex Playground的导航栏应该不显示。（Android版测试通过）</text>
     </div>
+    <div v-if="params">
+      <text>Params: {{ params }}</text>
+    </div>
   </div>
 </template>
 
@@ -22,10 +25,11 @@ export default {
   data() {
     return {
       leftButton: 'https://gw.alicdn.com/tfs/TB1cAYsbv2H8KJjy0FcXXaDlFXa-30-53.png',
+      params: null,
     };
   },
   mounted() {
-
+    this.params = helper.getParams();
   },
   methods: {
     back() {

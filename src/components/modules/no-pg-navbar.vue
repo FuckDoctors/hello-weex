@@ -1,3 +1,8 @@
+<template>
+  <!-- 必须得有template，不然报错。 -->
+  <div style="display:none"></div>
+</template>
+
 <script>
 export default {
   data() {

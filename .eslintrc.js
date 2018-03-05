@@ -65,6 +65,7 @@ module.exports = {
         '_wx_tpl'
       ]
     }],
+    'no-console': ['error', { allow: ['warn', 'error'] }],
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   }

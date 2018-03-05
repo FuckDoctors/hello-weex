@@ -1,3 +1,5 @@
+/* eslint no-console: ["error", { allow: ["log", "warn", "error"] }] */
+
 // 获取ip的问题，参考https://github.com/webpack/webpack-dev-server/pull/901
 const ip = require('ip').address();
 // 加入internal-ip又报错。。。版本跟webpackDevServer依赖的版本有冲突。
@@ -6,7 +8,11 @@ const ip = require('ip').address();
 
 // const actualIp = internalIp.v4();
 // 直接使用config里的host也为127.0.0.1，webpackDevServer内部做了处理？
-const actualIp = require('../../../configs/config').dev.host;
+// const actualIp = require('../../../configs/config').dev.host;
+// const localIp = require('../lib/local-ip');
+const localIp = require('../../../src/components/modules/local-ip');
+
+const actualIp = localIp.v4();
 
 describe('ip', () => {
   it('get ip', () => {

@@ -31,7 +31,21 @@ function createQuery(obj) {
 function getQueryData(url) {
   // ?_wx_tpl=xxx的要除外，这个是用来做Native的。
   // url = url.substring(url.indexOf('.js?') + 3);
-  const _url = url.substring(url.indexOf('?_wx_tpl'));
+  let startIndex = url.indexOf('?_wx_tpl');
+  if (startIndex === -1) {
+    // 不包含?_wx_tpl=xxx时
+    // web端使用的是.html?xxx，native是.js?xxx所以两者分开处理
+    startIndex = url.indexOf('.js?');
+    if (url.indexOf('.js?') > -1) {
+      // native
+      startIndex += 3;
+    } else {
+      // web端
+      startIndex = url.indexOf('.html?') + 5;
+    }
+  }
+  const _url = url.substring(startIndex);
+
   const result = {};
   if (_url.indexOf('?') !== -1) {
     const str = _url.substr(1);
@@ -140,6 +154,10 @@ function back() {
   }
 }
 
+function getParams() {
+  return getQueryData(weex.config.bundleUrl);
+}
+
 export default {
   createQuery,
   getQueryData,
@@ -148,4 +166,5 @@ export default {
   gotoTab,
   gotoH5,
   back,
+  getParams,
 };
