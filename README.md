@@ -20,6 +20,29 @@
 
 ## Tips & Questions
 
+* Android platform，gradle v2 -> v3(v4)，修改build.gradle.
+  修改内容：
+  1. defaultConfig中加入以下内容：
+
+    ``` gradle
+    javaCompileOptions {
+        annotationProcessorOptions {
+            includeCompileClasspath true
+        }
+    }
+    ```
+
+  2. outputFile修改
+
+    ``` gradle
+    // https://stackoverflow.com/questions/44239235/android-gradle-3-0-0-alpha2-plugin-cannot-set-the-value-of-read-only-property
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = "../weex-app.apk"
+        }
+    }
+    ```
+
 * Android加了intent-filter，`npm run android`执行时，`navigator.push`也不跳转。
 
   解决方法：
@@ -29,7 +52,16 @@
   2. 或者，自己实现`IActivityNavBarSetter`，然后通过`WXSDKEngine.setActivityNavBarSetter(new MyNavigator())`引入进来。
 
 * 为了使用dev和prod两套发布地址，把发布的地址配到了process.env中，hot-reload时，process.env中的东西会丢失？？？
+
   暂时解决办法：还是把自己的ip配置到`src/config/index.js`中。。。
+
+* weex-vue-render由v0.12.x升级为v1.x的问题
+
+  一开始没照模板生成，而是自己把weex和vue相关依赖直接升级成最新的，但各种错，各种折腾后，还是按照生成的模板用的。。。（自己不懂还是别瞎折腾了，要相信别人~ 囧~）
+
+  自己试出来的结果是使用的vue-loader版本有问题，使用最新的v14.x会出错，退回v12.x才行。
+
+  貌似官方的weex-vue-render给的引入方式不行，还是用原来的import的方式。
 
 * 后面再加。。。
 

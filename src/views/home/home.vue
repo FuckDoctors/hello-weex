@@ -3,6 +3,7 @@
     <text class="greeting">Hello Weex!</text>
     <text class="message">Home page.</text>
     <text class="message" @click="jump('views/test/hello')">跳转</text>
+    <text class="message" @click="jumpWithParams('views/test/hello')">带参跳转</text>
   </div>
 </template>
 
@@ -20,8 +21,15 @@ export default {
       if (WXEnvironment.platform === 'Web') {
         helper.gotoH5(`http${ENABLE_HTTPS ? 's' : ''}://${DOMAIN}/${to}.html`);
       } else {
-        helper.gotoH5(`http${ENABLE_HTTPS ? 's' : ''}://${DOMAIN}/${DIST}/${to}.js`);
+        helper.gotoH5(`http${ENABLE_HTTPS ? 's' : ''}://${DOMAIN}${DIST}/${to}.js`);
       }
+    },
+    jumpWithParams(to) {
+      const params = {
+        a: 'a1',
+        b: 'b1',
+      };
+      helper.push(to, params);
     },
   },
 };

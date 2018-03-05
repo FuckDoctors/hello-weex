@@ -29,7 +29,7 @@ export default {
     jump() {
       navigator.push({
         // url: 'http://192.168.1.86:8081/dist/views/home/home.js', // OK
-        url: `http${ENABLE_HTTPS ? 's' : ''}://${DOMAIN}/${DIST}/views/home/home.js`,
+        url: `http${ENABLE_HTTPS ? 's' : ''}://${DOMAIN}${DIST}/views/home/home.js`,
         animated: 'true',
       }, (event) => {
         modal.alert({
@@ -41,7 +41,7 @@ export default {
       helper.push(to);
     },
     jump3(to) {
-      helper.gotoH5(`http${ENABLE_HTTPS ? 's' : ''}://${DOMAIN}/${DIST}/${to}.js`);
+      helper.gotoH5(`http${ENABLE_HTTPS ? 's' : ''}://${DOMAIN}${DIST}/${to}.js`);
     },
     jump4(to) {
       helper.gotoH5(`http${ENABLE_HTTPS ? 's' : ''}://${DOMAIN}/${to}.html`);

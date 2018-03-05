@@ -4,6 +4,13 @@ module.exports = {
   "plugins": {
     // to edit target browsers: use "browserslist" field in package.json
     "postcss-import": {},
-    "autoprefixer": {}
+    "postcss-plugin-weex": {},
+    "autoprefixer": {
+      browsers: ['> 0.1%', 'ios >= 8', 'not ie < 12']
+    },
+    "postcss-plugin-px2rem": {
+      rootValue: 75,
+      minPixelValue: 1.01
+    }
   }
 }

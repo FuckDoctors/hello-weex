@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <scroller class="scroller">
-
+      <text>空的模板页</text>
     </scroller>
   </div>
 </template>
