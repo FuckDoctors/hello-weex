@@ -8,6 +8,9 @@
     <div v-if="params">
       <text>Params: {{ params }}</text>
     </div>
+    <text class="btn" @click="backWithResult">带返回值（跳转方式）</text>
+    <text class="btn" @click="backWithoutResult">无返回值（跳转方式）</text>
+    <text>用跳转的形式返回值，会在navigator中留下，使用pop时会出来。Weex中没有vue-router中的replace，不留记录的处理</text>
   </div>
 </template>
 
@@ -32,6 +35,16 @@ export default {
     this.params = helper.getParams();
   },
   methods: {
+    backWithResult() {
+      const result = {
+        ret1: 'return value 1',
+        ret2: 'return value 2',
+      };
+      helper.goto('views/test/index', result);
+    },
+    backWithoutResult() {
+      helper.goto('views/test/index');
+    },
     back() {
       helper.back();
     },
@@ -47,5 +60,10 @@ export default {
   left: 0;
   right: 0;
   background-color: #ffffff;
+}
+.btn {
+  margin: 15px;
+  padding: 15px;
+  background-color: #888;
 }
 </style>

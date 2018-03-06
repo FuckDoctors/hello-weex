@@ -10,6 +10,10 @@ const navigator = weex.requireModule('navigator');
  * object 转 URL 参数，已拼接问号“？”。
  */
 function createQuery(obj) {
+  if (obj === undefined || obj === null) {
+    return '';
+  }
+
   let url = '?';
   // for (const key in obj) {
   //   if (obj[key] !== null) {
@@ -159,7 +163,10 @@ function gotoTab(to, params, callback) {
 function goto(to, params, callback) {
   const baseUrl = `http${config.ENABLE_HTTPS ? 's' : ''}://${config.DOMAIN}`;
 
-  const allQuery = createQuery(params);
+  let allQuery = '';
+  if (params) {
+    allQuery = createQuery(params);
+  }
 
   if (WXEnvironment.platform === 'Web' || typeof window === 'object') {
     // web

@@ -1,0 +1,150 @@
+<template>
+  <div class="wrapper">
+    <no-pg-navbar />
+    <nav-bar title="测试主页" :left-button="leftButton" :left-button-click="back"></nav-bar>
+    <text class="info">点击标题跳转</text>
+    <text class="info" v-if="result">返回值: {{result}}</text>
+    <list>
+      <template v-for="(page, index) in pages">
+        <cell :key="index">
+          <div class="card">
+            <div class="card-header" @click="jump(page)">
+              <text class="card-title">{{page.title}}</text>
+            </div>
+            <div class="card-body">
+              <text class="card-description">{{page.description}}</text>
+            </div>
+          </div>
+        </cell>
+      </template>
+    </list>
+    <text class="info">底部信息没遮挡，证明list组件是自适应高度的。</text>
+  </div>
+</template>
+
+<script>
+import NavBar from '@/components/nav-bar';
+import NoPgNavbar from '@/components/modules/no-pg-navbar';
+
+import helper from '@/utils/helper';
+// import { DOMAIN, DIST } from './config';
+
+export default {
+  components: {
+    NavBar,
+    NoPgNavbar,
+  },
+  data() {
+    return {
+      leftButton: 'https://gw.alicdn.com/tfs/TB1cAYsbv2H8KJjy0FcXXaDlFXa-30-53.png',
+      result: null,
+      pages: [
+        {
+          title: 'Hello 跳转',
+          path: 'views/test/hello',
+          params: null,
+          description: '跳转测试',
+        },
+        {
+          title: 'Hello 带参跳转',
+          path: 'views/test/hello',
+          params: {
+            a: 'a1',
+            b: 'b1',
+          },
+          description: '带参跳转测试',
+        },
+        {
+          title: 'Hello Weex UI',
+          path: 'views/test/weex-ui',
+          description: 'Weex UI测试',
+        },
+      ],
+    };
+  },
+  mounted() {
+    // 这种跳转的方式传过来的值，只有下次手动设没有参数值才会消失，
+    // 不然用navigator.pop这种返回来，queryString不会消失，所以，值会一直能取到。
+    this.result = helper.getParams();
+  },
+  methods: {
+    jump(page) {
+      // 清楚结果
+      this.result = {};
+      if (page.params) {
+        helper.goto(page.path, page.params);
+      } else {
+        helper.goto(page.path);
+      }
+    },
+    back() {
+      helper.back();
+    },
+  },
+};
+</script>
+
+<style scoped>
+  .wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .info {
+    width: 750px;
+    text-align: left;
+    font-size: 40px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: #606060;
+    background-color: #E8E8E8;
+  }
+
+  .card {
+    width: 650px;
+    border-width: 4px;
+    border-style: solid;
+    border-color: #E8E8E8;
+    border-radius: 20px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+  .card-title {
+    text-align: center;
+    justify-content: center;
+    font-size: 40px;
+    color: #888;
+    background-color: #F5F5F5;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-bottom-color: #E0E0E0;
+  }
+  .card-body {
+    height: 200px;
+    justify-content: center;
+  }
+  .card-description {
+    text-align: center;
+    font-size: 30px;
+    color: #1FB5FC;
+    padding: 5px;
+  }
+  .mute {
+    color: #888;
+  }
+
+</style>
