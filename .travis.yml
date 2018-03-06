@@ -89,7 +89,9 @@ after_success:
   # - sed -i '' "s/fuckdoctors.github.io/zhaobc.coding.me/g" `grep "fuckdoctors.github.io" -rl ./hello-weex`
   - sed -i '' "s/fuckdoctors.github.io/dever.site/g" `grep "fuckdoctors.github.io" -rl ./hello-weex`
   - git add hello-weex
-  - git commit -m "Updated by travis-ci at $(date)"
+  # - git commit -m "Updated by travis-ci at $(date)"
+  # 改成中国时间
+  - git commit -m "Updated by travis-ci at $(TZ='Asia/Shanghai' date "+%Y-%m-%d %H:%M:%S %z")"
   # - git push --force https://git.coding.net/zhaobc/zhaobc.coding.me.git master:master
   # https方式报错，改成ssh方式
   # - git push --force git@git.coding.net:zhaobc/zhaobc.coding.me.git master:master
