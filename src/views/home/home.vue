@@ -29,7 +29,12 @@ export default {
         a: 'a1',
         b: 'b1',
       };
-      helper.push(to, params);
+      // 第一次会走bundle下的views/test/hello，热加载后才会走domain下的/dist/views/test/hello
+      // 修改push方法，支持绝对bundle的地址
+      // helper.push(to, params);
+      // helper.push(`http${ENABLE_HTTPS ? 's' : ''}://${DOMAIN}${DIST}/${to}.js`, params);
+      // 使用goto方法，拼接域名+bundle地址，直接用线上地址。
+      helper.goto(to, params);
     },
   },
 };

@@ -1,6 +1,7 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_push", "_url"] }] */
 
 import getBaseUrl from './base-url';
+import * as config from '../config';
 
 const navigator = weex.requireModule('navigator');
 // const modal = weex.requireModule('modal');
@@ -72,46 +73,6 @@ function getHash(url) {
   return result;
 }
 
-function _push(to, params, isNavi, callback) {
-  const baseUrl = getBaseUrl(isNavi);
-  const query = getQueryData(weex.config.bundleUrl);
-
-  let allQuery = createQuery(query);
-  if (params) {
-    allQuery = createQuery(Object.assign({}, query, params));
-  }
-
-  if (WXEnvironment.platform === 'Web' || typeof window === 'object') {
-    // web
-    window.location.href = `${baseUrl}${to}.html${allQuery}`;
-  } else {
-    // modal.alert({
-    //   message: `${baseUrl}${to}.js${allQuery}`
-    // });
-    // native
-    navigator.push({
-      // route.url为相对地址时，为原生或者绝对地址时需要再单独处理
-      url: `${baseUrl}${to}.js${allQuery}`,
-      animated: 'true',
-    }, (event) => {
-      if (callback) {
-        callback(event);
-      }
-      // modal.alert({
-      //   message: event
-      // });
-    });
-  }
-}
-
-function push(to, params, callback) {
-  _push(to, params, true, callback);
-}
-
-function gotoTab(to, params, callback) {
-  _push(to, params, false, callback);
-}
-
 function gotoH5(url, params, callback) {
   const query = getQueryData(url);
 
@@ -125,9 +86,13 @@ function gotoH5(url, params, callback) {
 
   if (WXEnvironment.platform === 'Web' || typeof window === 'object') {
     // web
+    // web和native除了后缀不同之外，路径也不同。。。
+    // target = target.replace(/(.js)$/, '.html');
     window.location.href = `${target}${allQuery}`;
   } else {
     // native
+    // web和native除了后缀不同之外，路径也不同。。。
+    // target = target.replace(/(.html)$/, '.js');
     navigator.push({
       // route.url为相对地址时，为原生或者绝对地址时需要再单独处理
       url: `${target}${allQuery}`,
@@ -139,6 +104,77 @@ function gotoH5(url, params, callback) {
       // modal.alert({
       //   message: `${target}${allQuery}`
       // });
+    });
+  }
+}
+
+function _push(to, params, isNavi, callback) {
+  const matches = /\/\/([^/]+?)\//.exec(to);
+  if (matches && matches.length >= 2) {
+    // 如果是绝对地址的话，走gotoH5
+    gotoH5(to, params, callback);
+    return;
+  }
+
+  const baseUrl = getBaseUrl(isNavi);
+  const query = getQueryData(weex.config.bundleUrl);
+
+  let allQuery = createQuery(query);
+  if (params) {
+    allQuery = createQuery(Object.assign({}, query, params));
+  }
+
+  if (WXEnvironment.platform === 'Web' || typeof window === 'object') {
+    // web
+    window.location.href = `${baseUrl}${to}.html${allQuery}`;
+  } else {
+    // native
+    // 先走本地bundle，本地有问题走线上？js里面使用try-catch无法捕获这个异常，应该在native里做。
+    navigator.push({
+      // route.url为相对地址时，为原生或者绝对地址时需要再单独处理
+      url: `${baseUrl}${to}.js${allQuery}`,
+      animated: 'true',
+    }, (event) => {
+      if (callback) {
+        callback(event);
+      }
+    });
+  }
+}
+
+/**
+ * 跳转到bundle下的相对路径，或者http的绝对路径
+ * @param {String} to bundle下的相对路径，或者http的绝对路径
+ * @param {Object} params 参数，生成queryString
+ * @param {Function} callback 回调
+ */
+function push(to, params, callback) {
+  _push(to, params, true, callback);
+}
+
+function gotoTab(to, params, callback) {
+  _push(to, params, false, callback);
+}
+
+function goto(to, params, callback) {
+  const baseUrl = `http${config.ENABLE_HTTPS ? 's' : ''}://${config.DOMAIN}`;
+
+  const allQuery = createQuery(params);
+
+  if (WXEnvironment.platform === 'Web' || typeof window === 'object') {
+    // web
+    window.location.href = `${baseUrl}/${to}.html${allQuery}`;
+  } else {
+    // native
+    // 先走本地bundle，本地有问题走线上？js里面使用try-catch无法捕获这个异常，应该在native里做。
+    navigator.push({
+      // route.url为相对地址时，为原生或者绝对地址时需要再单独处理
+      url: `${baseUrl}${config.DIST}/${to}.js${allQuery}`,
+      animated: 'true',
+    }, (event) => {
+      if (callback) {
+        callback(event);
+      }
     });
   }
 }
@@ -163,6 +199,7 @@ export default {
   getQueryData,
   getHash,
   push,
+  goto,
   gotoTab,
   gotoH5,
   back,
