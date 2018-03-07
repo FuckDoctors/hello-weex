@@ -2,6 +2,7 @@
   <div class="wrapper">
     <text class="greeting">Hello Weex!</text>
     <text class="message">Home page.</text>
+    <text class="message" @click="jump('env')">环境参数</text>
     <text class="message" @click="jump('views/test/hello')">跳转</text>
     <text class="message" @click="jumpWithParams('views/test/hello')">带参跳转</text>
     <text class="message" @click="jump('views/test/index')">测试页面一览</text>

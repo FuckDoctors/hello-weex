@@ -38,14 +38,17 @@ export default {
     return {
       leftButton: 'https://gw.alicdn.com/tfs/TB1cAYsbv2H8KJjy0FcXXaDlFXa-30-53.png',
       result: null,
+      message: null,
       pages: [
         {
+          id: 'hello',
           title: 'Hello 跳转',
           path: 'views/test/hello',
           params: null,
           description: '跳转测试',
         },
         {
+          id: 'hello-params',
           title: 'Hello 带参跳转',
           path: 'views/test/hello',
           params: {
@@ -55,6 +58,18 @@ export default {
           description: '带参跳转测试',
         },
         {
+          id: 'hello-channel',
+          title: 'BroadcastChannel传参',
+          path: 'views/test/hello',
+          params: {
+            a: 'broadcast',
+            b: 'channel',
+          },
+          broadcastChannel: true,
+          description: 'BroadcastChannel带参跳转测试',
+        },
+        {
+          id: 'hello-weex-ui',
           title: 'Hello Weex UI',
           path: 'views/test/weex-ui',
           description: 'Weex UI测试',
@@ -66,16 +81,41 @@ export default {
     // 这种跳转的方式传过来的值，只有下次手动设没有参数值才会消失，
     // 不然用navigator.pop这种返回来，queryString不会消失，所以，值会一直能取到。
     this.result = helper.getParams();
+    // broadcast channel
+    this.channel = new BroadcastChannel('TEST');
+    this.message = {
+      type: null,
+      data: null,
+    };
+    this.channel.onmessage = (event) => {
+      this.message = event.data;
+    };
   },
   methods: {
     jump(page) {
-      // 清楚结果
+      // 清除结果
       this.result = {};
-      if (page.params) {
+      if (page.broadcastChannel) {
+        // BroadcastChannel方式传值
+        this.sendMessage('hello', `Hello from ${page.title}`);
+        helper.goto(page.path);
+      } else if (page.params) {
+        // 跳转方式传值
         helper.goto(page.path, page.params);
       } else {
+        // 不传值
         helper.goto(page.path);
       }
+    },
+    sendMessage(type, data) {
+      this.message = {
+        type,
+        data,
+      };
+      this.channel.postMessage(this.message);
+    },
+    getMessage() {
+      return this.message;
     },
     back() {
       helper.back();
