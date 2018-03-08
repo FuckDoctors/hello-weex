@@ -73,6 +73,7 @@ export default {
         op,
         data: `Data from ${op}`,
       }, () => {
+        console.log('fireGlobalEvent callback in hello.vue');
         helper.back();
       });
     },

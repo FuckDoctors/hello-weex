@@ -112,12 +112,14 @@ export default {
       if (page.globalEvent) {
         // GlobalEvent
         globalEvent.addEventListener('hello-return', (result) => {
+          console.log(`addEventListener callback, result: ${result}`);
           this.result = result;
           modal.toast({
             message: 'addEventListener callback',
           });
         });
         globalEvent.fireGlobalEvent('hello-params', page.params, () => {
+          console.log('fireGlobalEvent callback');
           modal.toast({
             message: 'fireGlobalEvent callback',
           });
