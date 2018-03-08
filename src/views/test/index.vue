@@ -113,10 +113,14 @@ export default {
         // GlobalEvent
         globalEvent.addEventListener('hello-return', (result) => {
           this.result = result;
-          modal.toast('addEventListener callback');
+          modal.toast({
+            message: 'addEventListener callback',
+          });
         });
         globalEvent.fireGlobalEvent('hello-params', page.params, () => {
-          modal.toast('fireGlobalEvent callback');
+          modal.toast({
+            message: 'fireGlobalEvent callback',
+          });
           helper.goto(page.path);
         });
       } else if (page.broadcastChannel) {
