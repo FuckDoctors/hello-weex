@@ -27,7 +27,10 @@ import NavBar from '@/components/nav-bar';
 import NoPgNavbar from '@/components/modules/no-pg-navbar';
 
 import helper from '@/utils/helper';
+import globalEvent from '@/utils/globalEvent';
 // import { DOMAIN, DIST } from './config';
+
+const modal = weex.requireModule('modal');
 
 export default {
   components: {
@@ -69,6 +72,17 @@ export default {
           description: 'BroadcastChannel带参跳转测试',
         },
         {
+          id: 'hello-global-event',
+          title: 'GlobalEvent传参',
+          path: 'views/test/hello',
+          params: {
+            a: 'global',
+            b: 'event',
+          },
+          globalEvent: true,
+          description: 'GlobalEvent带参跳转测试',
+        },
+        {
           id: 'hello-weex-ui',
           title: 'Hello Weex UI',
           path: 'views/test/weex-ui',
@@ -95,7 +109,17 @@ export default {
     jump(page) {
       // 清除结果
       this.result = {};
-      if (page.broadcastChannel) {
+      if (page.globalEvent) {
+        // GlobalEvent
+        globalEvent.addEventListener('hello-return', (result) => {
+          this.result = result;
+          modal.toast('addEventListener callback');
+        });
+        globalEvent.fireGlobalEvent('hello-params', page.params, () => {
+          modal.toast('fireGlobalEvent callback');
+          helper.goto(page.path);
+        });
+      } else if (page.broadcastChannel) {
         // BroadcastChannel方式传值
         this.sendMessage('hello', `Hello from ${page.title}`);
         helper.goto(page.path);

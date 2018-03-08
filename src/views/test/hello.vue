@@ -13,11 +13,14 @@
     <text>用跳转的形式返回值，会在navigator中留下，使用pop时会出来。Weex中没有vue-router中的replace，不留记录的处理</text>
     <text class="btn" @click="backWithResultByChannal('op1')">BroadcastChannel返回值-操作1</text>
     <text class="btn" @click="backWithResultByChannal('op2')">BroadcastChannel返回值-操作2</text>
+    <text class="btn" @click="backWithResultByGlobalEvent('op2')">GlobalEvent返回值-操作1</text>
     <text>Message: {{ message }}</text>
   </div>
 </template>
 
 <script>
+import globalEvent from '@/utils/globalEvent';
+
 import NavBar from '../../components/nav-bar';
 import helper from '../../utils/helper';
 // weex里必须加后缀.vue，不然报错。
@@ -46,6 +49,9 @@ export default {
       this.message = event.data;
       this.params = event.data;
     };
+    globalEvent.addEventListener('hello-params', (params) => {
+      this.params = params;
+    });
   },
   methods: {
     backWithResult() {
@@ -61,6 +67,14 @@ export default {
     backWithResultByChannal(op) {
       this.sendMessage(op, `Data from ${op}`);
       helper.back();
+    },
+    backWithResultByGlobalEvent(op) {
+      globalEvent.fireGlobalEvent('hello-return', {
+        op,
+        data: `Data from ${op}`,
+      }, () => {
+        helper.back();
+      });
     },
     sendMessage(type, data) {
       this.message = {

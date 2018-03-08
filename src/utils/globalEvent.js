@@ -1,4 +1,5 @@
 const gEvt = weex.requireModule('globalEvent');
+const myEvt = weex.requireModule('myGlobalEvent');
 
 /**
  * 需要配合Native.
@@ -47,8 +48,16 @@ export default {
       if (callback) {
         callback();
       }
-    } else {
+    } else if (myEvt && myEvt.fireGlobalEvent) {
       // 自己实现native
+      myEvt.fireGlobalEvent(eventName, params, callback);
+    } else {
+      // WeexPlayground
+      const evt = weex.requireModule('event');
+      if (evt && evt.fireNativeGlobalEvent) {
+        // WeexPlayground没法传参。
+        evt.fireNativeGlobalEvent(event, callback);
+      }
     }
   },
 };
