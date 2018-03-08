@@ -6,12 +6,20 @@
     <text class="message" @click="jump('views/test/hello')">跳转</text>
     <text class="message" @click="jumpWithParams('views/test/hello')">带参跳转</text>
     <text class="message" @click="jump('views/test/index')">测试页面一览</text>
+    <text class="message"
+        @click="jumpGlobalEvent('views/test/hello', { a: 'hello', b: 'globalEvent' })">
+        测试GlobalEvent
+    </text>
   </div>
 </template>
 
 <script>
+import globalEvent from '@/utils/globalEvent';
+
 import helper from '../../utils/helper';
 import { DOMAIN, DIST, ENABLE_HTTPS } from '../../config';
+
+const modal = weex.requireModule('modal');
 
 export default {
   data() {
@@ -37,6 +45,22 @@ export default {
       // helper.push(`http${ENABLE_HTTPS ? 's' : ''}://${DOMAIN}${DIST}/${to}.js`, params);
       // 使用goto方法，拼接域名+bundle地址，直接用线上地址。
       helper.goto(to, params);
+    },
+    jumpGlobalEvent(to, params) {
+      // GlobalEvent
+      globalEvent.addEventListener('hello-return', (result) => {
+        console.log(`addEventListener callback, result: ${result}`);
+        modal.toast({
+          message: `addEventListener callback, result: ${result}`,
+        });
+      });
+      globalEvent.fireGlobalEvent('hello-params', params, () => {
+        console.log('fireGlobalEvent callback');
+        modal.toast({
+          message: 'fireGlobalEvent callback',
+        });
+        helper.goto(to);
+      });
     },
   },
 };

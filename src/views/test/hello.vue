@@ -26,6 +26,8 @@ import helper from '../../utils/helper';
 // weex里必须加后缀.vue，不然报错。
 import NoPgNavbar from '../../components/modules/no-pg-navbar';
 
+const modal = weex.requireModule('modal');
+
 export default {
   components: {
     NavBar,
@@ -73,6 +75,9 @@ export default {
         op,
         data: `Data from ${op}`,
       }, () => {
+        modal.toast({
+          message: 'fireGlobalEvent callback in hello.vue',
+        });
         console.log('fireGlobalEvent callback in hello.vue');
         helper.back();
       });

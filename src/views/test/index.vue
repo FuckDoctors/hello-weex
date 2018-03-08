@@ -115,7 +115,7 @@ export default {
           console.log(`addEventListener callback, result: ${result}`);
           this.result = result;
           modal.toast({
-            message: 'addEventListener callback',
+            message: `addEventListener callback, result: ${result}`,
           });
         });
         globalEvent.fireGlobalEvent('hello-params', page.params, () => {
