@@ -56,7 +56,7 @@ export default {
       const evt = weex.requireModule('event');
       if (evt && evt.fireNativeGlobalEvent) {
         // WeexPlayground没法传参。
-        evt.fireNativeGlobalEvent(event, callback);
+        evt.fireNativeGlobalEvent(eventName, callback);
       }
     }
   },
