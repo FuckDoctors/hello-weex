@@ -2,11 +2,11 @@
   <div class="wrapper">
     <no-pg-navbar />
     <nav-bar title="测试主页" :left-button="leftButton" :left-button-click="back"></nav-bar>
-    <text class="info">点击标题跳转</text>
-    <text class="info" v-if="result">返回值: {{result}}</text>
-    <list>
-      <template v-for="(page, index) in pages">
-        <cell :key="index">
+    <text class="info" v-if="result">点击标题跳转，返回值: {{result}}</text>
+    <list class="list">
+      <!-- <template v-for="(page, index) in pages">
+        <cell :key="index"> -->
+        <cell v-for="(page, index) in pages" :key="index">
           <div class="card">
             <div class="card-header" @click="jump(page)">
               <text class="card-title">{{page.title}}</text>
@@ -16,9 +16,9 @@
             </div>
           </div>
         </cell>
-      </template>
+      <!-- </template> -->
     </list>
-    <text class="info">底部信息没遮挡，证明list组件是自适应高度的。</text>
+    <text class="info">底部信息没遮挡，证明list组件是自适应高度的。web端不是自适应的，需要手动设置flex:1</text>
   </div>
 </template>
 
@@ -163,13 +163,17 @@ export default {
   .info {
     width: 750px;
     text-align: left;
-    font-size: 40px;
+    font-size: 25px;
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 15px;
     padding-right: 15px;
     color: #606060;
     background-color: #E8E8E8;
+  }
+
+  .list {
+    flex: 1;
   }
 
   .card {
@@ -187,7 +191,7 @@ export default {
     text-align: center;
     justify-content: center;
     font-size: 40px;
-    color: #888;
+    color: #888888;
     background-color: #F5F5F5;
     padding-top: 12px;
     padding-bottom: 12px;
@@ -208,7 +212,7 @@ export default {
     padding: 5px;
   }
   .mute {
-    color: #888;
+    color: #888888;
   }
 
 </style>

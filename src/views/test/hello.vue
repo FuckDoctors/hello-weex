@@ -105,6 +105,6 @@ export default {
 .btn {
   margin: 15px;
   padding: 15px;
-  background-color: #888;
+  background-color: #888888;
 }
 </style>
