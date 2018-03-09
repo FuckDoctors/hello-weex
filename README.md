@@ -79,9 +79,9 @@
 
       事件名也要配合好，不能乱了。
 
-  3. 使用localStorage实现？
+  3. 使用storage实现？
 
-      这样传值和取值，不用区分传值方向了，直接从localStroge里取或设？
+      这样传值和取值，不用区分传值方向了，直接从stroge里取或设？(反向传值时，取值的时机怎么控制？)
 
   4. 别人的实践：
 
@@ -89,7 +89,7 @@
 
       b. [weex从.we转.vue之BroadcastChannel](https://segmentfault.com/a/1190000009885105)
 
-          标题虽然是BroadcastChannel，其实写的是由BroadcastChannel改为globalEvent的事
+          标题虽然是BroadcastChannel，其实写的是由BroadcastChannel改为globalEvent的事。
 
 * 后面再加。。。
 
