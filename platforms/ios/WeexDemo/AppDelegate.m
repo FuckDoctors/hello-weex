@@ -29,7 +29,7 @@
 
     // 加上这个首页就空白
 //    [WXDevTool setDebug:YES];
-//    [WXDevTool launchDevToolDebugWithUrl:@"ws://192.168.202.84:8088/debugProxy/native"];
+//    [WXDevTool launchDevToolDebugWithUrl:@"ws://192.168.1.86:8088/debugProxy/native"];
     [self initWeexSDK];
 
     [WeexSDKManager setup];
@@ -46,13 +46,13 @@
 - (void)initWeexSDK
 {
     [WXAppConfiguration setExternalUserAgent:@"ExternalUA"];
-    
+
     [WXSDKEngine initSDKEnvironment];
-    
+
     [WXSDKEngine registerModule:@"myGlobalEvent" withClass:[MyGlobalEventModule class]];
-    
+
 //    [WXDevTool setDebug:YES];
-//    [WXDevTool launchDevToolDebugWithUrl:@"ws://192.168.202.84:8088/debugProxy/native"];
+//    [WXDevTool launchDevToolDebugWithUrl:@"ws://192.168.1.86:8088/debugProxy/native"];
 }
 
 #pragma mark

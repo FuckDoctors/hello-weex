@@ -3,22 +3,31 @@
     <no-pg-navbar />
     <nav-bar title="测试主页" :left-button="leftButton" :left-button-click="back"></nav-bar>
     <text class="info" v-if="result">点击标题跳转，返回值: {{result}}</text>
+    <!-- list不显示了。。。 -->
     <list class="list">
-      <!-- <template v-for="(page, index) in pages">
-        <cell :key="index"> -->
-        <cell v-for="(page, index) in pages" :key="index">
-          <div class="card">
-            <div class="card-header" @click="jump(page)">
-              <text class="card-title">{{page.title}}</text>
-            </div>
-            <div class="card-body">
-              <text class="card-description">{{page.description}}</text>
-            </div>
+      <cell v-for="(page, index) in pages" :key="index">
+        <div class="card">
+          <div class="card-header" @click="jump(page)">
+            <text class="card-title">{{page.title}}</text>
           </div>
-        </cell>
-      <!-- </template> -->
+          <div class="card-body">
+            <text class="card-description">{{page.description}}</text>
+          </div>
+        </div>
+      </cell>
     </list>
-    <text class="info">底部信息没遮挡，证明list组件是自适应高度的。web端不是自适应的，需要手动设置flex:1</text>
+    <!-- div能正常显示 -->
+    <!-- <div class="list">
+      <div class="card" v-for="(page, index) in pages" :key="index">
+        <div class="card-header" @click="jump(page)">
+          <text class="card-title">{{page.title}}</text>
+        </div>
+        <div class="card-body">
+          <text class="card-description">{{page.description}}</text>
+        </div>
+      </div>
+    </div> -->
+    <text class="info">底部信息没遮挡，证明list组件是自适应高度的。web端不是自适应的，需要手动设置flex:1。</text>
   </div>
 </template>
 
@@ -117,14 +126,17 @@ export default {
           modal.toast({
             message: `addEventListener callback (hello-return), result: ${JSON.stringify(result)}`,
           });
+          // 删掉注册的事件，不然每次都注册，而且，会执行好多次callback
+          globalEvent.removeEventListener('hello-return');
         });
-        globalEvent.fireGlobalEvent('hello-params', page.params, () => {
-          console.log('fireGlobalEvent callback (hello-params)');
-          modal.toast({
-            message: 'fireGlobalEvent callback (hello-params)',
-          });
-          helper.goto(page.path);
-        });
+        // globalEvent.fireGlobalEvent('hello-params', page.params, () => {
+        //   console.log('fireGlobalEvent callback (hello-params)');
+        //   modal.toast({
+        //     message: 'fireGlobalEvent callback (hello-params)',
+        //   });
+        //   helper.goto(page.path);
+        // });
+        helper.goto(page.path, page.params);
       } else if (page.broadcastChannel) {
         // BroadcastChannel方式传值
         this.sendMessage('hello', `Hello from ${page.title}`);
@@ -163,7 +175,10 @@ export default {
     right: 0;
     background-color: #ffffff;
     justify-content: center;
-    align-items: center;
+    /* 必须注释掉align-items，不然list不能显示 */
+    /* 按照官网的文档说明: <list> 为根节点时无需设置高度，但是内嵌 <list> 高度必须可计算。 */
+    /* 难道说设置了这个会导致list高度不可计算？ */
+    /* align-items: center; */
   }
 
   .info {
