@@ -1,9 +1,9 @@
 <template>
-  <div class="nav-wrapper" :style="wrapperStyle">
+  <div class="nav-wrapper" :show-back="showBack" :style="wrapperStyle">
     <wxc-minibar :title="title"
                   :background-color="backgroundColor"
                   :text-color="textColor"
-                  :left-button="leftButton"
+                  :left-button="leftButtonForDisplay"
                   @wxcMinibarLeftButtonClicked="minibarLeftButtonClick"
                   @wxcMinibarRightButtonClicked="minibarRightButtonClick"
                   :right-text="rightText"
@@ -17,6 +17,8 @@
 import { WxcMinibar, Utils } from 'weex-ui';
 import utils from '../../utils';
 
+import config from './config';
+
 export default {
   components: {
     WxcMinibar,
@@ -25,6 +27,10 @@ export default {
     title: {
       type: String,
       default: 'Title here...',
+    },
+    showBack: {
+      type: Boolean,
+      default: false,
     },
     backgroundColor: {
       type: String,
@@ -48,7 +54,9 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      leftButtonForDisplay: '',
+    };
   },
   created() {
     this.wrapperStyle = {
@@ -56,6 +64,14 @@ export default {
       height: Utils.env.isWeb() ? 'auto' : utils.getNavHeight(),
       paddingTop: Utils.env.isWeb() ? 0 : utils.getNavHeight() - 90,
     };
+    // 不想每个页面都自己设定leftButton了，设一个默认的按钮。
+    if (this.leftButton && this.leftButton !== '') {
+      // 如果设置了leftButton，则采用设置的。
+      this.leftButtonForDisplay = this.leftButton;
+    } else if (this.showBack) {
+      // 如果没设置leftButton，并且设置了showBack的话，显示默认的leftButton。
+      this.leftButtonForDisplay = config.leftArrow;
+    }
   },
   methods: {
     minibarLeftButtonClick() {

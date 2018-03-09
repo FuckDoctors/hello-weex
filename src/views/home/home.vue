@@ -3,13 +3,13 @@
     <text class="greeting">Hello Weex!</text>
     <text class="message">Home page.</text>
     <text class="message" @click="jump('env')">环境参数</text>
-    <text class="message" @click="jump('views/test/hello')">跳转</text>
-    <text class="message" @click="jumpWithParams('views/test/hello')">带参跳转</text>
+    <!-- <text class="message" @click="jump('views/test/hello')">跳转</text> -->
+    <!-- <text class="message" @click="jumpWithParams('views/test/hello')">带参跳转</text> -->
     <text class="message" @click="jump('views/test/index')">测试页面一览</text>
     <!-- 注意! text标签与里面的文字不要换行写，不然换行后，>与文字间的空白字符会被认为空格来显示 -->
-    <text class="message"
+    <!-- <text class="message"
         @click="jumpGlobalEvent('views/test/hello', { a: 'hello', b: 'globalEvent' })"
-      >测试GlobalEvent</text>
+      >测试GlobalEvent</text> -->
   </div>
 </template>
 

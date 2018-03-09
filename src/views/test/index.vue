@@ -40,6 +40,7 @@ import globalEvent from '@/utils/globalEvent';
 // import { DOMAIN, DIST } from './config';
 
 const modal = weex.requireModule('modal');
+const storage = weex.requireModule('storage');
 
 export default {
   components: {
@@ -92,6 +93,18 @@ export default {
           description: 'GlobalEvent带参跳转测试',
         },
         {
+          id: 'hello-storage',
+          title: 'storage传参',
+          path: 'views/test/hello',
+          params: {
+            a: 'hello',
+            b: 'storage',
+          },
+          globalEvent: true,
+          storage: true,
+          description: 'storage带参跳转测试',
+        },
+        {
           id: 'hello-weex-ui',
           title: 'Hello Weex UI',
           path: 'views/test/weex-ui',
@@ -136,7 +149,22 @@ export default {
         //   });
         //   helper.goto(page.path);
         // });
-        helper.goto(page.path, page.params);
+        if (page.storage) {
+          // 按storage传值
+          if (page.params) {
+            storage.setItem('hello-storage', JSON.stringify(page.params), (e) => {
+              if (e.result === 'success') {
+                // 设置成功则跳转
+                helper.goto(page.path);
+              }
+            });
+          } else {
+            // 跳转
+            helper.goto(page.path);
+          }
+        } else {
+          helper.goto(page.path, page.params);
+        }
       } else if (page.broadcastChannel) {
         // BroadcastChannel方式传值
         this.sendMessage('hello', `Hello from ${page.title}`);
