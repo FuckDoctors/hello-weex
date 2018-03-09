@@ -2,14 +2,24 @@
   <div class="wrapper">
     <text class="greeting">Hello Weex!</text>
     <text class="message">Home page.</text>
+    <text class="message" @click="jump('env')">环境参数</text>
     <text class="message" @click="jump('views/test/hello')">跳转</text>
     <text class="message" @click="jumpWithParams('views/test/hello')">带参跳转</text>
+    <text class="message" @click="jump('views/test/index')">测试页面一览</text>
+    <!-- 注意! text标签与里面的文字不要换行写，不然换行后，>与文字间的空白字符会被认为空格来显示 -->
+    <text class="message"
+        @click="jumpGlobalEvent('views/test/hello', { a: 'hello', b: 'globalEvent' })"
+      >测试GlobalEvent</text>
   </div>
 </template>
 
 <script>
+import globalEvent from '@/utils/globalEvent';
+
 import helper from '../../utils/helper';
 import { DOMAIN, DIST, ENABLE_HTTPS } from '../../config';
+
+const modal = weex.requireModule('modal');
 
 export default {
   data() {
@@ -36,6 +46,32 @@ export default {
       // 使用goto方法，拼接域名+bundle地址，直接用线上地址。
       helper.goto(to, params);
     },
+    jumpGlobalEvent(to, params) {
+      // GlobalEvent
+      // 这种先注册，然后再后面触发的方式是可以传值的。（反向传参）
+      globalEvent.addEventListener('hello-return', (result) => {
+        console.log(`addEventListener callback (hello-return), result: ${result}`);
+        modal.toast({
+          message: `addEventListener callback (hello-return), result: ${JSON.stringify(result)}`,
+        });
+        // 删掉注册的事件，不然每次都注册，而且，会执行好多次callback
+        globalEvent.removeEventListener('hello-return');
+      });
+      // 这种先触发（传参），后面绑定监听事件（取值）的方式不行。（正向传参）
+      // 还是得靠url的queryString，或者靠localStorage？
+      // 这样传值和取值，不用区分传值方向了，直接从localStroge里取或设。
+      // globalEvent.fireGlobalEvent('hello-params', params, () => {
+      //   console.log('fireGlobalEvent callback (hello-params)');
+      //   modal.toast({
+      //     message: 'fireGlobalEvent callback (hello-params)',
+      //   });
+      //   helper.goto(to);
+      // });
+      helper.goto(to, params);
+    },
+  },
+  beforeDestroy() {
+    globalEvent.removeEventListener('hello-return');
   },
 };
 </script>

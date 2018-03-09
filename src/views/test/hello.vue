@@ -8,14 +8,25 @@
     <div v-if="params">
       <text>Params: {{ params }}</text>
     </div>
+    <text class="btn" @click="backWithResult">带返回值（跳转方式）</text>
+    <text class="btn" @click="backWithoutResult">无返回值（跳转方式）</text>
+    <text>用跳转的形式返回值，会在navigator中留下，使用pop时会出来。Weex中没有vue-router中的replace，不留记录的处理</text>
+    <text class="btn" @click="backWithResultByChannal('op1')">BroadcastChannel返回值-操作1</text>
+    <text class="btn" @click="backWithResultByChannal('op2')">BroadcastChannel返回值-操作2</text>
+    <text class="btn" @click="backWithResultByGlobalEvent('op1')">GlobalEvent返回值-操作1</text>
+    <text>Message: {{ message }}</text>
   </div>
 </template>
 
 <script>
+import globalEvent from '@/utils/globalEvent';
+
 import NavBar from '../../components/nav-bar';
 import helper from '../../utils/helper';
 // weex里必须加后缀.vue，不然报错。
 import NoPgNavbar from '../../components/modules/no-pg-navbar';
+
+const modal = weex.requireModule('modal');
 
 export default {
   components: {
@@ -26,15 +37,73 @@ export default {
     return {
       leftButton: 'https://gw.alicdn.com/tfs/TB1cAYsbv2H8KJjy0FcXXaDlFXa-30-53.png',
       params: null,
+      message: null,
     };
   },
   mounted() {
     this.params = helper.getParams();
+    this.channel = new BroadcastChannel('TEST');
+    this.message = {
+      type: null,
+      data: null,
+    };
+    this.channel.onmessage = (event) => {
+      this.message = event.data;
+      this.params = event.data;
+    };
+    // 这种先触发（传参），后面绑定监听事件（取值）的方式不行。（正向传参）
+    // globalEvent.addEventListener('hello-params', (params) => {
+    //   console.log(`addEventListener callback (hello-params), result: ${params}`);
+    //   this.params = params;
+    //   modal.toast({
+    //     message: `addEventListener callback (hello-params) in hello.vue.
+    //       params: ${JSON.stringify(params)}`,
+    //   });
+    // });
   },
   methods: {
+    backWithResult() {
+      const result = {
+        ret1: 'return value 1',
+        ret2: 'return value 2',
+      };
+      helper.goto('views/test/index', result);
+    },
+    backWithoutResult() {
+      helper.goto('views/test/index');
+    },
+    backWithResultByChannal(op) {
+      this.sendMessage(op, `Data from ${op}`);
+      helper.back();
+    },
+    backWithResultByGlobalEvent(op) {
+      globalEvent.fireGlobalEvent('hello-return', {
+        op,
+        data: `Data from ${op}`,
+      }, () => {
+        modal.toast({
+          message: 'fireGlobalEvent callback in hello.vue',
+        });
+        console.log('fireGlobalEvent callback in hello.vue');
+        helper.back();
+      });
+    },
+    sendMessage(type, data) {
+      this.message = {
+        type,
+        data,
+      };
+      this.channel.postMessage(this.message);
+    },
+    getMessage() {
+      return this.message;
+    },
     back() {
       helper.back();
     },
+  },
+  beforeDestroy() {
+    globalEvent.removeEventListener('hello-params');
   },
 };
 </script>
@@ -47,5 +116,10 @@ export default {
   left: 0;
   right: 0;
   background-color: #ffffff;
+}
+.btn {
+  margin: 15px;
+  padding: 15px;
+  background-color: #888888;
 }
 </style>

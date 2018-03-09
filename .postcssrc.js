@@ -4,6 +4,7 @@ module.exports = {
   "plugins": {
     // to edit target browsers: use "browserslist" field in package.json
     "postcss-import": {},
+    "postcss-url": {},
     "postcss-plugin-weex": {},
     "autoprefixer": {
       browsers: ['> 0.1%', 'ios >= 8', 'not ie < 12']
