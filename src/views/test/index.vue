@@ -112,16 +112,16 @@ export default {
       if (page.globalEvent) {
         // GlobalEvent
         globalEvent.addEventListener('hello-return', (result) => {
-          console.log(`addEventListener callback, result: ${result}`);
+          console.log(`addEventListener callback (hello-return), result: ${result}`);
           this.result = result;
           modal.toast({
-            message: `addEventListener callback, result: ${result}`,
+            message: `addEventListener callback (hello-return), result: ${JSON.stringify(result)}`,
           });
         });
         globalEvent.fireGlobalEvent('hello-params', page.params, () => {
-          console.log('fireGlobalEvent callback');
+          console.log('fireGlobalEvent callback (hello-params)');
           modal.toast({
-            message: 'fireGlobalEvent callback',
+            message: 'fireGlobalEvent callback (hello-params)',
           });
           helper.goto(page.path);
         });

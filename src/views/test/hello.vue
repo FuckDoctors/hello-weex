@@ -13,7 +13,7 @@
     <text>用跳转的形式返回值，会在navigator中留下，使用pop时会出来。Weex中没有vue-router中的replace，不留记录的处理</text>
     <text class="btn" @click="backWithResultByChannal('op1')">BroadcastChannel返回值-操作1</text>
     <text class="btn" @click="backWithResultByChannal('op2')">BroadcastChannel返回值-操作2</text>
-    <text class="btn" @click="backWithResultByGlobalEvent('op2')">GlobalEvent返回值-操作1</text>
+    <text class="btn" @click="backWithResultByGlobalEvent('op1')">GlobalEvent返回值-操作1</text>
     <text>Message: {{ message }}</text>
   </div>
 </template>
@@ -51,9 +51,15 @@ export default {
       this.message = event.data;
       this.params = event.data;
     };
-    globalEvent.addEventListener('hello-params', (params) => {
-      this.params = params;
-    });
+    // 这种先触发（传参），后面绑定监听事件（取值）的方式不行。（正向传参）
+    // globalEvent.addEventListener('hello-params', (params) => {
+    //   console.log(`addEventListener callback (hello-params), result: ${params}`);
+    //   this.params = params;
+    //   modal.toast({
+    //     message: `addEventListener callback (hello-params) in hello.vue.
+    //       params: ${JSON.stringify(params)}`,
+    //   });
+    // });
   },
   methods: {
     backWithResult() {
@@ -95,6 +101,9 @@ export default {
     back() {
       helper.back();
     },
+  },
+  beforeDestroy() {
+    globalEvent.removeEventListener('hello-params');
   },
 };
 </script>

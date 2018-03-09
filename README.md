@@ -63,6 +63,34 @@
 
   貌似官方的weex-vue-render给的引入方式不行，还是用原来的import的方式。
 
+* weex页面间传值
+
+  1. 可以通过queryString的方式，正向传值，反向传值都可以。
+
+      但是，但是反向传值也是通过navigator.push方法，会在历史记录里存着，使用pop时会再次显示出页面来，参数也可能会影响页面。
+
+      weex中没有vue-router中的replace方法？
+
+  2. 正向使用queryString方式传值，反向使用globalEvent，可以避免上面1. 中navigator.pop的问题。
+
+      但是使用globalEvent需要配合native端，native需要有相应的实现。
+
+      另外，需要在合适的时机执行removeEventListener，不然可能会注册多次，callback执行多次。
+
+      事件名也要配合好，不能乱了。
+
+  3. 使用localStorage实现？
+
+      这样传值和取值，不用区分传值方向了，直接从localStroge里取或设？
+
+  4. 别人的实践：
+
+      a. [「前端」weex页面传参](https://zhuanlan.zhihu.com/p/28490996)
+
+      b. [weex从.we转.vue之BroadcastChannel](https://segmentfault.com/a/1190000009885105)
+
+          标题虽然是BroadcastChannel，其实写的是由BroadcastChannel改为globalEvent的事
+
 * 后面再加。。。
 
 ## Commands
@@ -71,7 +99,7 @@
 
 发布Demo，需要修改configs/config.js里的下面的内容。
 
-``` json
+``` javascript
 server: {
   domain: 'fuckdoctors.github.io/hello-weex',
   enableHttps: true
