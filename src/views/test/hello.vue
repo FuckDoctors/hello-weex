@@ -2,19 +2,25 @@
   <div class="wrapper">
     <no-pg-navbar />
     <nav-bar title="Hello" :left-button="leftButton" :left-button-click="back"></nav-bar>
-    <div>
-      <text>在Weex Playground中，此页的Weex Playground的导航栏应该不显示。（Android版测试通过）</text>
-    </div>
-    <div v-if="params">
-      <text>Params: {{ params }}</text>
-    </div>
-    <text class="btn" @click="backWithResult">带返回值（跳转方式）</text>
-    <text class="btn" @click="backWithoutResult">无返回值（跳转方式）</text>
-    <text>用跳转的形式返回值，会在navigator中留下，使用pop时会出来。Weex中没有vue-router中的replace，不留记录的处理</text>
-    <text class="btn" @click="backWithResultByChannal('op1')">BroadcastChannel返回值-操作1</text>
-    <text class="btn" @click="backWithResultByChannal('op2')">BroadcastChannel返回值-操作2</text>
-    <text class="btn" @click="backWithResultByGlobalEvent('op1')">GlobalEvent返回值-操作1</text>
-    <text>Message: {{ message }}</text>
+    <scroller>
+      <div>
+        <text>在Weex Playground中，此页的Weex Playground的导航栏应该不显示。（Android版测试通过）</text>
+      </div>
+      <div v-if="params">
+        <text>Params: {{ params }}</text>
+      </div>
+      <text class="btn" @click="backWithResult">带返回值（跳转方式）</text>
+      <text class="btn" @click="backWithoutResult">无返回值（跳转方式）</text>
+      <text>用跳转的形式返回值，会在navigator中留下，使用pop时会出来。Weex中没有vue-router中的replace，不留记录的处理</text>
+      <text class="btn" @click="backWithResultByChannal('op1')">BroadcastChannel返回值-操作1</text>
+      <text class="btn" @click="backWithResultByChannal('op2')">BroadcastChannel返回值-操作2</text>
+      <text>Message: {{ message }}</text>
+      <text class="btn" @click="backWithResultByGlobalEvent('op1')">GlobalEvent返回值-操作1</text>
+      <text class="btn"
+          @click="backWithResultByGlobalEvent('storage')"
+      >GlobalEvent返回值-测试storage</text>
+      <text>Storage: {{ storage }}</text>
+    </scroller>
   </div>
 </template>
 
@@ -27,6 +33,7 @@ import helper from '../../utils/helper';
 import NoPgNavbar from '../../components/modules/no-pg-navbar';
 
 const modal = weex.requireModule('modal');
+const storage = weex.requireModule('storage');
 
 export default {
   components: {
@@ -38,6 +45,7 @@ export default {
       leftButton: 'https://gw.alicdn.com/tfs/TB1cAYsbv2H8KJjy0FcXXaDlFXa-30-53.png',
       params: null,
       message: null,
+      storage: null,
     };
   },
   mounted() {
@@ -60,8 +68,21 @@ export default {
     //       params: ${JSON.stringify(params)}`,
     //   });
     // });
+    this.getStorage();
   },
   methods: {
+    getStorage() {
+      // 从storage中取值
+      storage.getItem('hello-storage', (e) => {
+        if (e.result === 'success') {
+          this.storage = JSON.parse(e.data);
+          // 从storage中移除
+          storage.removeItem('hello-storage');
+        } else {
+          this.storage = null;
+        }
+      });
+    },
     backWithResult() {
       const result = {
         ret1: 'return value 1',

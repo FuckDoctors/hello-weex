@@ -71,7 +71,7 @@
 
       weex中没有vue-router中的replace方法？
 
-  2. 正向使用queryString方式传值，反向使用globalEvent，可以避免上面1. 中navigator.pop的问题。
+  2. 正向使用queryString方式传值，反向使用globalEvent，可以避免上面(1.)中navigator.pop的问题。
 
       但是使用globalEvent需要配合native端，native需要有相应的实现。
 
@@ -81,7 +81,11 @@
 
   3. 使用storage实现？
 
-      这样传值和取值，不用区分传值方向了，直接从stroge里取或设？(反向传值时，取值的时机怎么控制？)
+      这样传值和取值，不用区分传值方向了，直接从storage里取或设？(反向传值时，取值的时机怎么控制？)
+
+      正向传值，如果要传的东西比较多，或者结构比较复杂，可以使用storage来传。
+
+      反向传值还是用globalEvent来传。
 
   4. 别人的实践：
 
