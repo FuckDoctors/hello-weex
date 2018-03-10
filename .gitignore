@@ -20,9 +20,6 @@ platforms/android
 platforms/ios/build
 platforms/ios/bundlejs
 platforms/ios/Pods
-*.xcodeproj
-*.xcworkspace
-platforms/ios/*Tests
 
 .temp/*
 .wx/*

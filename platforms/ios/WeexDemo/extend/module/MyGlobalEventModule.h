@@ -2,7 +2,7 @@
 //  MyGlobalEventModule.h
 //  WeexDemo
 //
-//  Created by zhaobc on 2018/3/8.
+//  Created by ZhaoBin on 2018/3/10.
 //  Copyright © 2018年 taobao. All rights reserved.
 //
 
