@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.journeyapps.barcodescanner.CaptureActivity;
+import com.taobao.weex.WXSDKInstance;
+import com.taobao.weex.WXSDKManager;
 import com.taobao.weex.annotation.JSMethod;
 import com.taobao.weex.bridge.JSCallback;
 import com.taobao.weex.common.WXModule;
@@ -119,12 +121,23 @@ public class MyGlobalEventModule extends WXModule {
 //                .append("\n")
 //                .append(callback.toString());
 //        Toast.makeText(mWXSDKInstance.getContext(), sbMsg.toString(), Toast.LENGTH_LONG).show();
-        mWXSDKInstance.fireGlobalEventCallback(event, params);
+//        mWXSDKInstance.fireGlobalEventCallback(event, params);
+        // mWXSDKInstance.fireGlobalEventCallback无法触发addEventListener的callback，返回值也无法传回来。
+        // 解决方案：GlobalEvent是实例级的，不是应用级的。只有mWXSDKInstance这个实例能收到。但是可以遍历所有实例，都发送event。
+        // https://segmentfault.com/q/1010000009232501
+        fireSuperEventCallback(event, params);
 //        mWXSDKInstance.fireModuleEvent(event, this, params);
         if (null != callback) {
             Map<String, Boolean> result = new HashMap<String, Boolean>();
             result.put("ok", true);
             callback.invoke(result);
+        }
+    }
+
+    public void fireSuperEventCallback(String eventName, Map<String, Object> params) {
+        List<WXSDKInstance> instances = WXSDKManager.getInstance().getWXRenderManager().getAllInstances();
+        for (WXSDKInstance instance : instances) {
+            instance.fireGlobalEventCallback(eventName, params);
         }
     }
 

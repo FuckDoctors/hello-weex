@@ -132,15 +132,18 @@ export default {
       };
       globalEvent.addEventListener('hello-page', listener);
 
-      globalEvent.fireGlobalEvent('hello-page', {
-        op,
-        data: `Data from ${op}`,
-      }, () => {
-        modal.toast({
-          message: 'fireGlobalEvent callback(hello-page) in hello.vue',
+      // 同页面内也不能触发globalEvent，试试延迟调用。
+      setTimeout(() => {
+        globalEvent.fireGlobalEvent('hello-page', {
+          op,
+          data: `Data from ${op}`,
+        }, () => {
+          modal.toast({
+            message: 'fireGlobalEvent callback(hello-page) in hello.vue',
+          });
+          console.log('fireGlobalEvent callback(hello-page) in hello.vue');
         });
-        console.log('fireGlobalEvent callback(hello-page) in hello.vue');
-      });
+      }, 1000);
     },
     sendMessage(type, data) {
       this.message = {
