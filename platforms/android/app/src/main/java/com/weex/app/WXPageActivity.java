@@ -1,5 +1,6 @@
 package com.weex.app;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -273,6 +274,7 @@ public class WXPageActivity extends AbsWeexActivity implements
       return;
     }
     Intent intent = new Intent(context, WXPageActivity.class);
+    intent.setAction(Intent.ACTION_VIEW);
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     intent.putExtra(WEEX_URL, url);
     context.startActivity(intent);

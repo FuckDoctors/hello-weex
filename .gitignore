@@ -18,7 +18,12 @@ build/*.map
 
 platforms/android/.gradle
 platforms/android/.idea
+platforms/android/.settings
+platforms/android/app/.classpath
+platforms/android/app/.project
+platforms/android/app/bin
 platforms/android/app/build
+platforms/android/app/src/.settings
 platforms/android/app/src/main/assets/dist
 platforms/android/appframework
 platforms/android/build

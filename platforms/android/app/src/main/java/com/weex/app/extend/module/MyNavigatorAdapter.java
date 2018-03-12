@@ -1,6 +1,8 @@
 package com.weex.app.extend.module;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import com.taobao.weex.appfram.navigator.IActivityNavBarSetter;
@@ -9,6 +11,8 @@ import com.weex.app.WXPageActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Stack;
+
 /**
  * Created by zhaobin on 2018/3/3.
  */
@@ -16,6 +20,8 @@ import org.json.JSONObject;
 public class MyNavigatorAdapter implements IActivityNavBarSetter {
 
     private Context context;
+
+    private Stack<Activity> history = new Stack<>();
 
     public MyNavigatorAdapter(Context context) {
         this.context = context;
@@ -38,6 +44,9 @@ public class MyNavigatorAdapter implements IActivityNavBarSetter {
             object = new JSONObject(param);
             String url = object.optString("url");
             if(!TextUtils.isEmpty(url)) {
+                if (context instanceof Activity) {
+                    history.push((Activity) context);
+                }
                 WXPageActivity.start(context, url);
                 return true;
             } else {
@@ -63,7 +72,15 @@ public class MyNavigatorAdapter implements IActivityNavBarSetter {
 //            ((Activity) context).finish();
 //        }
 //        return true;
-        return false;
+        if (context instanceof Activity) {
+            ((Activity) context).finish();
+        }
+        if (history.isEmpty()) {
+            return false;
+        } else {
+            history.peek();
+            return true;
+        }
     }
 
     @Override

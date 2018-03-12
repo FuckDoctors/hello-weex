@@ -20,6 +20,7 @@
           @click="backWithResultByGlobalEvent('storage')"
       >GlobalEvent返回值-测试storage</text>
       <text>Storage: {{ storage }}</text>
+      <text class="btn" @click="testGlobalEvent('page')">GlobalEvent通信-页面内</text>
     </scroller>
   </div>
 </template>
@@ -107,6 +108,38 @@ export default {
         });
         console.log('fireGlobalEvent callback in hello.vue');
         helper.back();
+      });
+    },
+    testGlobalEvent(op) {
+      // globalEvent.removeEventListener('hello-page', (result) => {
+      //   console.log(`addEventListener callback (hello-page), result: ${result}`);
+      //   this.result = result;
+      //   modal.toast({
+      //     message: `addEventListener callback (hello-page), result: ${JSON.stringify(result)}`,
+      //   });
+      //   // web上还是会执行多次callback，应该跟removeEventListener没加后面的listener有关。
+      //   globalEvent.removeEventListener('hello-page', listener);
+      // });
+      // web端移除时需要指定listener所以，改成具名function
+      const listener = (result) => {
+        console.log(`addEventListener callback (hello-page), result: ${result}`);
+        this.result = result;
+        modal.toast({
+          message: `addEventListener callback (hello-page), result: ${JSON.stringify(result)}`,
+        });
+        // web上还是会执行多次callback，应该跟removeEventListener没加后面的listener有关。
+        globalEvent.removeEventListener('hello-page', listener);
+      };
+      globalEvent.addEventListener('hello-page', listener);
+
+      globalEvent.fireGlobalEvent('hello-page', {
+        op,
+        data: `Data from ${op}`,
+      }, () => {
+        modal.toast({
+          message: 'fireGlobalEvent callback(hello-page) in hello.vue',
+        });
+        console.log('fireGlobalEvent callback(hello-page) in hello.vue');
       });
     },
     sendMessage(type, data) {

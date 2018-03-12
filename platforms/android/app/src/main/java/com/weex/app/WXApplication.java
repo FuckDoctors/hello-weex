@@ -27,7 +27,7 @@ public class WXApplication extends Application {
     try {
       WXSDKEngine.registerModule("event", WXEventModule.class);
       // 注册globalEvent模块
-      WXSDKEngine.registerModule(MyGlobalEventModule.MODULE_NAME, MyGlobalEventModule.class);
+      WXSDKEngine.registerModule(MyGlobalEventModule.MODULE_NAME, MyGlobalEventModule.class, true);
     } catch (WXException e) {
       e.printStackTrace();
     }

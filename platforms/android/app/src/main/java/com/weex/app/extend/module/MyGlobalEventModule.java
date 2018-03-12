@@ -33,6 +33,7 @@ public class MyGlobalEventModule extends WXModule {
     private static final String WEEX_ACTION = "com.taobao.android.intent.action.WEEX";
 
     public static final String MODULE_NAME = "myGlobalEvent";
+    public static final String WEEX_INSTANCE_ID_KEY = "WEEX_INSTACNCE_ID";
 
     private static final int CAMERA_PERMISSION_REQUEST_CODE = 0x9;
 
@@ -92,15 +93,32 @@ public class MyGlobalEventModule extends WXModule {
         }
     }
 
+    @JSMethod(uiThread = true)
+    public void getWXInstaceId(JSCallback callback) {
+        if (callback != null) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put(WEEX_INSTANCE_ID_KEY, mWXSDKInstance.getInstanceId());
+            callback.invoke(jsonObject);
+        }
+    }
+
     /*
-       * a test method for macaca case, you can fire globalEvent when download finish、device shaked and so on.
-       * @param event event name
-      * */
+           * a test method for macaca case, you can fire globalEvent when download finish、device shaked and so on.
+           * @param event event name
+          * */
     @JSMethod(uiThread = true)
     public void fireGlobalEvent(String event, JSONObject params, JSCallback callback) {
         // 页面上没有返回值
         // 加了toast试了下传的返回值能接受到
 //        Toast.makeText(mWXSDKInstance.getContext(), params.toJSONString(), Toast.LENGTH_LONG).show();
+//        StringBuffer sbMsg = new StringBuffer();
+//        sbMsg.append("event name: ")
+//                .append(event)
+//                .append("\n")
+//                .append(params.toJSONString())
+//                .append("\n")
+//                .append(callback.toString());
+//        Toast.makeText(mWXSDKInstance.getContext(), sbMsg.toString(), Toast.LENGTH_LONG).show();
         mWXSDKInstance.fireGlobalEventCallback(event, params);
 //        mWXSDKInstance.fireModuleEvent(event, this, params);
         if (null != callback) {
