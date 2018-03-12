@@ -30,4 +30,8 @@ public class AppConfig {
     parser.parse(context);
     sPreferences = parser.getPreferences();
   }
+
+  public static String getCategory() {
+    return sPreferences.getString("category", "site.dever.weex");
+  }
 }

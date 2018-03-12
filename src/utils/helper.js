@@ -3,7 +3,8 @@
 import getBaseUrl from './base-url';
 import * as config from '../config';
 
-const navigator = weex.requireModule('navigator');
+// const navigator = weex.requireModule('navigator');
+const navigator = weex.requireModule('myNavigator') || weex.requireModule('navigator');
 // const modal = weex.requireModule('modal');
 
 /**

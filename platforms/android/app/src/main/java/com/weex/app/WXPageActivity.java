@@ -1,6 +1,5 @@
 package com.weex.app;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -66,9 +65,9 @@ public class WXPageActivity extends AbsWeexActivity implements
     String from = intent.getStringExtra("from");
     mFromSplash = "splash".equals(from);
 
-    if (uri == null) {
-      uri = Uri.parse("{}");
-    }
+//    if (uri == null) {
+//      uri = Uri.parse("{}");
+//    }
     if (uri != null) {
       try {
         JSONObject initData = new JSONObject(uri.toString());
@@ -114,10 +113,16 @@ public class WXPageActivity extends AbsWeexActivity implements
 
     if (mUri == null) {
 //      mUri = Uri.parse(AppConfig.getLaunchUrl());
-      if (TextUtils.isEmpty(intent.getStringExtra(WEEX_URL))) {
+//      // 另一种方式
+//      if (TextUtils.isEmpty(intent.getStringExtra(WEEX_URL))) {
+//        mUri = Uri.parse(AppConfig.getLaunchUrl());
+//      } else {
+//        mUri = Uri.parse(intent.getStringExtra(WEEX_URL));
+//      }
+      if (uri == null) {
         mUri = Uri.parse(AppConfig.getLaunchUrl());
       } else {
-        mUri = Uri.parse(intent.getStringExtra(WEEX_URL));
+        mUri = uri;
       }
     }
 

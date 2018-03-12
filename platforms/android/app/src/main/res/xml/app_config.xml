@@ -8,4 +8,6 @@
     <preference name="launch_url" value="https://dever.site/hello-weex/dist/index.js"/>
     <preference name="local_url" value="file://assets/dist/index.js"/>
 
+    <preference name="category" value="site.dever.weex" />
+
 </widget>
