@@ -242,6 +242,9 @@ function replace(to, params, callback) {
 
     // 后来看源代码发现有close方法，android能看懂，会关掉Activity。ios的没看懂。
     // 实际效果，跑出来android确实也把index给关了。ios的左滑还是显示index。
+    // ios没实现close方法？
+    // 如果要实现的话，参考下面的资料：
+    // https://stackoverflow.com/questions/7895274/iphone-remove-view-and-navigationcontroller
     navigator.push({
       // route.url为相对地址时，为原生或者绝对地址时需要再单独处理
       url: `${baseUrl}${to}.js${allQuery}`,
