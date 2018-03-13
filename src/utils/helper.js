@@ -202,6 +202,11 @@ function getParams() {
   return getQueryData(weex.config.bundleUrl);
 }
 
+function close(params, success, failure) {
+  const NOOP = () => {};
+  navigator.close(params || {}, success || NOOP, failure || NOOP);
+}
+
 function replace(to, params, callback) {
   if (WXEnvironment.platform === 'Web' || typeof window === 'object') {
     // web
@@ -220,13 +225,30 @@ function replace(to, params, callback) {
     if (params) {
       allQuery = createQuery(Object.assign({}, query, params));
     }
-    // 没有replace，按网上一哥们的说法，先跳转，再快速pop。参考地址忘了。。，
-    // 效果：android端可以，ios端不行，直接显示空白页（index.vue？）
+    // // 没有replace，按网上一哥们的说法，先跳转，再快速pop。参考地址忘了。。，
+    // // 效果：android端可以，ios端不行，直接显示空白页（index.vue？）
+    // navigator.push({
+    //   // route.url为相对地址时，为原生或者绝对地址时需要再单独处理
+    //   url: `${baseUrl}${to}.js${allQuery}`,
+    //   animated: 'true',
+    // }, (event) => {
+    //   if (callback) {
+    //     callback(event);
+    //   }
+    // });
+    // navigator.pop({
+    //   animated: 'false',
+    // });
+
+    // 后来看源代码发现有close方法，android能看懂，会关掉Activity。ios的没看懂。
+    // 实际效果，跑出来android确实也把index给关了。ios的左滑还是显示index。
     navigator.push({
       // route.url为相对地址时，为原生或者绝对地址时需要再单独处理
       url: `${baseUrl}${to}.js${allQuery}`,
       animated: 'true',
     }, (event) => {
+      // 关掉之前的页面
+      close();
       if (callback) {
         callback(event);
       }
@@ -248,4 +270,5 @@ export default {
   back,
   getParams,
   replace,
+  close,
 };
