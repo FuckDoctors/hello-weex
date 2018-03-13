@@ -13,6 +13,7 @@ export default {
   },
   mounted() {
     helper.push('app');
+    // helper.replace('app');
   },
   methods: {
   },

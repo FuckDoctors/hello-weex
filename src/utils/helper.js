@@ -202,6 +202,41 @@ function getParams() {
   return getQueryData(weex.config.bundleUrl);
 }
 
+function replace(to, params, callback) {
+  if (WXEnvironment.platform === 'Web' || typeof window === 'object') {
+    // web
+    const baseUrl = `http${config.ENABLE_HTTPS ? 's' : ''}://${config.DOMAIN}`;
+
+    let allQuery = '';
+    if (params) {
+      allQuery = createQuery(params);
+    }
+    window.location.replace(`${baseUrl}/${to}.html${allQuery}`);
+  } else {
+    // native
+    const baseUrl = getBaseUrl(true);
+    const query = getQueryData(weex.config.bundleUrl);
+    let allQuery = createQuery(query);
+    if (params) {
+      allQuery = createQuery(Object.assign({}, query, params));
+    }
+    // 没有replace，按网上一哥们的说法，先跳转，再快速pop。参考地址忘了。。，
+    // 效果：android端可以，ios端不行，直接显示空白页（index.vue？）
+    navigator.push({
+      // route.url为相对地址时，为原生或者绝对地址时需要再单独处理
+      url: `${baseUrl}${to}.js${allQuery}`,
+      animated: 'true',
+    }, (event) => {
+      if (callback) {
+        callback(event);
+      }
+    });
+    navigator.pop({
+      animated: 'false',
+    });
+  }
+}
+
 export default {
   createQuery,
   getQueryData,
@@ -212,4 +247,5 @@ export default {
   gotoH5,
   back,
   getParams,
+  replace,
 };
