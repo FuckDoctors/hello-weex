@@ -16,13 +16,21 @@ lerna-debug.log
 build/example
 build/*.map
 
-platforms/android
+platforms/android/.gradle
+platforms/android/.idea
+platforms/android/.settings
+platforms/android/app/.classpath
+platforms/android/app/.project
+platforms/android/app/bin
+platforms/android/app/build
+platforms/android/app/src/.settings
+platforms/android/app/src/main/assets/dist
+platforms/android/appframework
+platforms/android/build
+
 platforms/ios/build
 platforms/ios/bundlejs
 platforms/ios/Pods
-*.xcodeproj
-*.xcworkspace
-platforms/ios/*Tests
 
 .temp/*
 .wx/*
