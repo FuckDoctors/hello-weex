@@ -256,9 +256,6 @@ function replace(to, params, callback) {
         callback(event);
       }
     });
-    navigator.pop({
-      animated: 'false',
-    });
   }
 }
 
