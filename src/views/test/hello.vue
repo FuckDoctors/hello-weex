@@ -20,10 +20,7 @@
           @click="backWithResultByGlobalEvent('storage')"
       >GlobalEvent返回值-测试storage</text>
       <text>Storage: {{ storage }}</text>
-<<<<<<< HEAD
-=======
       <text class="btn" @click="testGlobalEvent('page')">GlobalEvent通信-页面内</text>
->>>>>>> dev
     </scroller>
   </div>
 </template>

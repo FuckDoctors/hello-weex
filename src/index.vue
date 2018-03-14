@@ -12,7 +12,12 @@ export default {
     };
   },
   mounted() {
-    helper.push('app');
+    // helper.push('app');
+    helper.replace('app');
+    // // android可以，ios不可以
+    // helper.push('app', null, () => {
+    //   helper.close();
+    // });
   },
   methods: {
   },
