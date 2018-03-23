@@ -18,6 +18,12 @@ import { WxcButton } from 'weex-ui';
 
 import helper from '@/utils/helper';
 
+import {
+  USER_KEY,
+} from '@/config';
+
+const storage = weex.requireModule('storage');
+
 export default {
   components: {
     WxcButton,
@@ -35,7 +41,18 @@ export default {
     },
     login() {
       if (this.check()) {
-        helper.replace('app');
+        const user = {
+          username: this.username,
+          password: this.password,
+        };
+        storage.setItem(USER_KEY, user, (e) => {
+          if (e.result === 'success') {
+            // 在线jsbundle转向本地jsbundle时路径不对，可以修改helper文件，改成原来的样子。
+            // 这里省懒事，改成replaceOnline了，但这样首屏加载意义不大了，需要做优化。
+            // helper.replace('app');
+            helper.replaceOnline('app');
+          }
+        });
       }
     },
     register() {

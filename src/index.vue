@@ -13,7 +13,8 @@ export default {
   },
   mounted() {
     // helper.push('app');
-    helper.replace('app');
+    // helper.replace('app');
+    helper.replaceOnline('views/login/login');
     // // android可以，ios不可以
     // helper.push('app', null, () => {
     //   helper.close();

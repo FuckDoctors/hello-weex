@@ -293,6 +293,43 @@ function replace(to, params, callback) {
   }
 }
 
+function replaceOnline(to, params, callback) {
+  const baseUrl = `http${config.ENABLE_HTTPS ? 's' : ''}://${config.DOMAIN}`;
+
+  let allQuery = '';
+  if (params) {
+    allQuery = createQuery(params);
+  }
+
+  if (WXEnvironment.platform === 'Web' || typeof window === 'object') {
+    // web
+    window.location.replace(`${baseUrl}/${to}.html${allQuery}`);
+  } else {
+    // native
+    const query = getQueryData(weex.config.bundleUrl);
+    allQuery = createQuery(query);
+    if (params) {
+      allQuery = createQuery(Object.assign({}, query, params));
+    }
+    navigator.push({
+      // route.url为相对地址时，为原生或者绝对地址时需要再单独处理
+      url: `${baseUrl}${config.DIST}/${to}.js${allQuery}`,
+      animated: 'true',
+    }, (event) => {
+      if (WXEnvironment.platform.toLowerCase() === 'ios' && navEvent) {
+        // 删掉前一个页面
+        navEvent.removeBefore();
+      } else {
+        // 关掉之前的页面
+        close();
+      }
+      if (callback) {
+        callback(event);
+      }
+    });
+  }
+}
+
 export default {
   createQuery,
   getQueryData,
@@ -304,5 +341,6 @@ export default {
   back,
   getParams,
   replace,
+  replaceOnline,
   close,
 };

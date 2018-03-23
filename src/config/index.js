@@ -6,3 +6,12 @@ export const ENABLE_HTTPS = process.env.ENABLE_HTTPS;
 export const DIST = '/dist';
 export const APP_NAME = 'WeexDemo';
 export const LOGO = 'https://gw.alicdn.com/tfs/TB1JpgJRFXXXXc7XpXXXXXXXXXX-800-800.png';
+
+export const WHITE_LIST = [
+  'index',
+  'views/login/login',
+  'views/login/register',
+  'views/error',
+  'views/about',
+];
+export const USER_KEY = 'USER';
