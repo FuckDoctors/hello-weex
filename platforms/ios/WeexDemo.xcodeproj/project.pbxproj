@@ -33,6 +33,7 @@
 		DC6DD9D21CFE9BC400549297 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7475ACA01CD8444A0044E96C /* libsqlite3.0.tbd */; };
 		DCD286E01CF491AC00C601CA /* weex-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD286DF1CF491AC00C601CA /* weex-icon.png */; };
 		E1027A7B6EE11DA4A7C6998C /* libPods-WeexUITestDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 835DE5CE4D0CD132AAC64A27 /* libPods-WeexUITestDemo.a */; };
+		EAA4B6932064E86C00E733CA /* MyNavigatorEventModule.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA4B6922064E86C00E733CA /* MyNavigatorEventModule.m */; };
 		ECD914D77E3545D298280280 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BECB15C78BC5454C86CFBC04 /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -86,6 +87,8 @@
 		DC65C4F91CEB032F00B2F84F /* bundlejs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bundlejs; sourceTree = "<group>"; };
 		DCD286DF1CF491AC00C601CA /* weex-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "weex-icon.png"; path = "WeexDemo/weex-icon.png"; sourceTree = "<group>"; };
 		E838291E72D02CC3C36A86A4 /* Pods-WeexDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeexDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeexDemo/Pods-WeexDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		EAA4B6912064E7AF00E733CA /* MyNavigatorEventModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyNavigatorEventModule.h; sourceTree = "<group>"; };
+		EAA4B6922064E86C00E733CA /* MyNavigatorEventModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNavigatorEventModule.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,6 +245,8 @@
 			children = (
 				BD2E41E22054081A00402EA6 /* MyGlobalEventModule.h */,
 				BD2E41E32054089200402EA6 /* MyGlobalEventModule.m */,
+				EAA4B6912064E7AF00E733CA /* MyNavigatorEventModule.h */,
+				EAA4B6922064E86C00E733CA /* MyNavigatorEventModule.m */,
 			);
 			path = module;
 			sourceTree = "<group>";
@@ -568,6 +573,7 @@
 				0A4A05FA1E0405070046E1BE /* WXDemoViewController.m in Sources */,
 				BD2E41E42054089200402EA6 /* MyGlobalEventModule.m in Sources */,
 				775BEE831C1E8ECC008D1629 /* AppDelegate.m in Sources */,
+				EAA4B6932064E86C00E733CA /* MyNavigatorEventModule.m in Sources */,
 				0A4A05F91E0405070046E1BE /* UIViewController+WXDemoNaviBar.m in Sources */,
 				775BEE801C1E8ECC008D1629 /* main.m in Sources */,
 				0A7758D71EA0D39C00AE9815 /* WXImgLoaderDefaultImpl.m in Sources */,
