@@ -22,6 +22,8 @@ import { DOMAIN, DIST, ENABLE_HTTPS } from '../../config';
 const modal = weex.requireModule('modal');
 
 export default {
+  components: {
+  },
   data() {
     return {};
   },
@@ -78,8 +80,13 @@ export default {
 
 <style scoped>
 .wrapper {
-  justify-content: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   align-items: center;
+  align-content: center;
 }
 .greeting {
   margin-top: 70px;

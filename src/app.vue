@@ -1,17 +1,14 @@
 <template>
   <div class="wrapper">
-    <nav-bar title="Hello Weex"></nav-bar>
     <tab-bar></tab-bar>
   </div>
 </template>
 
 <script>
-import NavBar from './components/nav-bar';
 import TabBar from './views/tab-bar';
 
 export default {
   components: {
-    NavBar,
     TabBar,
   },
   data() {
