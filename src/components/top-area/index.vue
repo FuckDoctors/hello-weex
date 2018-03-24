@@ -32,6 +32,7 @@ export default {
   data() {
     return {
       calcHeight: 0,
+      statusBarHeight: 0,
       paddingTop: 0,
     };
   },
@@ -40,13 +41,14 @@ export default {
       this.paddingTop = 0;
     } else if (Utils.env.isIPhoneX()) {
       // status bar
-      this.paddingTop = 44;
+      this.statusBarHeight = 44;
+      this.paddingTop = this.statusBarHeight * 2;
     } else {
       // status bar
-      this.paddingTop = 20;
+      this.statusBarHeight = 20;
+      this.paddingTop = this.statusBarHeight * 2.1;
     }
-    this.calcHeight = this.height
-      + (this.paddingTop * 2.34375); // 750/320
+    this.calcHeight = this.height + this.paddingTop;
   },
 };
 </script>
