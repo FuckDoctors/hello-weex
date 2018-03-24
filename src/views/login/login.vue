@@ -45,7 +45,7 @@ export default {
           username: this.username,
           password: this.password,
         };
-        storage.setItem(USER_KEY, user, (e) => {
+        storage.setItem(USER_KEY, JSON.stringify(user), (e) => {
           if (e.result === 'success') {
             // 在线jsbundle转向本地jsbundle时路径不对，可以修改helper文件，改成原来的样子。
             // 这里省懒事，改成replaceOnline了，但这样首屏加载意义不大了，需要做优化。
@@ -111,7 +111,10 @@ export default {
 }
 .input {
   width: 700px;
-  border: 1px solid #ddd;
+  /* border: 1px solid #ddd; */
+  border-width: 3px;
+  border-style: solid;
+  border-color: #dddddd;
   border-radius: 8px;
   height: 68px;
   font-size: 28px;
