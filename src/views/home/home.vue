@@ -1,5 +1,7 @@
 <template>
   <div class="wrapper">
+    <top-area></top-area>
+
     <text class="greeting">Hello Weex!</text>
     <text class="message">Home page.</text>
     <text class="message" @click="jump('env')">环境参数</text>
@@ -14,6 +16,8 @@
 </template>
 
 <script>
+import TopArea from '@/components/top-area';
+
 import globalEvent from '@/utils/globalEvent';
 
 import helper from '../../utils/helper';
@@ -23,6 +27,7 @@ const modal = weex.requireModule('modal');
 
 export default {
   components: {
+    TopArea,
   },
   data() {
     return {};
