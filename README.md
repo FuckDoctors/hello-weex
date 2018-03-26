@@ -1,8 +1,7 @@
 # Hello Weex
 
 [![Build Status](https://travis-ci.org/FuckDoctors/hello-weex.svg?branch=dev)](https://travis-ci.org/FuckDoctors/hello-weex)
-master:![Last Commit](https://img.shields.io/github/last-commit/FuckDoctors/hello-weex.svg)
-dev:![Last Commit](https://img.shields.io/github/last-commit/FuckDoctors/hello-weex/dev.svg)
+![Last Commit](https://img.shields.io/github/last-commit/FuckDoctors/hello-weex/dev.svg)
 
 ## Demo
 
