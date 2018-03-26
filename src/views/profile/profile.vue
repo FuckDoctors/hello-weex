@@ -4,12 +4,20 @@
     <div class="page-wrapper">
       <text class="greeting">Hello Weex!</text>
       <text class="message">我的主页</text>
+      <text class="message" @click="logout()">注销</text>
     </div>
   </div>
 </template>
 
 <script>
 import NavBar from '@/components/nav-bar';
+
+import helper from '@/utils/helper';
+import {
+  USER_KEY,
+} from '@/config';
+
+const storage = weex.requireModule('storage');
 
 export default {
   components: {
@@ -18,6 +26,16 @@ export default {
   data() {
     return {
     };
+  },
+  methods: {
+    logout() {
+      storage.removeItem(USER_KEY, (e) => {
+        if (e.result === 'success') {
+          // 注销
+          helper.replace('views/login/login');
+        }
+      });
+    },
   },
 };
 </script>
@@ -41,16 +59,17 @@ export default {
 }
 .page-wrapper {
   flex: 1;
-
 }
 .greeting {
   margin-top: 70px;
   font-size: 50px;
   color: #41B883;
+  text-align: center;
 }
 .message {
-  margin: 30px;
+  margin-top: 30px;
   font-size: 32px;
   color: #727272;
+  text-align: center;
 }
 </style>

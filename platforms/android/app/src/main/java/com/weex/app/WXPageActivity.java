@@ -87,6 +87,7 @@ public class WXPageActivity extends AbsWeexActivity implements
       // 更多资料可以看这个：
       // http://yifeng.studio/2017/02/19/android-statusbar/
       // https://www.zhihu.com/question/31468556
+      // https://yiweifen.com/html/news/WaiYu/114323.html
       // 这里设置true不行，必须设置为false
       parentView.setFitsSystemWindows(false);
     }

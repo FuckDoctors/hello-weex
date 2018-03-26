@@ -46,14 +46,25 @@ export default function getBaseURL(isnav) {
       // 发布环境
       nativeBase = `http${config.ENABLE_HTTPS ? 's' : ''}://${host}${config.DIST}/`;
     } else {
-      // 开发环境，恢复成原来的样子
+      // // 开发环境，恢复成原来的样子
+      // const matches = /\/\/([^/]+?)\//.exec(weex.config.bundleUrl);
+      // if (matches && matches.length >= 2) {
+      //   host = matches[1];
+      // }
+
+      // // weex run直接使用dist目录下的东西
+      // nativeBase = `http${config.ENABLE_HTTPS ? 's' : ''}://${host}/`;
+
+      // 使用helper.repalce时，替换的地址不对，还是改回上面的方式吧。。。
       const matches = /\/\/([^/]+?)\//.exec(weex.config.bundleUrl);
       if (matches && matches.length >= 2) {
-        host = matches[1];
+        const colonIndex = matches[1].indexOf(':');
+        const bundleHost = colonIndex > 0 ? matches[1].substr(0, colonIndex) : matches[1];
+        // 如果包含本机host的话，就是本机的host，否则就使用匹配得到的host
+        host = host.indexOf(bundleHost) > -1 ? host : matches[1];
       }
 
-      // weex run直接使用dist目录下的东西
-      nativeBase = `http${config.ENABLE_HTTPS ? 's' : ''}://${host}/`;
+      nativeBase = `http${config.ENABLE_HTTPS ? 's' : ''}://${host}${config.DIST}/`;
     }
 
     h5Base = `http${config.ENABLE_HTTPS ? 's' : ''}://${host}/`;

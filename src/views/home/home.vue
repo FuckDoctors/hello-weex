@@ -99,7 +99,7 @@ export default {
   color: #41b883;
 }
 .message {
-  margin: 30px;
+  margin-top: 30px;
   font-size: 32px;
   color: #727272;
 }
