@@ -59,6 +59,8 @@ export default {
 }
 .page-wrapper {
   flex: 1;
+  /* 不加下面的代码，android上不会居中对齐，ios和web能居中对齐。。。 */
+  align-items: center;
 }
 .greeting {
   margin-top: 70px;
