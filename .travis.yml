@@ -4,8 +4,13 @@ node_js:
   - "node"
 
 # Travis-CI Caching
+# https://docs.travis-ci.com/user/caching/
+# cache示例
 cache:
+  # bundler: true
+  # cocoapods: true
   directories:
+    # - $HOME/.m2
     - node_modules
 
 branches:

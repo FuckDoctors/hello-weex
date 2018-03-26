@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "DemoDefine.h"
 #import "MyGlobalEventModule.h"
+#import "MyNavigatorEventModule.h"
 #import <WeexSDK/WeexSDK.h>
 #import <AVFoundation/AVFoundation.h>
 #import "WeexSDKManager.h"
@@ -50,6 +51,7 @@
     [WXSDKEngine initSDKEnvironment];
 
     [WXSDKEngine registerModule:@"myGlobalEvent" withClass:[MyGlobalEventModule class]];
+    [WXSDKEngine registerModule:@"myNavigatorEvent" withClass:[MyNavigatorEventModule class]];
 
 //    [WXDevTool setDebug:YES];
 //    [WXDevTool launchDevToolDebugWithUrl:@"ws://192.168.1.86:8088/debugProxy/native"];

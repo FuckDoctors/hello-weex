@@ -2,7 +2,9 @@ package com.weex.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
@@ -12,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +57,40 @@ public class WXPageActivity extends AbsWeexActivity implements
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_wxpage);
+
+    // 隐藏状态栏，理解沉浸式模式
+    // https://blog.csdn.net/guolin_blog/article/details/51763825
+    if (Build.VERSION.SDK_INT >= 21) {
+      View decorView = getWindow().getDecorView();
+//      int option = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//              | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//              | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+      int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+              | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+      decorView.setSystemUiVisibility(option);
+//      getWindow().setNavigationBarColor(Color.TRANSPARENT);
+      getWindow().setStatusBarColor(Color.TRANSPARENT);
+//      getWindow().setStatusBarColor(Color.argb(0, 0, 62, 94));
+    }
+//    // 隐藏ActionBar
+//    ActionBar actionBar = getSupportActionBar();
+//    if (actionBar != null) {
+//      actionBar.hide();
+//    }
+    // 设置FitsSystemWindows
+    ViewGroup contentFrameLayout = findViewById(Window.ID_ANDROID_CONTENT);
+    View parentView = contentFrameLayout.getChildAt(0);
+    if (parentView != null && Build.VERSION.SDK_INT >= 19) {
+      // 不懂android，想实现跟iOS一样的效果，设置状态栏颜色。
+      // 有关于沉浸式的资料有写，但是需要设置android:fitsSystemWindows="true"。
+      // 但是试了不起作用，还是透明色，搜索过程中有资料要设为false，然后不报希望的试了一下，是想要的效果了。。。
+      // 更多资料可以看这个：
+      // http://yifeng.studio/2017/02/19/android-statusbar/
+      // https://www.zhihu.com/question/31468556
+      // https://yiweifen.com/html/news/WaiYu/114323.html
+      // 这里设置true不行，必须设置为false
+      parentView.setFitsSystemWindows(false);
+    }
 
 //    WXSDKEngine.setActivityNavBarSetter(new MyNavigatorAdapter());
 

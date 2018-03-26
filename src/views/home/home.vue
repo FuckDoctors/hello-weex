@@ -1,5 +1,7 @@
 <template>
   <div class="wrapper">
+    <top-area></top-area>
+
     <text class="greeting">Hello Weex!</text>
     <text class="message">Home page.</text>
     <text class="message" @click="jump('env')">环境参数</text>
@@ -14,6 +16,8 @@
 </template>
 
 <script>
+import TopArea from '@/components/top-area';
+
 import globalEvent from '@/utils/globalEvent';
 
 import helper from '../../utils/helper';
@@ -22,6 +26,9 @@ import { DOMAIN, DIST, ENABLE_HTTPS } from '../../config';
 const modal = weex.requireModule('modal');
 
 export default {
+  components: {
+    TopArea,
+  },
   data() {
     return {};
   },
@@ -78,8 +85,13 @@ export default {
 
 <style scoped>
 .wrapper {
-  justify-content: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   align-items: center;
+  align-content: center;
 }
 .greeting {
   margin-top: 70px;
@@ -87,7 +99,7 @@ export default {
   color: #41b883;
 }
 .message {
-  margin: 30px;
+  margin-top: 30px;
   font-size: 32px;
   color: #727272;
 }

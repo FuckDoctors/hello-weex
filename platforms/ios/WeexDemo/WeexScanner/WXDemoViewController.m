@@ -36,7 +36,6 @@
 {
     if (self = [super init]) {
     }
-
     return self;
 }
 
@@ -60,7 +59,6 @@
     }
 
 #endif
-
     [self render];
 }
 
@@ -125,7 +123,6 @@
     _instance = [[WXSDKInstance alloc] init];
     _instance.viewController = self;
     _instance.frame = CGRectMake(self.view.frame.size.width-width, 0, width, _weexHeight);
-
     __weak typeof(self) weakSelf = self;
     _instance.onCreate = ^(UIView *view) {
         [weakSelf.weexView removeFromSuperview];
@@ -151,12 +148,12 @@
 
     _instance.renderFinish = ^(UIView *view) {
          WXLogDebug(@"%@", @"Render Finish...");
-        // 下面删除空白页的方式没起作用，所以继续搜索，通过下面的方法实现删除navigator中指定的view
-        // 参考资料：https://stackoverflow.com/questions/10281545/removing-viewcontrollers-from-navigation-stack
-        NSMutableArray *navigationArray = [[NSMutableArray alloc] initWithArray: weakSelf.navigationController.viewControllers];
-        // [navigationArray removeAllObjects];    // This is just for remove all view controller from navigation stack.
-        [navigationArray removeObjectAtIndex: 0];  // You can pass your index here
-        weakSelf.navigationController.viewControllers = navigationArray;
+//        // 下面删除空白页的方式没起作用，所以继续搜索，通过下面的方法实现删除navigator中指定的view
+//        // 参考资料：https://stackoverflow.com/questions/10281545/removing-viewcontrollers-from-navigation-stack
+//        NSMutableArray *navigationArray = [[NSMutableArray alloc] initWithArray: weakSelf.navigationController.viewControllers];
+//        // [navigationArray removeAllObjects];    // This is just for remove all view controller from navigation stack.
+//        [navigationArray removeObjectAtIndex: 0];  // You can pass your index here
+//        weakSelf.navigationController.viewControllers = navigationArray;
 
         [weakSelf updateInstanceState:WeexInstanceAppear];
     };
@@ -172,14 +169,14 @@
     NSString *randomURL = [NSString stringWithFormat:@"%@%@random=%d",URL.absoluteString,URL.query?@"&":@"?",arc4random()];
     [_instance renderWithURL:[NSURL URLWithString:randomURL] options:@{@"bundleUrl":URL.absoluteString} data:nil];
 
-    // 第一个页面是空白页，做重定向，完后就不需要了。删除掉~
-    // 然而，这个办法没起到效果。。。
-    NSString *relativePath = [URL relativePath];
-    if ([relativePath isEqualToString:@"/index.js"]
-            || [relativePath isEqualToString:@"/dist/index.js"]
-            || [URL.absoluteString hasSuffix:@"/bundlejs/index.js"]) {
-        [self.weexView removeFromSuperview];
-    }
+//    // 第一个页面是空白页，做重定向，完后就不需要了。删除掉~
+//    // 然而，这个办法没起到效果。。。
+//    NSString *relativePath = [URL relativePath];
+//    if ([relativePath isEqualToString:@"/index.js"]
+//            || [relativePath isEqualToString:@"/dist/index.js"]
+//            || [URL.absoluteString hasSuffix:@"/bundlejs/index.js"]) {
+//        [self.weexView removeFromSuperview];
+//    }
 }
 
 - (void)updateInstanceState:(WXState)state

@@ -16,15 +16,15 @@ import weex from 'weex-vue-render';
 // weex.install(stream);
 
 // import * as filters from '@/filters';
-// import mixins from '@/mixins';
+import mixins from '@/mixins';
 
 // // register global utility filters.
 // Object.keys(filters).forEach(key => {
 //   Vue.filter(key, filters[key]);
 // });
 
-// // register global mixins.
-// Vue.mixin(mixins);
+// register global mixins.
+Vue.mixin(mixins);
 
 weex.init(Vue);
 

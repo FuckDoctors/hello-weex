@@ -1,26 +1,25 @@
 <template>
   <div class="wrapper">
+    <nav-bar title="login" :left-button-click="back"></nav-bar>
   </div>
 </template>
 
 <script>
-import helper from './utils/helper';
+import NavBar from '@/components/nav-bar';
+import helper from '@/utils/helper';
 
 export default {
+  components: {
+    NavBar,
+  },
   data() {
     return {
     };
   },
-  mounted() {
-    // helper.push('app');
-    // helper.replace('app');
-    helper.replaceOnline('views/login/login');
-    // // android可以，ios不可以
-    // helper.push('app', null, () => {
-    //   helper.close();
-    // });
-  },
   methods: {
+    back() {
+      helper.back();
+    },
   },
 };
 </script>

@@ -6,6 +6,7 @@ import * as config from '../config';
 // const navigator = weex.requireModule('navigator');
 const navigator = weex.requireModule('myNavigator') || weex.requireModule('navigator');
 // const modal = weex.requireModule('modal');
+const navEvent = weex.requireModule('myNavigatorEvent');
 
 /**
  * object 转 URL 参数，已拼接问号“？”。
@@ -250,8 +251,78 @@ function replace(to, params, callback) {
       url: `${baseUrl}${to}.js${allQuery}`,
       animated: 'true',
     }, (event) => {
-      // 关掉之前的页面
-      close();
+      if (WXEnvironment.platform.toLowerCase() === 'ios' && navEvent) {
+        // 删掉前一个页面
+        navEvent.removeBefore();
+      } else {
+        // 关掉之前的页面
+        close();
+      }
+      if (callback) {
+        callback(event);
+      }
+    });
+    // 下面使用先removeLast再push的方式，index本身就是第一个页面了，再removeLast就退出整个app了。。。
+    // if (WXEnvironment.platform.toLowerCase() === 'ios' && navEvent) {
+    //   // ios
+    //   navEvent.removeLast(() => {
+    //     navigator.push({
+    //       // route.url为相对地址时，为原生或者绝对地址时需要再单独处理
+    //       url: `${baseUrl}${to}.js${allQuery}`,
+    //       animated: 'true',
+    //     }, (event) => {
+    //       if (callback) {
+    //         callback(event);
+    //       }
+    //     });
+    //   });
+    // } else {
+    //   // android
+    //   navigator.push({
+    //     // route.url为相对地址时，为原生或者绝对地址时需要再单独处理
+    //     url: `${baseUrl}${to}.js${allQuery}`,
+    //     animated: 'true',
+    //   }, (event) => {
+    //     // 关掉之前的页面
+    //     close();
+    //     if (callback) {
+    //       callback(event);
+    //     }
+    //   });
+    // }
+  }
+}
+
+function replaceOnline(to, params, callback) {
+  const baseUrl = `http${config.ENABLE_HTTPS ? 's' : ''}://${config.DOMAIN}`;
+
+  let allQuery = '';
+  if (params) {
+    allQuery = createQuery(params);
+  }
+
+  if (WXEnvironment.platform === 'Web' || typeof window === 'object') {
+    // web
+    window.location.replace(`${baseUrl}/${to}.html${allQuery}`);
+  } else {
+    // native
+    const query = getQueryData(weex.config.bundleUrl);
+    allQuery = createQuery(query);
+    if (params) {
+      allQuery = createQuery(Object.assign({}, query, params));
+    }
+    navigator.push({
+      // route.url为相对地址时，为原生或者绝对地址时需要再单独处理
+      url: `${baseUrl}${config.DIST}/${to}.js${allQuery}`,
+      animated: 'true',
+    }, (event) => {
+      if (WXEnvironment.platform.toLowerCase() === 'ios' && navEvent) {
+        // 删掉前一个页面
+        navEvent.removeBefore();
+      } else {
+        // 关掉之前的页面
+        close();
+      }
       if (callback) {
         callback(event);
       }
@@ -270,5 +341,6 @@ export default {
   back,
   getParams,
   replace,
+  replaceOnline,
   close,
 };
