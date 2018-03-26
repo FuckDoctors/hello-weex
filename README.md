@@ -1,6 +1,8 @@
 # Hello Weex
 
 [![Build Status](https://travis-ci.org/FuckDoctors/hello-weex.svg?branch=dev)](https://travis-ci.org/FuckDoctors/hello-weex)
+master:![Last Commit](https://img.shields.io/github/last-commit/FuckDoctors/hello-weex.svg)
+dev:![Last Commit](https://img.shields.io/github/last-commit/FuckDoctors/hello-weex/dev.svg)
 
 ## Demo
 
@@ -14,9 +16,11 @@
 
 所以，Demo是有错的，希望以后慢慢解决。。。
 
+<!--
 ## Screenshots
 
 <img src="./static/img/web.png" width="30%" height="30%" /><img src="./static/img/iPhone8P.png" width="30%" height="30%" /><img src="./static/img/iPhoneX.png" width="30%" height="30%" />
+ -->
 
 ## Tips & Questions
 
@@ -95,7 +99,7 @@
 
           标题虽然是BroadcastChannel，其实写的是由BroadcastChannel改为globalEvent的事。
 
-* 后面再加。。。
+* [更多问题和内容](https://github.com/FuckDoctors/hello-weex/projects/1)
 
 ## Commands
 
