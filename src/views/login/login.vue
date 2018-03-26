@@ -35,7 +35,19 @@ export default {
       password: '',
     };
   },
+  created() {
+    this.checkLogin();
+  },
   methods: {
+    checkLogin() {
+      // const storage = weex.requireModule('storage');
+      storage.getItem(USER_KEY, (e) => {
+        if (e.result === 'success' && e.data !== undefined) {
+          // 已登录
+          helper.replaceOnline('app');
+        }
+      });
+    },
     check() {
       return true;
     },
