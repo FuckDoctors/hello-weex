@@ -35,7 +35,7 @@
     "postcss-px2rem": "^0.3.0",
     "vue": "^2.5.11",
     "weex-html5": "^0.4.1",
-    "weex-ui": "^0.4.1",
+    "weex-ui": "^0.6.0-beta-3",
     "weex-vue-render": "^1.0.17"
   },
   "devDependencies": {
