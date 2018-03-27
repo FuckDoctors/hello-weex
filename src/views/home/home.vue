@@ -8,14 +8,10 @@
             :icon-style="{color: 'white', fontSize: '28px', fontWeight: 'bold'}"></wxc-icon>
         <text class="geo" @click="changeLocation">齐鲁软件园</text>
       </div>
-      <wxc-searchbar ref="wxc-searchbar"
-                     :disabled="true"
-                     theme="transparent"
-                     class="search-bar"
-                     @wxcSearchbarInputReturned="wxcSearchbarInputReturned"
-                     @wxcSearchbarInputOnInput="wxcSearchbarInputOnInput"
-                     @wxcSearchbarInputDisabledClicked="wxcSearchbarInputDisabledClicked"
-                     @wxcSearchbarInputOnFocus="wxcSearchbarInputOnFocus"></wxc-searchbar>
+      <search-bar ref="search-bar"
+                  theme="transparent"
+                  :disabled="true"
+                  @searchbarInputDisabledClicked="searchbarInputDisabledClicked"></search-bar>
     </div>
   </div>
 </template>
@@ -23,8 +19,8 @@
 <script>
 import { WxcIcon } from 'weex-ui';
 
-import WxcSearchbar from '@/components/wxc-searchbar';
 import TopArea from '@/components/top-area';
+import SearchBar from '@/components/search-bar';
 import helper from '@/utils/helper';
 
 const modal = weex.requireModule('modal');
@@ -32,7 +28,7 @@ const modal = weex.requireModule('modal');
 export default {
   components: {
     TopArea,
-    WxcSearchbar,
+    SearchBar,
     WxcIcon,
   },
   data() {
@@ -46,22 +42,7 @@ export default {
         message: '未实现...',
       });
     },
-    wxcSearchbarInputReturned() {
-
-    },
-    wxcSearchbarInputOnInput(e) {
-      // 或者直接使用this.$refs.wxcSearchbar.setValue
-      this.searchKey = e.value;
-    },
-    wxcSearchbarInputOnFocus() {
-      // OnFocus后，会显示键盘，然后跳转到search页面。
-      // 但是在search页面点返回后，因为search还在OnFocus状态，所以又会跳回search页面...
-      // 所以换个实现方式，点下确定后，再跳转到search页面显示结果
-      // 上面的方式不好显示搜索历史
-      // 如果使用h5.ele.me的方式点击后跳转，应该使用disable模式？
-      // helper.push('views/search/search');
-    },
-    wxcSearchbarInputDisabledClicked() {
+    searchbarInputDisabledClicked() {
       helper.push('views/search/search');
     },
   },
@@ -100,26 +81,5 @@ export default {
   lines: 1;
   font-weight: bold;
 }
-.wxc-search-bar-transparent {
-  /* 不起作用 */
-  background-color: transparent;
-}
-.search-bar {
-  /* 这个只修饰了外层的div，内部的div还是白色 */
-  background-color: transparent;
-}
-.wxc-search-bar {
-  background-color: transparent;
-}
 
-.greeting {
-  margin-top: 70px;
-  font-size: 50px;
-  color: #41b883;
-}
-.message {
-  margin-top: 30px;
-  font-size: 32px;
-  color: #727272;
-}
 </style>

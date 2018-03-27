@@ -1,19 +1,23 @@
 <template>
   <div class="wrapper">
     <nav-bar title="搜索" :show-back="true" :left-button-click="back"></nav-bar>
+
     <div class="top">
-      <wxc-searchbar ref="wxc-searchbar"
+      <search-bar ref="search-bar"
                      theme="transparent"
-                     @wxcSearchbarInputReturned="wxcSearchbarInputReturned"
-                     @wxcSearchbarInputOnInput="wxcSearchbarInputOnInput"
-                     @wxcSearchbarInputOnFocus="wxcSearchbarInputOnFocus"></wxc-searchbar>
+                     :alwaysShowCancel="true"
+                     cancelLabel="搜索"
+                     @searchbarInputReturned="searchbarInputReturned"
+                     @searchbarInputOnInput="searchbarInputOnInput"
+                     @searchbarCancelClicked="searchbarSearchClicked"
+                     @searchbarInputOnFocus="searchbarInputOnFocus"></search-bar>
     </div>
   </div>
 </template>
 
 <script>
 import NavBar from '@/components/nav-bar';
-import WxcSearchbar from '@/components/wxc-searchbar';
+import SearchBar from '@/components/search-bar';
 import helper from '@/utils/helper';
 
 const modal = weex.requireModule('modal');
@@ -21,7 +25,7 @@ const modal = weex.requireModule('modal');
 export default {
   components: {
     NavBar,
-    WxcSearchbar,
+    SearchBar,
   },
   data() {
     return {
@@ -29,16 +33,27 @@ export default {
     };
   },
   methods: {
-    wxcSearchbarInputReturned() {
+    searchbarInputReturned() {
+      if (this.searchKey.length === 0) {
+        return;
+      }
       modal.toast({
         message: `Searching ${this.searchKey}...`,
       });
     },
-    wxcSearchbarInputOnInput(e) {
+    searchbarInputOnInput(e) {
       this.searchKey = e.value;
     },
-    wxcSearchbarInputOnFocus() {
+    searchbarInputOnFocus() {
 
+    },
+    searchbarSearchClicked() {
+      // 只调用Returned方法焦点还在，键盘不消失。
+      // this.searchbarInputReturned();
+      // 只触发下面的onSubmit也不行。。。
+      // 还得加上autoBlur。。。
+      this.$refs['search-bar'].autoBlur();
+      this.$refs['search-bar'].onSubmit({ value: this.searchKey });
     },
     back() {
       helper.back();

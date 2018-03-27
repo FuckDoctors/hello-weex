@@ -131,6 +131,7 @@
   position: absolute;
   left: 0;
   right: 0;
+  top: 10px;
   background-color: transparent;
 }
 </style>
@@ -254,9 +255,6 @@ export default {
     },
     detectShowClose() {
       this.showClose = this.value.length > 0 && this.showCancel;
-    },
-    depClicked() {
-      this.$emit('searchbarDepChooseClicked', {});
     },
     inputDisabledClicked() {
       this.$emit('searchbarInputDisabledClicked', {});
