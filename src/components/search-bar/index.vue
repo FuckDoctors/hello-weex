@@ -201,6 +201,17 @@ export default {
       this.showClose = false;
     }
   },
+  mounted() {
+    // ios和android端，输入框偏小。
+    // 这里重新设置一下。
+    // 不过没起作用。。。
+    if (WXEnvironment.platform !== 'Web') {
+      const dom = weex.requireModule('dom');
+      dom.getComponentRect(this.$refs['search-input'], (option) => {
+        this.$refs['search-input'].style.width = `${option.size.width + 20}px`;
+      });
+    }
+  },
   methods: {
     onBlur() {
       const self = this;
