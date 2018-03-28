@@ -1,5 +1,9 @@
 <template>
   <div class="nav-wrapper" :show-back="showBack" :style="wrapperStyle">
+    <!-- 怎么实现嵌套slot？ -->
+    <!-- https://forum.vuejs.org/t/nested-slots/18264/5 -->
+    <!-- https://jsfiddle.net/Herteby/wee90hmh/ -->
+
     <wxc-minibar :title="title"
                   :background-color="backgroundColor"
                   :text-color="textColor"
@@ -9,6 +13,15 @@
                   :right-text="rightText"
                   :right-button="rightButton"
                   >
+      <template v-if="$slots.cleft && $slots.cleft.length > 0" slot="left">
+        <slot name="cleft"></slot>
+      </template>
+      <template v-if="$slots.cmiddle && $slots.cmiddle.length > 0" slot="middle">
+        <slot name="cmiddle"></slot>
+      </template>
+      <template v-if="$slots.cright && $slots.cright.length > 0" slot="right">
+        <slot name="cright"></slot>
+      </template>
     </wxc-minibar>
   </div>
 </template>
@@ -59,6 +72,7 @@ export default {
     };
   },
   created() {
+    console.log(this.$slots);
     this.wrapperStyle = {
       backgroundColor: this.backgroundColor,
       height: Utils.env.isWeb() ? 'auto' : utils.getNavHeight(),
