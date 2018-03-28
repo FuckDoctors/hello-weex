@@ -72,7 +72,6 @@ export default {
     };
   },
   created() {
-    console.log(this.$slots);
     this.wrapperStyle = {
       backgroundColor: this.backgroundColor,
       height: Utils.env.isWeb() ? 'auto' : utils.getNavHeight(),

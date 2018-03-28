@@ -74,6 +74,7 @@
 }
 .search-bar-input {
   background-color: transparent;
+  outline: none;
   flex: 1;
 }
 

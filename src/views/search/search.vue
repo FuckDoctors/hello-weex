@@ -1,17 +1,6 @@
 <template>
   <div class="wrapper">
-    <nav-bar title="搜索" :show-back="true" :left-button-click="back">
-      <template slot="cmiddle">
-        <search-bar ref="search-bar2"
-                     theme="transparent"
-                     :alwaysShowCancel="true"
-                     cancelLabel="搜索"
-                     @searchbarInputReturned="searchbarInputReturned"
-                     @searchbarInputOnInput="searchbarInputOnInput"
-                     @searchbarCancelClicked="searchbarSearchClicked"
-                     @searchbarInputOnFocus="searchbarInputOnFocus"></search-bar>
-      </template>
-    </nav-bar>
+    <nav-bar title="搜索" :show-back="true" :left-button-click="back"></nav-bar>
 
     <div class="top">
       <search-bar ref="search-bar"
