@@ -1,4 +1,4 @@
-export const DEV_DOMAIN = '192.168.202.84:8081';
+export const DEV_DOMAIN = '192.168.1.86:8081';
 // hot reload之后，DOMAIN为undefined，process.env内容丢失？
 export const DOMAIN = process.env.DOMAIN || DEV_DOMAIN;
 export const ENABLE_HTTPS = process.env.ENABLE_HTTPS;

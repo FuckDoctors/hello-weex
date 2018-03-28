@@ -13,6 +13,8 @@
                   :disabled="true"
                   @searchbarInputDisabledClicked="searchbarInputDisabledClicked"></search-bar>
     </div>
+
+    <scroller class="scroller"></scroller>
   </div>
 </template>
 
@@ -80,6 +82,10 @@ export default {
   color: #ffffff;
   lines: 1;
   font-weight: bold;
+}
+
+.scroller {
+  flex: 1;
 }
 
 </style>
