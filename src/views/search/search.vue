@@ -18,6 +18,19 @@
         @click="clickHistory(item)"
         v-for="(item, index) in history" :key="index">{{item.key}}</text>
     </div>
+
+    <scroller class="scroller">
+      <div class="instant-result">
+        <div class="instant-shop">
+          <div class="shop-item">
+            <!-- <image class="shop-image" :src=""></image> -->
+            <div class="shop-title"></div>
+            <div class="shop-rating"></div>
+          </div>
+        </div>
+        <div class="instant-keywords"></div>
+      </div>
+    </scroller>
   </div>
 </template>
 
@@ -45,9 +58,9 @@ export default {
     this.history = [
       '奶粉',
       '超级能恩',
-      '超级能恩3端',
+      '超级能恩3段',
       '一',
-      '雀巢超级能恩3端',
+      '雀巢超级能恩3段',
       '纸尿裤',
       '花王纸尿裤',
       '超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容',
@@ -151,6 +164,7 @@ export default {
   lines: 1;
   font-size: 24px;
   height: 60px;
+  /* 设置1.5倍的字体大小，还是能看出来一点第二行的内容，所以稍微调大了一点。 */
   line-height: 38px;
   max-width: 660px;
   text-overflow: ellipsis;

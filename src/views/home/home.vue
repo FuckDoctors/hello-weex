@@ -6,7 +6,7 @@
       <div class="location">
         <wxc-icon class="location-icon" name="map"
             :icon-style="{color: 'white', fontSize: '28px', fontWeight: 'bold'}"></wxc-icon>
-        <text class="geo" @click="changeLocation">齐鲁软件园</text>
+        <text class="geo" @click="changeLocation">{{location}}</text>
       </div>
       <search-bar ref="search-bar"
                   theme="transparent"
@@ -28,6 +28,14 @@ import { WxcIcon } from 'weex-ui';
 import TopArea from '@/components/top-area';
 import SearchBar from '@/components/search-bar';
 import helper from '@/utils/helper';
+import storageHelper from '@/utils/storageHelper';
+
+import geoService from '@/services/geoService';
+
+import {
+  GEO_KEY,
+  GEO_MORE_KEY,
+} from '@/config';
 
 const modal = weex.requireModule('modal');
 
@@ -40,9 +48,28 @@ export default {
   data() {
     return {
       searchKey: '',
+      location: '',
+      geo: {},
     };
   },
+  mounted() {
+    this.init();
+  },
   methods: {
+    init() {
+      // h5.ele.me信息
+      // 齐鲁软件园
+      this.geo = {
+        latitude: 36.672408,
+        longitude: 117.134598,
+      };
+      storageHelper.setItem(GEO_KEY, JSON.stringify(this.geo));
+      geoService.reverseGeo(this.geo.latitude, this.geo.longitude)
+        .then((ret) => {
+          this.location = ret.data.name;
+          storageHelper.setItem(GEO_MORE_KEY, JSON.stringify(ret.data));
+        });
+    },
     changeLocation() {
       modal.toast({
         message: '未实现...',

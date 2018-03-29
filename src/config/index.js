@@ -15,3 +15,5 @@ export const WHITE_LIST = [
   'views/about',
 ];
 export const USER_KEY = 'USER';
+export const GEO_KEY = 'GEO';
+export const GEO_MORE_KEY = 'GEO_MORE';
