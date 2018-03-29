@@ -14,7 +14,11 @@
                   @searchbarInputDisabledClicked="searchbarInputDisabledClicked"></search-bar>
     </div>
 
-    <scroller class="scroller"></scroller>
+    <scroller class="scroller">
+      <div class="banner">
+        <text>banner</text>
+      </div>
+    </scroller>
   </div>
 </template>
 

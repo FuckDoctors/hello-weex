@@ -12,6 +12,11 @@
                      @searchbarCancelClicked="searchbarSearchClicked"
                      @searchbarInputOnFocus="searchbarInputOnFocus"></search-bar>
     </div>
+
+    <div class="history-list">
+      <text lines="1" class="history-key"
+        v-for="(item, index) in history" :key="index">{{item}}</text>
+    </div>
   </div>
 </template>
 
@@ -30,7 +35,23 @@ export default {
   data() {
     return {
       searchKey: '',
+      history: [],
+      result: [],
     };
+  },
+  mounted() {
+    this.history = [
+      '奶粉',
+      '超级能恩',
+      '超级能恩3端',
+      '一',
+      '雀巢超级能恩3端',
+      '纸尿裤',
+      '花王纸尿裤',
+      '超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容',
+      '儿童车',
+      '1',
+    ];
   },
   methods: {
     searchbarInputReturned() {
@@ -74,5 +95,32 @@ export default {
 .top {
   background-color: #009ff0;
   color: #ffffff;
+}
+
+.history-list {
+  /* margin-top: 40px; */
+  margin-bottom: 40px;
+  /* padding-left: 30px; */
+  padding-right: 30px;
+  flex: 1;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.history-key {
+  margin-top: 30px;
+  margin-left: 20px;
+  padding-top: 10px;;
+  padding-right: 20px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  border-radius: 30px;
+  border-width: 3px;
+  border-color: #D3D3D3;
+  lines: 1;
+  font-size: 24px;
+  height: 60px;
+  line-height: 38px;
+  max-width: 660px;
+  text-overflow: ellipsis;
 }
 </style>
