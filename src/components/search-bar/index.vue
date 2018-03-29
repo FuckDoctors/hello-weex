@@ -140,6 +140,8 @@
 <script>
 import { INPUT_ICON, ARROW_ICON, CLOSE_ICON } from './type';
 
+// const dom = weex.requireModule('dom');
+
 export default {
   props: {
     disabled: {
@@ -205,12 +207,26 @@ export default {
     // ios和android端，输入框偏小。
     // 这里重新设置一下。
     // 不过没起作用。。。
+    // const modal = weex.requireModule('modal');
+    // setTimeout(() => {
     if (WXEnvironment.platform !== 'Web') {
-      const dom = weex.requireModule('dom');
-      dom.getComponentRect(this.$refs['search-input'], (option) => {
-        this.$refs['search-input'].style.width = `${option.size.width + 20}px`;
-      });
+      // 想重新设下search-bar的宽度，但得到的width一直为0，不知为何。
+      // 首页加载时，toast显示的还是能正常显示的。。。
+      // const dom = weex.requireModule('dom');
+      // dom.getComponentRect(this.$refs['search-input'], (option) => {
+      //   // modal.toast({
+      //   //   message: JSON.stringify(option),
+      //   // });
+      //   modal.toast({
+      //     message: `callback: ${option.size.width}`,
+      //   });
+      //   this.$refs['search-input'].style.width = `${option.size.width + 20}`;
+      // });
+
+      // this.$refs['search-input'].style.width =
+      //   `${parseFloat(this.$refs['search-input'].style.width) + 30}px`;
     }
+    // }, 200);
   },
   methods: {
     onBlur() {
