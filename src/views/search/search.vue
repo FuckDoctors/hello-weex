@@ -15,7 +15,8 @@
 
     <div class="history-list">
       <text lines="1" class="history-key"
-        v-for="(item, index) in history" :key="index">{{item}}</text>
+        @click="clickHistory(item)"
+        v-for="(item, index) in history" :key="index">{{item.key}}</text>
     </div>
   </div>
 </template>
@@ -40,6 +41,7 @@ export default {
     };
   },
   mounted() {
+    const date = Date.now();
     this.history = [
       '奶粉',
       '超级能恩',
@@ -51,13 +53,42 @@ export default {
       '超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容',
       '儿童车',
       '1',
-    ];
+    ].map((value) => {
+      const obj = {
+        weight: 1,
+        key: value,
+        date,
+      };
+      return obj;
+    });
   },
   methods: {
+    clickHistory(history) {
+      this.searchKey = history.key;
+      this.searchbarSearchClicked();
+    },
+    addHistoryKey(key) {
+      const date = Date.now();
+
+      const arr = this.history.filter(item => item.key === key);
+      if (arr.length > 0) {
+        arr[0].weight += 1;
+        arr[0].date = date;
+      } else {
+        this.history.push({
+          weight: 1,
+          key,
+          date,
+        });
+      }
+      // 排序
+      this.history.sort((a, b) => b.date - a.date);
+    },
     searchbarInputReturned() {
       if (this.searchKey.length === 0) {
         return;
       }
+      this.addHistoryKey(this.searchKey);
       modal.toast({
         message: `Searching ${this.searchKey}...`,
       });
@@ -75,6 +106,7 @@ export default {
       // 还得加上autoBlur。。。
       this.$refs['search-bar'].autoBlur();
       this.$refs['search-bar'].onSubmit({ value: this.searchKey });
+      this.addHistoryKey(this.searchKey);
     },
     back() {
       helper.back();
