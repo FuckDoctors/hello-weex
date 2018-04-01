@@ -1,7 +1,25 @@
 const stream = weex.requireModule('stream');
 
 export default {
-  fetch(options, hasProgress = false) {
+  fetch(options, shasProgress = false) {
+    // return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
+      stream.fetch(options, (ret) => {
+        // if (ret.ok) {
+        //   resolve(ret);
+        // } else {
+        //   reject(ret);
+        // }
+        resolve(ret);
+      }, (response) => {
+        if (shasProgress) {
+          resolve(response);
+        }
+      });
+    });
+  },
+
+  fetch2(options, hasProgress = false) {
     const promises = [];
 
     return new Promise((resolve) => {
