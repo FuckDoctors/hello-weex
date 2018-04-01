@@ -113,6 +113,9 @@ export default {
 
     },
     searchbarSearchClicked() {
+      if (this.searchKey.length === 0) {
+        return;
+      }
       // 只调用Returned方法焦点还在，键盘不消失。
       // this.searchbarInputReturned();
       // 只触发下面的onSubmit也不行。。。
