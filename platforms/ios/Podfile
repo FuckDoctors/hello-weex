@@ -9,6 +9,7 @@ def common
     pod 'SocketRocket', '0.4.2'
     pod 'WXDevtool', '0.15.3', :configurations => ['Debug']
     # pod 'ATSDK-Weex', '0.0.1', :configurations => ['Debug']
+    pod 'BindingX', '~> 1.0.1'
 end
 
 target 'WeexDemo' do

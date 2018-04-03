@@ -4,6 +4,7 @@ import android.app.Application;
 import android.os.Build;
 import android.os.StrictMode;
 
+import com.alibaba.android.bindingx.plugin.weex.BindingX;
 import com.alibaba.weex.plugin.loader.WeexPluginContainer;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXEnvironment;
@@ -49,6 +50,16 @@ public class WXApplication extends Application {
       e.printStackTrace();
     }
     AppConfig.init(this);
+
+    // register bindingx module manually
+    try {
+      BindingX.register();
+    } catch (WXException e) {
+    }
+
+    // register bindingx module automatically by annotation processor
+//        WeexPluginContainer.loadAll(getApplicationContext());
+
     WeexPluginContainer.loadAll(this);
   }
 
