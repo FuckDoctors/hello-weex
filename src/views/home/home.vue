@@ -16,14 +16,34 @@
 
     <scroller class="scroller">
       <div class="banner">
-        <text>banner</text>
+        <wxc-ep-slider ref="banner-slider"
+                        :slider-id="bannerSliderId"
+                        :card-length="bannerSliderCardLength"
+                        :container-s="bannerSliderContainerStyle"
+                        :card-s="bannerSliderCardSize"
+                        :interval="bannerSliderInterval"
+                        :auto-play="true">
+           <wxc-pan-item v-for="(item, index) in bannerSliders" :key="index"
+                          :ext-id="index"
+                          @wxcPanItemPan="bannerSliderItemPan"
+                          @wxcPanItemClicked="bannerSliderItemClicked"
+                          :class="['banner-slider']"
+                          :slot="`card${index}_${bannerSliderId}`">
+            <text>banner {{index}}, title: {{item.title}}</text>
+           </wxc-pan-item>
+        </wxc-ep-slider>
       </div>
     </scroller>
   </div>
 </template>
 
 <script>
-import { WxcIcon } from 'weex-ui';
+import {
+  WxcIcon,
+  WxcEpSlider,
+  WxcPanItem,
+  // BindEnv, // 引入这个就报错，而且报的错有点奇怪。。。
+} from 'weex-ui';
 
 import TopArea from '@/components/top-area';
 import SearchBar from '@/components/search-bar';
@@ -44,12 +64,20 @@ export default {
     TopArea,
     SearchBar,
     WxcIcon,
+    WxcEpSlider,
+    WxcPanItem,
   },
   data() {
     return {
       searchKey: '',
       location: '',
       geo: {},
+      bannerSliders: [],
+      bannerSliderId: 1,
+      bannerSliderCardLength: 3,
+      bannerSliderContainerStyle: {},
+      bannerSliderCardSize: {},
+      bannerSliderInterval: 3000,
     };
   },
   mounted() {
@@ -69,6 +97,53 @@ export default {
           this.location = ret.data.name;
           storageHelper.setItem(GEO_MORE_KEY, JSON.stringify(ret.data));
         });
+
+      // banner
+      this.initBannerSlider();
+    },
+    initBannerSlider() {
+      this.bannerSliders = [
+        {
+          title: '标题1',
+          img: 'https://img.alicdn.com/tps/TB1zBLaPXXXXXXeXXXXXXXXXXXX-121-59.svg',
+        },
+        {
+          title: '标题2',
+          img: 'https://img.alicdn.com/tps/TB1zBLaPXXXXXXeXXXXXXXXXXXX-121-59.svg',
+        },
+        {
+          title: '标题3',
+          img: 'https://img.alicdn.com/tps/TB1zBLaPXXXXXXeXXXXXXXXXXXX-121-59.svg',
+        },
+        {
+          title: '标题4',
+          img: 'https://img.alicdn.com/tps/TB1zBLaPXXXXXXeXXXXXXXXXXXX-121-59.svg',
+        },
+      ];
+      this.bannerSliderCardLength = this.bannerSliders.length;
+
+      // 样式
+      this.bannerSliderContainerStyle = {
+        flex: 1,
+        flexDirection: 'row',
+      };
+      this.bannerSliderCardSize = {
+        height: 300,
+        width: 750,
+        spacing: 0,
+        scale: 1,
+      };
+    },
+    bannerSliderItemPan({ element }) {
+      console.log(`Panning ${element.extId}`);
+      // if (BindEnv.supportsEBForAndroid()) {
+      //   this.$refs['banner-slider'].bindExp(element);
+      // }
+    },
+    bannerSliderItemClicked({ extId }) {
+      modal.toast({
+        message: `点击了第${extId}个Banner...`,
+      });
     },
     changeLocation() {
       modal.toast({
@@ -117,6 +192,17 @@ export default {
 
 .scroller {
   flex: 1;
+}
+
+.banner {
+  width: 750px;
+  height: 300px;
+}
+
+.banner-slider {
+  flex: 1;
+  align-items: center;
+  justify-content: center;
 }
 
 </style>
