@@ -22,6 +22,7 @@
                         :container-s="bannerSliderContainerStyle"
                         :card-s="bannerSliderCardSize"
                         :interval="bannerSliderInterval"
+                        @wxcEpSliderCurrentIndexSelected="bannerSliderIndexSelected"
                         :auto-play="false">
            <wxc-pan-item v-for="(item, index) in bannerSliders" :key="index"
                           :ext-id="index"
@@ -33,6 +34,12 @@
             <!-- <text>banner {{index}}, title: {{item.title}}</text> -->
            </wxc-pan-item>
         </wxc-ep-slider>
+        <div class="banner-indicator-wrapper">
+          <text v-for="(item, index) in bannerSliders" :key="index"
+                :class="['banner-indicator',
+                  index === bannerIndex && 'banner-indicator-checked']"
+                @click="changeBannerPage(index)"></text>
+        </div>
       </div>
     </scroller>
   </div>
@@ -79,6 +86,7 @@ export default {
       bannerSliderContainerStyle: {},
       bannerSliderCardSize: {},
       bannerSliderInterval: 3000,
+      bannerIndex: 0,
     };
   },
   mounted() {
@@ -152,6 +160,12 @@ export default {
         message: `点击了第${extId}个Banner...`,
       });
     },
+    bannerSliderIndexSelected(e) {
+      this.bannerIndex = e.currentIndex;
+    },
+    changeBannerPage(index) {
+      this.$refs['banner-slider'].manualSetPage(index);
+    },
     changeLocation() {
       modal.toast({
         message: '未实现...',
@@ -217,6 +231,28 @@ export default {
   /* flex: 1; */
   width: 750px;
   height: 300px;
+}
+
+.banner-indicator-wrapper {
+  position: relative;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  flex-direction: row;
+  justify-content: center;
+}
+.banner-indicator {
+  width: 15px;
+  height: 15px;
+  border-radius: 5px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #ffffff;
+  background-color: transparent;
+  margin-left: 10px;
+}
+.banner-indicator-checked {
+  background-color: #ffffff;
 }
 
 </style>
