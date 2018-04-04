@@ -22,14 +22,15 @@
                         :container-s="bannerSliderContainerStyle"
                         :card-s="bannerSliderCardSize"
                         :interval="bannerSliderInterval"
-                        :auto-play="true">
+                        :auto-play="false">
            <wxc-pan-item v-for="(item, index) in bannerSliders" :key="index"
                           :ext-id="index"
                           @wxcPanItemPan="bannerSliderItemPan"
                           @wxcPanItemClicked="bannerSliderItemClicked"
                           :class="['banner-slider']"
                           :slot="`card${index}_${bannerSliderId}`">
-            <text>banner {{index}}, title: {{item.title}}</text>
+            <image :src="item.img" resize="cover" class="banner-slider-image"></image>
+            <!-- <text>banner {{index}}, title: {{item.title}}</text> -->
            </wxc-pan-item>
         </wxc-ep-slider>
       </div>
@@ -105,15 +106,15 @@ export default {
       this.bannerSliders = [
         {
           title: '标题1',
-          img: 'https://img.alicdn.com/tps/TB1zBLaPXXXXXXeXXXXXXXXXXXX-121-59.svg',
+          img: 'http://tva1.sinaimg.cn/crop.0.0.180.180.180/7aa84b53jw1e8qgp5bmzyj2050050aa8.jpg',
         },
         {
           title: '标题2',
-          img: 'https://img.alicdn.com/tps/TB1zBLaPXXXXXXeXXXXXXXXXXXX-121-59.svg',
+          img: 'http://tva1.sinaimg.cn/crop.0.0.180.180.180/7aa84b53jw1e8qgp5bmzyj2050050aa8.jpg',
         },
         {
           title: '标题3',
-          img: 'https://img.alicdn.com/tps/TB1zBLaPXXXXXXeXXXXXXXXXXXX-121-59.svg',
+          img: 'http://tva1.sinaimg.cn/crop.0.0.180.180.180/7aa84b53jw1e8qgp5bmzyj2050050aa8.jpg',
         },
         {
           title: '标题4',
@@ -203,12 +204,19 @@ export default {
 .banner {
   width: 750px;
   height: 300px;
+  /* background-color: #ffffff; */
 }
 
 .banner-slider {
   flex: 1;
   align-items: center;
   justify-content: center;
+}
+
+.banner-slider-image {
+  /* flex: 1; */
+  width: 750px;
+  height: 300px;
 }
 
 </style>
