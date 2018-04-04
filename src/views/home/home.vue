@@ -122,11 +122,17 @@ export default {
       ];
       this.bannerSliderCardLength = this.bannerSliders.length;
 
+      // container-s和card-s必须包含特定的那几个属性，不然ep-slider有问题。
       // 样式
       this.bannerSliderContainerStyle = {
         flex: 1,
         flexDirection: 'row',
+        // 下面几个是必须的属性
+        position: 'relative',
+        width: 750,
+        height: 312,
       };
+      // 下面几个是必须的属性
       this.bannerSliderCardSize = {
         height: 300,
         width: 750,
