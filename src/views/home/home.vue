@@ -23,7 +23,7 @@
                         :card-s="bannerSliderCardSize"
                         :interval="bannerSliderInterval"
                         @wxcEpSliderCurrentIndexSelected="bannerSliderIndexSelected"
-                        :auto-play="false">
+                        :auto-play="true">
            <wxc-pan-item v-for="(item, index) in bannerSliders" :key="index"
                           :ext-id="index"
                           @wxcPanItemPan="bannerSliderItemPan"
@@ -41,6 +41,13 @@
                 @click="changeBannerPage(index)"></text>
         </div>
       </div>
+
+      <slider :sliders="bannerSliders" :card-length="bannerSliders.length">
+        <image v-for="(item, index) in bannerSliders" :key="index"
+                :src="item.img"
+                :style="{width: '750px', height: '320px'}"
+                :slot="`slider-item-${index}`"></image>
+      </slider>
     </scroller>
   </div>
 </template>
@@ -55,6 +62,7 @@ import {
 
 import TopArea from '@/components/top-area';
 import SearchBar from '@/components/search-bar';
+import Slider from '@/components/slider';
 import helper from '@/utils/helper';
 import storageHelper from '@/utils/storageHelper';
 
@@ -74,6 +82,7 @@ export default {
     WxcIcon,
     WxcEpSlider,
     WxcPanItem,
+    Slider,
   },
   data() {
     return {
