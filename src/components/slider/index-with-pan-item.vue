@@ -9,7 +9,12 @@
                     @wxcEpSliderCurrentIndexSelected="sliderIndexSelected"
                     :auto-play="autoPlay">
       <template v-for="(item, index) in sliders" :slot="`card${index}_${sliderId}`">
-        <slot :name="`slider-item-${index}`"></slot>
+        <wxc-pan-item :key="index"
+                      :class="['slider-item']"
+                      @wxcPanItemPan="sliderItemPan"
+                      @wxcPanItemClicked="sliderItemClicked">
+          <slot :name="`slider-item-${index}`"></slot>
+        </wxc-pan-item>
       </template>
     </wxc-ep-slider>
     <div class="indicator-wrapper" v-if="showIndicator">
@@ -129,6 +134,12 @@ export default {
     },
     changePage(index) {
       this.$refs['ep-slider'].manualSetPage(index);
+    },
+    sliderItemPan() {
+      this.$emit('sliderItemPan', this.selectedIndex);
+    },
+    sliderItemClicked() {
+      this.$emit('sliderItemClicked', this.selectedIndex);
     },
   },
 

@@ -42,12 +42,30 @@
         </div>
       </div>
 
-      <slider :sliders="bannerSliders" :card-length="bannerSliders.length">
-        <image v-for="(item, index) in bannerSliders" :key="index"
+      <!-- 这种在slider组件内埋入wxc-pan-item的方式，slider显示不正常，
+        手动滑动是循环的效果，而且不显示indicator，也不能触发sliderItemClicked事件。
+       -->
+      <!-- <slider :sliders="sliders"
+              :slider-id="2"
+              @sliderItemClicked="sliderItemClicked">
+        <image v-for="(item, index) in sliders" :key="index"
                 :src="item.img"
                 :style="{width: '750px', height: '320px'}"
                 :slot="`slider-item-${index}`"></image>
-      </slider>
+      </slider> -->
+
+      <!-- 这个也不显示indicator，高度不对，估计是组件哪个地方写错了。。。外层出了滚动条 -->
+      <!-- <slider :sliders="sliders"
+              :slider-id="3"
+              :auto-play="true">
+        <wxc-pan-item v-for="(item, index) in sliders" :key="index"
+                          :ext-id="index"
+                          @wxcPanItemPan="sliderItemPan(index)"
+                          @wxcPanItemClicked="sliderItemClicked(index)"
+                          :slot="`slider-item-${index}`">
+          <image :src="item.img" :style="{width: '750px', height: '320px'}"></image>
+        </wxc-pan-item>
+      </slider> -->
     </scroller>
   </div>
 </template>
@@ -96,6 +114,7 @@ export default {
       bannerSliderCardSize: {},
       bannerSliderInterval: 3000,
       bannerIndex: 0,
+      sliders: [],
     };
   },
   mounted() {
@@ -118,24 +137,45 @@ export default {
 
       // banner
       this.initBannerSlider();
+
+      // slider test
+      this.sliders = [
+        {
+          text: '花王纸尿裤',
+          img: 'https://img1.360buyimg.com/da/jfs/t19219/215/1354604768/135651/2c8150bb/5ac4b50dNf32e5913.jpg!cr_1125x549_0_72',
+        },
+        {
+          text: '好奇纸尿裤',
+          img: 'https://m.360buyimg.com/mobilecms/s1125x549_jfs/t7234/236/3937100355/467052/30cb123b/5ac38c3eNd9f13d4e.jpg!cr_1125x549_0_72!q70.jpg',
+        },
+        {
+          img: 'https://m.360buyimg.com/mobilecms/s828x404_jfs/t18673/217/1170508430/427170/b64ee48d/5abd9d7fN87b54c6e.jpg!cr_1125x549_0_72!q70.jpg',
+        },
+        {
+          img: 'https://m.360buyimg.com/mobilecms/s828x404_jfs/t19063/225/1080488411/146586/d2df102/5abb4683Nc8f84cfc.jpg!cr_1125x549_0_72!q70.jpg',
+        },
+        {
+          img: 'https://m.360buyimg.com/mobilecms/s828x404_jfs/t18841/5/1285260207/98918/82c8b3be/5ac3459dN292e8395.jpg!cr_1125x549_0_72!q70.jpg',
+        },
+      ];
     },
     initBannerSlider() {
       this.bannerSliders = [
         {
-          title: '标题1',
-          img: 'http://tva1.sinaimg.cn/crop.0.0.180.180.180/7aa84b53jw1e8qgp5bmzyj2050050aa8.jpg',
+          title: '花王纸尿裤',
+          img: 'https://img1.360buyimg.com/da/jfs/t19219/215/1354604768/135651/2c8150bb/5ac4b50dNf32e5913.jpg!cr_1125x549_0_72',
         },
         {
-          title: '标题2',
-          img: 'http://tva1.sinaimg.cn/crop.0.0.180.180.180/7aa84b53jw1e8qgp5bmzyj2050050aa8.jpg',
+          title: '好奇纸尿裤',
+          img: 'https://m.360buyimg.com/mobilecms/s1125x549_jfs/t7234/236/3937100355/467052/30cb123b/5ac38c3eNd9f13d4e.jpg!cr_1125x549_0_72!q70.jpg',
         },
         {
           title: '标题3',
-          img: 'http://tva1.sinaimg.cn/crop.0.0.180.180.180/7aa84b53jw1e8qgp5bmzyj2050050aa8.jpg',
+          img: 'https://m.360buyimg.com/mobilecms/s828x404_jfs/t18673/217/1170508430/427170/b64ee48d/5abd9d7fN87b54c6e.jpg!cr_1125x549_0_72!q70.jpg',
         },
         {
           title: '标题4',
-          img: 'https://img.alicdn.com/tps/TB1zBLaPXXXXXXeXXXXXXXXXXXX-121-59.svg',
+          img: 'https://m.360buyimg.com/mobilecms/s828x404_jfs/t19063/225/1080488411/146586/d2df102/5abb4683Nc8f84cfc.jpg!cr_1125x549_0_72!q70.jpg',
         },
       ];
       this.bannerSliderCardLength = this.bannerSliders.length;
@@ -174,6 +214,16 @@ export default {
     },
     changeBannerPage(index) {
       this.$refs['banner-slider'].manualSetPage(index);
+    },
+    sliderItemPan(index) {
+      modal.toast({
+        message: `按下了第${index}个slider...`,
+      });
+    },
+    sliderItemClicked(index) {
+      modal.toast({
+        message: `点击了第${index}个slider...`,
+      });
     },
     changeLocation() {
       modal.toast({
@@ -243,7 +293,7 @@ export default {
 }
 
 .banner-indicator-wrapper {
-  position: relative;
+  position: absolute;
   left: 0;
   right: 0;
   bottom: 10px;
