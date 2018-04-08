@@ -47,7 +47,7 @@
         原因：sliderItemClicked事件写错了，改正后可以触发了。
         后来不知怎么搞的，indicator也正常了。。。
        -->
-      <slider2 :sliders="sliders"
+      <ep-slider-pan :sliders="sliders"
               :slider-id="2"
               class="slider-comp"
               @sliderItemClicked="sliderItemClicked">
@@ -55,12 +55,12 @@
                 :src="item.img"
                 :style="{width: '750px', height: '320px'}"
                 :slot="`slider-item-${index}`"></image>
-      </slider2>
+      </ep-slider-pan>
 
       <!-- 这个也不显示indicator，高度不对，估计是组件哪个地方写错了。。。外层出了滚动条，
           slider组件设置了高和宽之后不会出多余滚动条了，但是好像scroller的滚动条本身就有问题。。。
        -->
-      <slider1 :sliders="sliders"
+      <ep-slider :sliders="sliders"
               :slider-id="3"
               class="slider-comp"
               :auto-play="true">
@@ -69,7 +69,7 @@
                           :slot="`slider-item-${index}`">
           <image :src="item.img" :style="{width: '750px', height: '320px'}"></image>
         </wxc-pan-item>
-      </slider1>
+      </ep-slider>
       <text>Native没显示indicator...</text>
     </scroller>
   </div>
@@ -85,8 +85,8 @@ import {
 
 import TopArea from '@/components/top-area';
 import SearchBar from '@/components/search-bar';
-import Slider1 from '@/components/slider';
-import Slider2 from '@/components/slider/slider-with-pan-item';
+import EpSlider from '@/components/ep-slider';
+import EpSliderPan from '@/components/ep-slider/slider-with-pan-item';
 import helper from '@/utils/helper';
 import storageHelper from '@/utils/storageHelper';
 
@@ -106,8 +106,8 @@ export default {
     WxcIcon,
     WxcEpSlider,
     WxcPanItem,
-    Slider1,
-    Slider2,
+    EpSlider,
+    EpSliderPan,
   },
   data() {
     return {
