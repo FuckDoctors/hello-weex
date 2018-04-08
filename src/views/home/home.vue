@@ -45,29 +45,29 @@
       <!-- 这种在slider组件内埋入wxc-pan-item的方式，slider显示不正常，
         手动滑动是循环的效果，而且不显示indicator，也不能触发sliderItemClicked事件。
        -->
-      <!-- <slider :sliders="sliders"
+      <slider2 :sliders="sliders"
               :slider-id="2"
+              class="slider-comp"
               @sliderItemClicked="sliderItemClicked">
         <image v-for="(item, index) in sliders" :key="index"
                 :src="item.img"
                 :style="{width: '750px', height: '320px'}"
                 :slot="`slider-item-${index}`"></image>
-      </slider> -->
+      </slider2>
 
       <!-- 这个也不显示indicator，高度不对，估计是组件哪个地方写错了。。。外层出了滚动条 -->
-      <slider :sliders="sliders"
+      <!-- <slider :sliders="sliders"
               :slider-id="3"
-              :style="{width: '750px', height: '320px'}"
+              class="slider-comp"
               :auto-play="true">
         <wxc-pan-item v-for="(item, index) in sliders" :key="index"
-                          :ext-id="index"
                           @wxcPanItemPan="sliderItemPan(index)"
                           @wxcPanItemClicked="sliderItemClicked(index)"
                           :slot="`slider-item-${index}`">
           <image :src="item.img" :style="{width: '750px', height: '320px'}"></image>
         </wxc-pan-item>
-      </slider>
-      <text>没显示indicator...</text>
+      </slider> -->
+      <text>Native没显示indicator...</text>
     </scroller>
   </div>
 </template>
@@ -83,6 +83,7 @@ import {
 import TopArea from '@/components/top-area';
 import SearchBar from '@/components/search-bar';
 import Slider from '@/components/slider';
+import Slider2 from '@/components/slider/slider-with-pan-item';
 import helper from '@/utils/helper';
 import storageHelper from '@/utils/storageHelper';
 
@@ -103,6 +104,7 @@ export default {
     WxcEpSlider,
     WxcPanItem,
     Slider,
+    Slider2,
   },
   data() {
     return {
@@ -316,4 +318,8 @@ export default {
   background-color: #ffffff;
 }
 
+.slider-comp {
+  width: 750px;
+  height: 320px;
+}
 </style>

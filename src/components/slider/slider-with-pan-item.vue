@@ -11,8 +11,8 @@
       <template v-for="(item, index) in sliders" :slot="`card${index}_${sliderId}`">
         <wxc-pan-item :key="index"
                       :class="['slider-item']"
-                      @wxcPanItemPan="sliderItemPan"
-                      @wxcPanItemClicked="sliderItemClicked">
+                      @wxcPanItemPan="sliderItemPan(index)"
+                      @wxcPanItemClicked="sliderItemClicked(index)">
           <slot :name="`slider-item-${index}`"></slot>
         </wxc-pan-item>
       </template>
@@ -135,11 +135,11 @@ export default {
     changePage(index) {
       this.$refs['ep-slider'].manualSetPage(index);
     },
-    sliderItemPan() {
-      this.$emit('sliderItemPan', this.selectedIndex);
+    sliderItemPan(index) {
+      this.$emit('sliderItemPan', index);
     },
-    sliderItemClicked() {
-      this.$emit('sliderItemClicked', this.selectedIndex);
+    sliderItemClicked(index) {
+      this.$emit('sliderItemClicked', index);
     },
   },
 
