@@ -44,6 +44,8 @@
 
       <!-- 这种在slider组件内埋入wxc-pan-item的方式，slider显示不正常，
         手动滑动是循环的效果，而且不显示indicator，也不能触发sliderItemClicked事件。
+        原因：sliderItemClicked事件写错了，改正后可以触发了。
+        后来不知怎么搞的，indicator也正常了。。。
        -->
       <slider2 :sliders="sliders"
               :slider-id="2"
@@ -55,18 +57,19 @@
                 :slot="`slider-item-${index}`"></image>
       </slider2>
 
-      <!-- 这个也不显示indicator，高度不对，估计是组件哪个地方写错了。。。外层出了滚动条 -->
-      <!-- <slider :sliders="sliders"
+      <!-- 这个也不显示indicator，高度不对，估计是组件哪个地方写错了。。。外层出了滚动条，
+          slider组件设置了高和宽之后不会出多余滚动条了，但是好像scroller的滚动条本身就有问题。。。
+       -->
+      <slider1 :sliders="sliders"
               :slider-id="3"
               class="slider-comp"
               :auto-play="true">
         <wxc-pan-item v-for="(item, index) in sliders" :key="index"
-                          @wxcPanItemPan="sliderItemPan(index)"
                           @wxcPanItemClicked="sliderItemClicked(index)"
                           :slot="`slider-item-${index}`">
           <image :src="item.img" :style="{width: '750px', height: '320px'}"></image>
         </wxc-pan-item>
-      </slider> -->
+      </slider1>
       <text>Native没显示indicator...</text>
     </scroller>
   </div>
@@ -82,7 +85,7 @@ import {
 
 import TopArea from '@/components/top-area';
 import SearchBar from '@/components/search-bar';
-import Slider from '@/components/slider';
+import Slider1 from '@/components/slider';
 import Slider2 from '@/components/slider/slider-with-pan-item';
 import helper from '@/utils/helper';
 import storageHelper from '@/utils/storageHelper';
@@ -103,7 +106,7 @@ export default {
     WxcIcon,
     WxcEpSlider,
     WxcPanItem,
-    Slider,
+    Slider1,
     Slider2,
   },
   data() {

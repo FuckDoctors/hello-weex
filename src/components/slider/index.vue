@@ -81,7 +81,7 @@ export default {
     containerStyle: {
       type: Object,
       default: () => ({
-        flex: 1,
+        // flex: 1,
         flexDirection: 'row',
         // 下面几个是必须的属性
         position: 'relative',
