@@ -55,8 +55,9 @@
       </slider> -->
 
       <!-- 这个也不显示indicator，高度不对，估计是组件哪个地方写错了。。。外层出了滚动条 -->
-      <!-- <slider :sliders="sliders"
+      <slider :sliders="sliders"
               :slider-id="3"
+              :style="{width: '750px', height: '320px'}"
               :auto-play="true">
         <wxc-pan-item v-for="(item, index) in sliders" :key="index"
                           :ext-id="index"
@@ -65,7 +66,8 @@
                           :slot="`slider-item-${index}`">
           <image :src="item.img" :style="{width: '750px', height: '320px'}"></image>
         </wxc-pan-item>
-      </slider> -->
+      </slider>
+      <text>没显示indicator...</text>
     </scroller>
   </div>
 </template>
