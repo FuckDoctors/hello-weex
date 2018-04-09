@@ -30,7 +30,7 @@
                           @wxcPanItemClicked="bannerSliderItemClicked"
                           :class="['banner-slider']"
                           :slot="`card${index}_${bannerSliderId}`">
-            <image :src="item.img" resize="cover" class="banner-slider-image"></image>
+            <image :src="item.img" resize="cover" class="banner-slider-image" />
             <!-- <text>banner {{index}}, title: {{item.title}}</text> -->
            </wxc-pan-item>
         </wxc-ep-slider>
@@ -54,7 +54,7 @@
         <image v-for="(item, index) in sliders" :key="index"
                 :src="item.img"
                 :style="{width: '750px', height: '320px'}"
-                :slot="`slider-item-${index}`"></image>
+                :slot="`slider-item-${index}`" />
       </ep-slider-pan>
 
       <!-- 这个也不显示indicator，高度不对，估计是组件哪个地方写错了。。。外层出了滚动条，
@@ -67,10 +67,12 @@
         <wxc-pan-item v-for="(item, index) in sliders" :key="index"
                           @wxcPanItemClicked="sliderItemClicked(index)"
                           :slot="`slider-item-${index}`">
-          <image :src="item.img" :style="{width: '750px', height: '320px'}"></image>
+          <image :src="item.img" :style="{width: '750px', height: '320px'}" />
         </wxc-pan-item>
       </ep-slider>
-      <text>Native没显示indicator...</text>
+      <!-- text组件内空白字符会被原样显示，所以如果想显示长文字的只能写一行，不能换行，所以对这行禁用eslint -->
+      <!-- eslint-disable-next-line -->
+      <text>占位符PlaceHodler...占位符PlaceHodler...占位符PlaceHodler...占位符PlaceHodler...占位符PlaceHodler...占位符PlaceHodler...占位符PlaceHodler...</text>
     </scroller>
   </div>
 </template>

@@ -39,6 +39,9 @@ export default {
   created() {
     if (Utils.env.isWeb()) {
       this.paddingTop = 0;
+    } else if (Utils.env.isAndroid()) {
+      this.statusBarHeight = 25;
+      this.paddingTop = this.statusBarHeight * 2;
     } else if (Utils.env.isIPhoneX()) {
       // status bar
       this.statusBarHeight = 44;
