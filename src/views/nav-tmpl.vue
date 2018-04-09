@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <nav-bar title="login" :left-button-click="back"></nav-bar>
+    <nav-bar title="login" :show-back="true" :left-button-click="back"></nav-bar>
   </div>
 </template>
 

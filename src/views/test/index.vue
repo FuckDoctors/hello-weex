@@ -110,6 +110,18 @@ export default {
           path: 'views/test/weex-ui',
           description: 'Weex UI测试',
         },
+        {
+          id: 'test-ep-slider',
+          title: 'weex-ui ep-slider',
+          path: 'views/test/ep-slider',
+          description: 'Weex UI Ep-Slider测试',
+        },
+        {
+          id: 'test-slider',
+          title: 'weex slider',
+          path: 'views/test/slider',
+          description: 'Weex Slider测试',
+        },
       ],
     };
   },
