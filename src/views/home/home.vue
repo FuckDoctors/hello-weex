@@ -101,8 +101,6 @@ import {
 
 const modal = weex.requireModule('modal');
 
-const modal = weex.requireModule('modal');
-
 export default {
   components: {
     TopArea,
@@ -244,44 +242,6 @@ export default {
     searchbarInputDisabledClicked() {
       helper.push('views/search/search');
     },
-    jumpWithParams(to) {
-      const params = {
-        a: 'a1',
-        b: 'b1',
-      };
-      // 第一次会走bundle下的views/test/hello，热加载后才会走domain下的/dist/views/test/hello
-      // 修改push方法，支持绝对bundle的地址
-      // helper.push(to, params);
-      // helper.push(`http${ENABLE_HTTPS ? 's' : ''}://${DOMAIN}${DIST}/${to}.js`, params);
-      // 使用goto方法，拼接域名+bundle地址，直接用线上地址。
-      helper.goto(to, params);
-    },
-    jumpGlobalEvent(to, params) {
-      // GlobalEvent
-      // 这种先注册，然后再后面触发的方式是可以传值的。（反向传参）
-      globalEvent.addEventListener('hello-return', (result) => {
-        console.log(`addEventListener callback (hello-return), result: ${result}`);
-        modal.toast({
-          message: `addEventListener callback (hello-return), result: ${JSON.stringify(result)}`,
-        });
-        // 删掉注册的事件，不然每次都注册，而且，会执行好多次callback
-        globalEvent.removeEventListener('hello-return');
-      });
-      // 这种先触发（传参），后面绑定监听事件（取值）的方式不行。（正向传参）
-      // 还是得靠url的queryString，或者靠localStorage？
-      // 这样传值和取值，不用区分传值方向了，直接从localStroge里取或设。
-      // globalEvent.fireGlobalEvent('hello-params', params, () => {
-      //   console.log('fireGlobalEvent callback (hello-params)');
-      //   modal.toast({
-      //     message: 'fireGlobalEvent callback (hello-params)',
-      //   });
-      //   helper.goto(to);
-      // });
-      helper.goto(to, params);
-    },
-  },
-  beforeDestroy() {
-    globalEvent.removeEventListener('hello-return');
   },
 };
 </script>
@@ -307,7 +267,6 @@ export default {
   font-size: 28px;
   color: #ffffff;
   align-items: center;
-  align-content: center;
 }
 .location-icon {
   width: 32px;
