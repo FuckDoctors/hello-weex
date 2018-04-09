@@ -67,10 +67,14 @@ export default {
     // tabStyles: Config.tabStyles
   }),
   created() {
-    const tabPageHeight = Utils.env.getPageHeight();
-    // const { env } = weex.config;
-    // const pageHeight = env.deviceHeight / env.deviceWidth * 750;
-    // const tabPageHeight = pageHeight;
+    // 这种获得的高度包含了navbar的高度，本应用没有使用native nav-bar，所以要减去。
+    // 不然tabPage会空出一块来。
+    // const tabPageHeight = Utils.env.getPageHeight();
+    // 这么做还是会空出一小块来，干脆tabPage设置全屏？
+    // const tabPageHeight = this.getPageHeightWidthoutNav();
+    const { env } = weex.config;
+    const pageHeight = (env.deviceHeight / env.deviceWidth) * 750;
+    const tabPageHeight = pageHeight;
     const { tabStyles } = this;
     this.contentStyle = { height: `${tabPageHeight - tabStyles.height}px` };
   },
@@ -80,6 +84,24 @@ export default {
     }
   },
   methods: {
+    getPageHeightWidthoutNav() {
+      const { env } = weex.config;
+      // const navHeight = Utils.env.isWeb() ? 0 : (Utils.env.isIPhoneX() ? 176 : 132);
+      // return env.deviceHeight / env.deviceWidth * 750 - navHeight;
+
+      let statusBarHeight = 0;
+      if (Utils.env.isWeb()) {
+        statusBarHeight = 0;
+      } else if (Utils.env.isAndroid()) {
+        statusBarHeight = 25;
+      } else if (Utils.env.isIPhoneX()) {
+        statusBarHeight = 44;
+      } else {
+        statusBarHeight = 20;
+      }
+
+      return ((env.deviceHeight / env.deviceWidth) * 750) - statusBarHeight;
+    },
     setPage(page, url = null, animated = true) {
       this.$refs['wxc-tab-bar'].setPage(page, url, animated);
     },

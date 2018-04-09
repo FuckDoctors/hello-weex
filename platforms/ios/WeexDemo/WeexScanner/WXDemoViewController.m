@@ -36,6 +36,7 @@
 {
     if (self = [super init]) {
     }
+
     return self;
 }
 
@@ -59,6 +60,7 @@
     }
 
 #endif
+
     [self render];
 }
 
@@ -123,6 +125,7 @@
     _instance = [[WXSDKInstance alloc] init];
     _instance.viewController = self;
     _instance.frame = CGRectMake(self.view.frame.size.width-width, 0, width, _weexHeight);
+
     __weak typeof(self) weakSelf = self;
     _instance.onCreate = ^(UIView *view) {
         [weakSelf.weexView removeFromSuperview];

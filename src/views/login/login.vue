@@ -132,6 +132,7 @@ export default {
   font-size: 28px;
   margin-top: 32px;
   padding-left: 20px;
+  outline: none;
 }
 .input:focus {
   border-color: #0089dc;

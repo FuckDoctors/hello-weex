@@ -4,8 +4,10 @@ import android.app.Application;
 import android.os.Build;
 import android.os.StrictMode;
 
+import com.alibaba.android.bindingx.plugin.weex.BindingX;
 import com.alibaba.weex.plugin.loader.WeexPluginContainer;
 import com.taobao.weex.InitConfig;
+import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.common.WXException;
 import com.weex.app.extend.ImageAdapter;
@@ -28,6 +30,9 @@ public class WXApplication extends Application {
       builder.detectFileUriExposure();
     }
 
+    // 加上这句可以debug，不过模拟器上不能显示页面了。。。
+//    initDebugEnvironment(true, "192.168.1.86");
+
     WXSDKEngine.addCustomOptions("appName", "WXSample");
     WXSDKEngine.addCustomOptions("appGroup", "WXApp");
     WXSDKEngine.initialize(this,
@@ -45,6 +50,21 @@ public class WXApplication extends Application {
       e.printStackTrace();
     }
     AppConfig.init(this);
+
+    // register bindingx module manually
+    try {
+      BindingX.register();
+    } catch (WXException e) {
+    }
+
+    // register bindingx module automatically by annotation processor
+//        WeexPluginContainer.loadAll(getApplicationContext());
+
     WeexPluginContainer.loadAll(this);
+  }
+
+  private void initDebugEnvironment(boolean enable, String host) {
+    WXEnvironment.sRemoteDebugMode = enable;
+    WXEnvironment.sRemoteDebugProxyUrl = "ws://" + host + ":8088/debugProxy/native";
   }
 }
