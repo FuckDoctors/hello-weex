@@ -27,7 +27,7 @@
       <div class="shortcuts-container">
         <wx-slider :auto-play="false"
                 :indicator-style="{itemSize: '10px', itemSelectedColor: '#000000'}">
-          <div class="slider-item">
+          <!-- <div class="slider-item"> -->
             <div class="shortcut-page"
                   v-for="n in pageRange(shortcuts.length, shortcutsPageSize)" :key="n">
               <div class="shortcut-wrapper"
@@ -36,7 +36,7 @@
                 <text class="shortcut-title">{{shortcuts[i].title}}</text>
               </div>
             </div>
-          </div>
+          <!-- </div> -->
         </wx-slider>
       </div>
 
@@ -173,14 +173,14 @@ export default {
           title: '地方菜系',
           icon: '//fuss10.elemecdn.com/a/8a/ec21096d528b7cfd23cdd894f01c6jpeg.jpeg?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/',
         },
-        // {
-        //   title: '披萨意面',
-        //   icon: '//fuss10.elemecdn.com/7/b6/235761e50d391445f021922b71789jpeg.jpeg?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/',
-        // },
-        // {
-        //   title: '地方小吃',
-        //   icon: '//fuss10.elemecdn.com/7/d6/6f2631288a44ec177204e05cbcb93jpeg.jpeg?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/',
-        // },
+        {
+          title: '披萨意面',
+          icon: '//fuss10.elemecdn.com/7/b6/235761e50d391445f021922b71789jpeg.jpeg?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/',
+        },
+        {
+          title: '地方小吃',
+          icon: '//fuss10.elemecdn.com/7/d6/6f2631288a44ec177204e05cbcb93jpeg.jpeg?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/',
+        },
 
         /* eslint-enable */
       ];
@@ -277,9 +277,12 @@ export default {
   flex: 1;
   flex-direction: row;
   flex-wrap: wrap;
+  width: 750px;
+  height: 320px;
 }
 .shortcut-wrapper {
   flex-basis: 145px;
+  height: 145px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
