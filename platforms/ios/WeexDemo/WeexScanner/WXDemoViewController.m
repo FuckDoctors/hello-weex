@@ -36,6 +36,7 @@
 {
     if (self = [super init]) {
     }
+
     return self;
 }
 
@@ -59,6 +60,7 @@
     }
 
 #endif
+
     [self render];
 }
 
@@ -123,6 +125,7 @@
     _instance = [[WXSDKInstance alloc] init];
     _instance.viewController = self;
     _instance.frame = CGRectMake(self.view.frame.size.width-width, 0, width, _weexHeight);
+
     __weak typeof(self) weakSelf = self;
     _instance.onCreate = ^(UIView *view) {
         [weakSelf.weexView removeFromSuperview];
@@ -138,12 +141,14 @@
                 [errMsg appendFormat:@"ErrorType:%@\n",[error domain]];
                 [errMsg appendFormat:@"ErrorCode:%ld\n",(long)[error code]];
                 [errMsg appendFormat:@"ErrorInfo:%@\n", [error userInfo]];
+
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"render failed" message:errMsg delegate:weakSelf cancelButtonTitle:nil otherButtonTitles:@"ok", nil];
                 [alertView show];
             });
         }
         #endif
     };
+
     _instance.renderFinish = ^(UIView *view) {
          WXLogDebug(@"%@", @"Render Finish...");
 //        // 下面删除空白页的方式没起作用，所以继续搜索，通过下面的方法实现删除navigator中指定的view
@@ -166,6 +171,7 @@
     NSURL *URL = [self testURL: [self.url absoluteString]];
     NSString *randomURL = [NSString stringWithFormat:@"%@%@random=%d",URL.absoluteString,URL.query?@"&":@"?",arc4random()];
     [_instance renderWithURL:[NSURL URLWithString:randomURL] options:@{@"bundleUrl":URL.absoluteString} data:nil];
+
 //    // 第一个页面是空白页，做重定向，完后就不需要了。删除掉~
 //    // 然而，这个办法没起到效果。。。
 //    NSString *relativePath = [URL relativePath];
@@ -180,6 +186,7 @@
 {
     if (_instance && _instance.state != state) {
         _instance.state = state;
+
         if (state == WeexInstanceAppear) {
             [[WXSDKManager bridgeMgr] fireEvent:_instance.instanceId ref:WX_SDK_ROOT_REF type:@"viewappear" params:nil domChanges:nil];
         }
@@ -229,6 +236,7 @@
             }
             [self render];
         }
+
     }@catch(NSError * error) {
         NSLog(@"error");
     }
@@ -236,6 +244,7 @@
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error
 {
+
 }
 
 #pragma mark - localBundle
@@ -247,12 +256,14 @@
         pathComponents =[NSMutableArray arrayWithArray:[url.absoluteString pathComponents]];
         [pathComponents removeObjectsInRange:NSRangeFromString(@"0 3")];
         [pathComponents replaceObjectAtIndex:0 withObject:@"bundlejs"];
+
         NSString *filePath = [NSString stringWithFormat:@"%@/%@",[NSBundle mainBundle].bundlePath,[pathComponents componentsJoinedByString:@"/"]];
         localPath = [NSURL fileURLWithPath:filePath];
     }else {
         NSString *filePath = [NSString stringWithFormat:@"%@/bundlejs/index.js",[NSBundle mainBundle].bundlePath];
         localPath = [NSURL fileURLWithPath:filePath];
     }
+
     NSString *bundleUrl = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/bundlejs/",[NSBundle mainBundle].bundlePath]].absoluteString;
      [_instance renderWithURL:localPath options:@{@"bundleUrl":bundleUrl} data:nil];
 }*/

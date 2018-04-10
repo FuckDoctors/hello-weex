@@ -17,12 +17,15 @@
     <scroller class="scroller">
       <div class="banner">
         <wx-slider :slider-style="{width: '750px', height: '320px'}"
-                :auto-play="true">
+              :auto-play="true">
           <div class="slider-item" v-for="(item, index) in bannerSliders" :key="index">
             <image class="banner-slider-image" :src="item.img" />
           </div>
         </wx-slider>
       </div>
+
+      <!-- shortcuts -->
+      <shortcuts></shortcuts>
 
     </scroller>
   </div>
@@ -37,6 +40,8 @@ import {
 import TopArea from '@/components/top-area';
 import SearchBar from '@/components/search-bar';
 import WxSlider from '@/components/wx-slider';
+
+import Shortcuts from '@/views/include/shortcuts';
 
 import helper from '@/utils/helper';
 import storageHelper from '@/utils/storageHelper';
@@ -56,6 +61,7 @@ export default {
     SearchBar,
     WxcIcon,
     WxSlider,
+    Shortcuts,
   },
   data() {
     return {
@@ -63,10 +69,16 @@ export default {
       location: '',
       geo: {},
       bannerSliders: [],
+      shortcuts: [],
+      shortcutsPageSize: 10,
     };
   },
-  mounted() {
+  created() {
+    // 放在mounted里shortcuts取不到东西，所以挪到created里。
     this.init();
+  },
+  mounted() {
+    // this.init();
   },
   methods: {
     init() {
