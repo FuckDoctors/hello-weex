@@ -58,6 +58,7 @@ import { WxcIcon } from 'weex-ui';
 import NavBar from '@/components/nav-bar';
 import SearchBar from '@/components/search-bar';
 import helper from '@/utils/helper';
+import utils from '@/utils';
 
 const modal = weex.requireModule('modal');
 
@@ -137,9 +138,24 @@ export default {
         message: `Searching ${this.searchKey}...`,
       });
     },
-    searchbarInputOnInput(e) {
+    // searchbarInputOnInput(e) {
+    //   this.searchKey = e.value;
+    // },
+    // searchbarInputOnInput: utils.debounce((e) => {
+    //   // 加入函数防抖
+    //   // https://vuejs.org/v2/guide/migration.html#Replacing-the-debounce-Filter
+    //   this.searchKey = e.value;
+    //   console.log(this.searchKey);
+    // }, 500),
+    searchbarInputOnInput: utils.debounce(function searchbarInputOnInput(e) {
+      // 加入函数防抖
+      // https://vuejs.org/v2/guide/migration.html#Replacing-the-debounce-Filter
+      // 不能使用箭头函数，因为箭头函数会改变this的指向。
+      // 另外，由于eslint的规则，这里使用了具名函数。
+      // 原因：参考 https://vuejs.org/v2/api/#methods 的注意内容
       this.searchKey = e.value;
-    },
+      console.log(this.searchKey);
+    }, 500),
     searchbarInputOnFocus() {
 
     },
