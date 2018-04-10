@@ -120,17 +120,22 @@ export default {
   background-color: #ffffff;
 }
 .shortcut-page {
-  flex: 1;
+  /* flex: 1; */
+  /* 将flex:1改成flex-grow:1，ios端能正常显示了，android端一行只能显示4个。 */
+  /* 一直以来理解错了，以为native能识别flex:1，看样子所有的组合都不识别。*/
+  flex-grow: 1;
   flex-direction: row;
   flex-wrap: wrap;
   width: 750px;
   height: 320px;
 }
 .shortcut-wrapper {
-  flex-basis: 150px;
+  flex-basis: 148px;
   /* 设置了width之后native上才能显示正确的宽度，但是一排只显示两个。。。 */
-  width: 150px;
-  height: 150px;
+  /* 然后配合上面的flex-grow能解决只显示两个的问题。 */
+  /* 宽度设为150时，web,ios一排正常显示5个，android只能显示4个。 */
+  width: 148px;
+  height: 148px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
