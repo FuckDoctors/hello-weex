@@ -7,7 +7,8 @@
       <div class="shortcut-page"
             v-for="n in pageRange(shortcuts.length, shortcutsPageSize)" :key="n">
         <div class="shortcut-wrapper"
-            v-for="i in pageRecordsRange(shortcuts.length, shortcutsPageSize, n)" :key="i">
+            v-for="i in pageRecordsRange(shortcuts.length, shortcutsPageSize, n)" :key="i"
+            @click="shortcutClicked(shortcuts[i])">
           <image :src="shortcuts[i].icon" class="shortcut-icon" />
           <text class="shortcut-title">{{shortcuts[i].title}}</text>
         </div>
@@ -18,6 +19,8 @@
 
 <script>
 import WxSlider from '@/components/wx-slider';
+
+import helper from '@/utils/helper';
 
 export default {
   components: {
@@ -43,18 +46,27 @@ export default {
           // 去掉后缀之后native可以显示了。
           // icon: 'https://fuss10.elemecdn.com/7/d8/a867c870b22bc74c87c348b75528djpeg.jpeg?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/',
           icon: 'https://fuss10.elemecdn.com/7/d8/a867c870b22bc74c87c348b75528djpeg.jpeg',
+          link: 'views/test/hello',
+          params: {
+            a: 'hello',
+            b: 'world',
+          },
         },
         {
           title: '商超便利',
           icon: 'https://fuss10.elemecdn.com/c/3c/0184f5b3fa72f295fc01864734218jpeg.jpeg',
+          link: 'views/test/hello',
+          params: null,
         },
         {
           title: '夜宵',
           icon: 'https://fuss10.elemecdn.com/9/21/60ac33f023d9074e13cd78f9b5964jpeg.jpeg',
+          link: 'views/test/hello',
         },
         {
           title: '果蔬生鲜',
           icon: 'https://fuss10.elemecdn.com/c/db/d20d49e5029281b9b73db1c5ec6f9jpeg.jpeg',
+          link: 'views/test/slider',
         },
         {
           title: '医药健康',
@@ -110,6 +122,15 @@ export default {
       // 返回当前页的范围
       const arr = Array(pageEnd - pageStart).fill(0).map((value, index) => pageStart + index);
       return arr;
+    },
+    shortcutClicked(item) {
+      if (item.link) {
+        if (item.params) {
+          helper.push(item.link, item.params);
+        } else {
+          helper.push(item.link);
+        }
+      }
     },
   },
 };
