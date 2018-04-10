@@ -1,7 +1,9 @@
 <template>
   <div class="shortcuts-container">
     <wx-slider :auto-play="false"
-            :indicator-style="{itemSize: '10px', itemSelectedColor: '#000000'}">
+                :indicator-style="{ itemSize: '10px',
+                                    itemColor: '#cccccc',
+                                    itemSelectedColor: '#000000'}">
       <div class="shortcut-page"
             v-for="n in pageRange(shortcuts.length, shortcutsPageSize)" :key="n">
         <div class="shortcut-wrapper"
@@ -37,47 +39,50 @@ export default {
       this.shortcuts = [
         {
           title: '美食',
-          icon: 'https://fuss10.elemecdn.com/7/d8/a867c870b22bc74c87c348b75528djpeg.jpeg?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/',
+          // 下面的图片地址在web正常，在native不正常，下面的地址在浏览器打开后，点保存是.webp格式。
+          // 去掉后缀之后native可以显示了。
+          // icon: 'https://fuss10.elemecdn.com/7/d8/a867c870b22bc74c87c348b75528djpeg.jpeg?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/',
+          icon: 'https://fuss10.elemecdn.com/7/d8/a867c870b22bc74c87c348b75528djpeg.jpeg',
         },
         {
           title: '商超便利',
-          icon: 'https://fuss10.elemecdn.com/c/3c/0184f5b3fa72f295fc01864734218jpeg.jpeg?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/',
+          icon: 'https://fuss10.elemecdn.com/c/3c/0184f5b3fa72f295fc01864734218jpeg.jpeg',
         },
         {
           title: '夜宵',
-          icon: 'https://fuss10.elemecdn.com/9/21/60ac33f023d9074e13cd78f9b5964jpeg.jpeg?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/',
+          icon: 'https://fuss10.elemecdn.com/9/21/60ac33f023d9074e13cd78f9b5964jpeg.jpeg',
         },
         {
           title: '果蔬生鲜',
-          icon: 'https://fuss10.elemecdn.com/c/db/d20d49e5029281b9b73db1c5ec6f9jpeg.jpeg?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/',
+          icon: 'https://fuss10.elemecdn.com/c/db/d20d49e5029281b9b73db1c5ec6f9jpeg.jpeg',
         },
         {
           title: '医药健康',
-          icon: 'https://fuss10.elemecdn.com/7/0a/af108e256ebc9f02db599592ae655jpeg.jpeg?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/',
+          icon: 'https://fuss10.elemecdn.com/7/0a/af108e256ebc9f02db599592ae655jpeg.jpeg',
         },
         {
           title: '大牌5折',
-          icon: 'https://fuss10.elemecdn.com/a/7b/b02bd836411c016935d258b300cfejpeg.jpeg?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/',
+          icon: 'https://fuss10.elemecdn.com/a/7b/b02bd836411c016935d258b300cfejpeg.jpeg',
         },
         {
           title: '浪漫鲜花',
-          icon: 'https://fuss10.elemecdn.com/3/01/c888acb2c8ba9e0c813f36ec9e90ajpeg.jpeg?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/',
+          icon: 'https://fuss10.elemecdn.com/3/01/c888acb2c8ba9e0c813f36ec9e90ajpeg.jpeg',
         },
         {
           title: '麻辣烫',
-          icon: 'https://fuss10.elemecdn.com/e/c7/b7ba9547aa700bd20d0420e1794a8jpeg.jpeg?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/',
+          icon: 'https://fuss10.elemecdn.com/e/c7/b7ba9547aa700bd20d0420e1794a8jpeg.jpeg',
         },
         {
           title: '地方菜系',
-          icon: 'https://fuss10.elemecdn.com/a/8a/ec21096d528b7cfd23cdd894f01c6jpeg.jpeg?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/',
+          icon: 'https://fuss10.elemecdn.com/a/8a/ec21096d528b7cfd23cdd894f01c6jpeg.jpeg',
         },
         {
           title: '披萨意面',
-          icon: 'https://fuss10.elemecdn.com/7/b6/235761e50d391445f021922b71789jpeg.jpeg?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/',
+          icon: 'https://fuss10.elemecdn.com/7/b6/235761e50d391445f021922b71789jpeg.jpeg',
         },
         {
           title: '地方小吃',
-          icon: 'https://fuss10.elemecdn.com/7/d6/6f2631288a44ec177204e05cbcb93jpeg.jpeg?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/',
+          icon: 'https://fuss10.elemecdn.com/7/d6/6f2631288a44ec177204e05cbcb93jpeg.jpeg',
         },
 
         /* eslint-enable */
@@ -122,8 +127,10 @@ export default {
   height: 320px;
 }
 .shortcut-wrapper {
-  flex-basis: 145px;
-  height: 145px;
+  flex-basis: 150px;
+  /* 设置了width之后native上才能显示正确的宽度，但是一排只显示两个。。。 */
+  width: 150px;
+  height: 150px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -136,5 +143,9 @@ export default {
   font-size: 24px;
   color: #666666;
   margin-top: 10px;
+  lines: 1;
+  text-align: center;
+  height: 30px;
+  line-height: 36px;
 }
 </style>
