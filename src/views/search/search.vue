@@ -10,42 +10,45 @@
                      @searchbarInputReturned="searchbarInputReturned"
                      @searchbarInputOnInput="searchbarInputOnInput"
                      @searchbarCancelClicked="searchbarSearchClicked"
+                     @searchbarCloseClicked="searchbarCloseClicked"
                      @searchbarInputOnFocus="searchbarInputOnFocus"></search-bar>
     </div>
 
     <scroller class="scroller">
-      <div class="history-label-wrapper">
-        <text class="history-label">搜索历史</text>
-        <wxc-icon class="history-clear" name="delete"
-          :iconStyle="{fontSize: '28px'}"
-          @wxcIconClicked="clearHistory()" />
+      <div class="history-area" v-if="!isTyping">
+        <div class="history-label-wrapper">
+          <text class="history-label">搜索历史</text>
+          <wxc-icon class="history-clear" name="delete"
+            :iconStyle="{fontSize: '28px'}"
+            @wxcIconClicked="clearHistory()" />
+        </div>
+
+        <div class="history-list">
+          <template v-if="history.length > 0">
+            <text lines="1" class="history-key"
+              @click="clickHistory(item)"
+              v-for="(item, index) in history" :key="index">{{item.key}}</text>
+          </template>
+          <template v-else>
+            <div class="history-empty">
+              <text class="history-empty-tip">空空如也，快搜索试试吧~</text>
+            </div>
+          </template>
+        </div>
       </div>
 
-      <div class="history-list">
-        <template v-if="history.length > 0">
-          <text lines="1" class="history-key"
-            @click="clickHistory(item)"
-            v-for="(item, index) in history" :key="index">{{item.key}}</text>
-        </template>
-        <template v-else>
-          <div class="history-empty">
-            <text class="history-empty-tip">空空如也，快搜索试试吧~</text>
-          </div>
-        </template>
-      </div>
-
-      <div class="instant-result">
+      <div class="instant-result" v-if="isTyping && !isSearching">
         <div class="instant-shop">
           <div class="shop-item">
             <!-- <image class="shop-image" :src=""></image> -->
-            <div class="shop-title"></div>
+            <div class="shop-title">及时结果</div>
             <div class="shop-rating"></div>
           </div>
         </div>
         <div class="instant-keywords"></div>
       </div>
 
-      <div class="result-list">
+      <div class="result-list" v-if="isSearching">
         <div class="result-item"></div>
       </div>
     </scroller>
@@ -74,6 +77,8 @@ export default {
       history: [],
       result: [],
       instantResult: [],
+      isTyping: false, // 是否在输入，输入的时候不显示搜索历史，而显示及时结果
+      isSearching: false, // 是否在搜索
     };
   },
   mounted() {
@@ -134,6 +139,10 @@ export default {
         return;
       }
       this.addHistoryKey(this.searchKey);
+
+      // 开始检索
+      this.isSearching = true;
+
       modal.toast({
         message: `Searching ${this.searchKey}...`,
       });
@@ -154,10 +163,20 @@ export default {
       // 另外，由于eslint的规则，这里使用了具名函数。
       // 原因：参考 https://vuejs.org/v2/api/#methods 的注意内容
       this.searchKey = e.value;
-      console.log(this.searchKey);
+
+      // 设置flag
+      if (e.value.length !== 0) {
+        // 点下close之后，会显示一下搜索历史，然后搜索历史会再次不显示。
+        // 因为点下close之后会触发onInput事件，所以这里判断一下。
+        this.isTyping = true;
+        this.isSearching = false;
+      }
     }, 500),
     searchbarInputOnFocus() {
-
+      if (this.isSearching) {
+        // 如果已经检索过一次，想再次检索时，显示搜索历史。
+        this.isTyping = false;
+      }
     },
     searchbarSearchClicked() {
       if (this.searchKey.length === 0) {
@@ -170,6 +189,12 @@ export default {
       this.$refs['search-bar'].autoBlur();
       this.$refs['search-bar'].onSubmit({ value: this.searchKey });
       this.addHistoryKey(this.searchKey);
+
+      this.isTyping = true;
+      this.isSearching = true;
+    },
+    searchbarCloseClicked() {
+      this.isTyping = false;
     },
     back() {
       helper.back();
