@@ -16,7 +16,7 @@
 
     <scroller class="scroller">
       <div class="banner">
-        <wx-slider :slider-style="{width: '750px', height: '320px'}"
+        <wx-slider :slider-style="{width: '750px', height: '260px'}"
               :auto-play="true">
           <div class="slider-item" v-for="(item, index) in bannerSliders" :key="index">
             <image class="banner-slider-image" :src="item.img" />
@@ -184,14 +184,14 @@ export default {
 
 .banner {
   width: 750px;
-  height: 320px;
+  /* height: 320px; */
 }
 .banner-item {
   flex: 1;
 }
 .banner-slider-image {
   width: 750px;
-  height: 320px;
+  height: 280px;
 }
 
 </style>
