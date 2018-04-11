@@ -60,20 +60,24 @@
       <!-- 及时结果区 -->
       <div class="instant-result" v-if="isTyping && !isSearching">
         <!-- 商店 -->
-        <div class="instant-shop">
-          <div class="shop-item" v-for="shop in instantResult.shops" :key="shop.id">
-            <div class="shop-logo">
-              <image class="shop-image" :src="shop.logo" />
+        <div class="type-ahead-shop">
+          <div class="type-ahead-shop-item" v-for="shop in instantResult.shops" :key="shop.id">
+            <div class="type-ahead-shop-logo-wrapper">
+              <image class="type-ahead-shop-logo" :src="shop.logo" />
             </div>
-            <div class="shop-item-center">
-              <div class="shop-title">{{shop.name}}</div>
-              <div class="shop-tag-container">
-                <text class="shop-tag" v-for="(tag, index) in shop.tags"
-                      :style="{backgroudColor: `${tag.color}`}"
-                      :key="index">{{tag.text}}</text>
+            <div class="type-ahead-shop-info">
+              <div class="type-ahead-shop-item-center">
+                <text class="type-ahead-shop-title">{{shop.name}}</text>
+                <div class="type-ahead-shop-tag-container">
+                  <text class="type-ahead-shop-tag" v-for="(tag, index) in shop.tags"
+                        :style="{backgroundColor: `${tag.color}`}"
+                        :key="index">{{tag.text}}</text>
+                </div>
+              </div>
+              <div class="type-ahead-shop-rating-wrapper">
+                <text class="type-ahead-shop-rating">评价{{shop.rating}}</text>
               </div>
             </div>
-            <div class="shop-rating">{{shop.rating}}</div>
           </div>
         </div>
 
@@ -193,7 +197,7 @@ export default {
         shops: [
           {
             id: 1,
-            name: '金拱门',
+            name: '麦当劳（金拱门）- 万达广场店',
             logo: 'https://fuss10.elemecdn.com/e/b1/fc3345910c85aa5c8e2023112cb71png.png',
             distance: 1234,
             rating: 4.5,
@@ -435,6 +439,78 @@ export default {
 }
 .history-empty-tip {
   color: #666666;
+}
+
+/* type ahead 商店 */
+.type-ahead-shop-item {
+  width: 750px;
+  flex-direction: row;
+  align-items: center;
+  height: 80px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.type-ahead-shop-logo-wrapper {
+  width: 60px;
+  height: 60px;
+  align-items: center;
+  justify-content: center;
+}
+.type-ahead-shop-logo {
+  width: 50px;
+  height: 50px;
+}
+.type-ahead-shop-info {
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px;
+  border-bottom-color: #e3e3e3;
+  border-bottom-style: solid;
+}
+.type-ahead-shop-item-center {
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  /* padding-left: 20px; */
+  padding-right: 20px;
+  overflow: hidden;
+}
+.type-ahead-shop-title {
+  max-width: 460px;
+  text-align: left;
+  lines: 1;
+}
+.type-ahead-shop-tag-container {
+  flex-direction: row;
+  align-items: center;
+}
+.type-ahead-shop-tag {
+  display: inline-block;
+  padding-right: 5px;
+  padding-left: 5px;
+  /* 不能设置宽度，可能会有两个字的情况 */
+  /* width: 30px; */
+  /* 设置的高度不合适，没垂直居中，干脆不设高度了 */
+  /* height: 35px; */
+  text-align: center;
+  font-size: 22px;
+  color: #ffffff;
+  margin-left: 10px;
+  border-radius: 6px;
+}
+.type-ahead-shop-rating-wrapper {
+  width: 100px;
+  align-items: center;
+  justify-content: center;
+}
+.type-ahead-shop-rating {
+  font-size: 28px;
+  color: #666666;
+  text-align: right;
 }
 
 /* type ahead提示词 */
