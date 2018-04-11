@@ -1,6 +1,6 @@
 <template>
   <tab-bar-comp ref="tab-bar" class="tab-bar-comp"
-            :selected="3"
+            :selected="0"
             :tab-titles="tabTitles"
             :tab-styles="tabStyles">
     <home slot="tab-page-0"></home>

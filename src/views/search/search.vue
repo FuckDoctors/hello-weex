@@ -11,6 +11,7 @@
                      @searchbarInputOnInput="searchbarInputOnInput"
                      @searchbarCancelClicked="searchbarSearchClicked"
                      @searchbarCloseClicked="searchbarCloseClicked"
+                     @searchbarInputOnBlur="searchbarInputOnBlur"
                      @searchbarInputOnFocus="searchbarInputOnFocus"></search-bar>
     </div>
 
@@ -37,19 +38,64 @@
         </div>
       </div>
 
+      <div class="hot-words-area" v-if="!isTyping">
+        <div class="history-label-wrapper">
+          <text class="history-label">热门搜索</text>
+        </div>
+
+        <div class="history-list">
+          <template v-if="hotWords.length > 0">
+            <text lines="1" class="history-key"
+              @click="clickHotWord(item)"
+              v-for="(item, index) in hotWords" :key="index">{{item.word}}</text>
+          </template>
+          <template v-else>
+            <div class="history-empty">
+              <text class="history-empty-tip">还没有热搜，贡献一个吧~</text>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      <!-- 及时结果区 -->
       <div class="instant-result" v-if="isTyping && !isSearching">
+        <!-- 商店 -->
         <div class="instant-shop">
-          <div class="shop-item">
-            <!-- <image class="shop-image" :src=""></image> -->
-            <div class="shop-title">及时结果</div>
-            <div class="shop-rating"></div>
+          <div class="shop-item" v-for="shop in instantResult.shops" :key="shop.id">
+            <div class="shop-logo">
+              <image class="shop-image" :src="shop.logo" />
+            </div>
+            <div class="shop-item-center">
+              <div class="shop-title">{{shop.name}}</div>
+              <div class="shop-tag-container">
+                <text class="shop-tag" v-for="(tag, index) in shop.tags"
+                      :style="{backgroudColor: `${tag.color}`}"
+                      :key="index">{{tag.text}}</text>
+              </div>
+            </div>
+            <div class="shop-rating">{{shop.rating}}</div>
           </div>
         </div>
-        <div class="instant-keywords"></div>
+
+        <!-- 提示词 -->
+        <div class="type-ahead">
+          <div class="type-ahead-item" v-for="(word, index) in instantResult.words"
+                @click="clickTypeAhead(word)"
+                :key="index">
+            <div class="type-ahead-item-icon-wrapper">
+              <wxc-icon name="search"
+                        class="type-ahead-item-icon"
+                        :iconStyle="{fontSize: '28px'}"></wxc-icon>
+            </div>
+            <div class="type-ahead-item-text-wrapper">
+              <text class="type-ahead-item-text">{{word}}</text>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="result-list" v-if="isSearching">
-        <div class="result-item"></div>
+        <div class="result-item">检索结果。。。</div>
       </div>
     </scroller>
   </div>
@@ -75,11 +121,19 @@ export default {
     return {
       searchKey: '',
       history: [],
+      hotWords: [],
       result: [],
-      instantResult: [],
+      instantResult: {
+        words: [],
+        foods: [],
+        shops: [],
+      },
       isTyping: false, // 是否在输入，输入的时候不显示搜索历史，而显示及时结果
       isSearching: false, // 是否在搜索
     };
+  },
+  created() {
+    this.initHotWords();
   },
   mounted() {
     const date = Date.now();
@@ -102,6 +156,90 @@ export default {
     });
   },
   methods: {
+    initHotWords() {
+      this.hotWords = [
+        {
+          isHignlight: 0,
+          word: '紫菜包饭',
+        },
+        {
+          isHignlight: 0,
+          word: '黄焖鸡',
+        },
+        {
+          isHignlight: 0,
+          word: '鸡公煲',
+        },
+        {
+          isHignlight: 0,
+          word: '麻辣烫',
+        },
+        {
+          isHignlight: 0,
+          word: '麻辣香锅',
+        },
+      ];
+    },
+    getInstantResult() {
+      this.instantResult = {
+        words: [
+          `假数据${this.getRandom(1, 100)}`,
+          `假数据${this.getRandom(1, 100)}`,
+          `假数据${this.getRandom(1, 100)}`,
+          `长数据长数据长数据长数据长数据长数据长数据长数据${this.getRandom(1, 100)}`,
+          `假数据${this.getRandom(1, 100)}`,
+        ],
+        foods: [],
+        shops: [
+          {
+            id: 1,
+            name: '金拱门',
+            logo: 'https://fuss10.elemecdn.com/e/b1/fc3345910c85aa5c8e2023112cb71png.png',
+            distance: 1234,
+            rating: 4.5,
+            recentOrderNum: 100,
+            tags: [
+              {
+                text: '减',
+                color: '#FA7047',
+              },
+            ],
+          },
+          {
+            id: 2,
+            name: 'E&T牛排',
+            logo: 'https://fuss10.elemecdn.com/9/b5/5d9fa3c140fd004cd36d9f1cbe1a3png.png',
+            distance: 1500,
+            rating: 4.6,
+            recentOrderNum: 145,
+            tags: [
+              {
+                text: '减',
+                color: '#FA7047',
+              },
+              {
+                text: '券',
+                color: '#2395FF',
+              },
+            ],
+          },
+          {
+            id: 3,
+            name: '汉堡王',
+            logo: 'https://fuss10.elemecdn.com/e/17/27fa41fc2b03b1b8c2d794a5cf139jpeg.jpeg',
+            distance: 1888,
+            rating: 4.7,
+            recentOrderNum: 155,
+            tags: [
+              {
+                text: '减',
+                color: '#FA7047',
+              },
+            ],
+          },
+        ],
+      };
+    },
     clickHistory(history) {
       this.searchKey = history.key;
       this.searchbarSearchClicked();
@@ -171,11 +309,20 @@ export default {
         this.isTyping = true;
         this.isSearching = false;
       }
+
+      // type ahead数据
+      this.getInstantResult();
     }, 500),
     searchbarInputOnFocus() {
       if (this.isSearching) {
         // 如果已经检索过一次，想再次检索时，显示搜索历史。
         this.isTyping = false;
+      }
+    },
+    searchbarInputOnBlur() {
+      if (this.isSearching) {
+        // 如果已经检索过一次，不是在输入时，不显示搜索历史。
+        this.isTyping = true;
       }
     },
     searchbarSearchClicked() {
@@ -195,6 +342,17 @@ export default {
     },
     searchbarCloseClicked() {
       this.isTyping = false;
+    },
+    clickHotWord(item) {
+      this.searchKey = item.word;
+      this.searchbarSearchClicked();
+    },
+    clickTypeAhead(word) {
+      this.searchKey = word;
+      this.searchbarSearchClicked();
+    },
+    getRandom(min, max) {
+      return parseInt(Math.random() * ((max - min) + 1), 10) + min;
     },
     back() {
       helper.back();
@@ -245,7 +403,7 @@ export default {
   margin-bottom: 40px;
   /* padding-left: 30px; */
   padding-right: 30px;
-  flex: 1;
+  flex-grow: 1;
   flex-direction: row;
   flex-wrap: wrap;
 }
@@ -268,7 +426,7 @@ export default {
   text-overflow: ellipsis;
 }
 .history-empty {
-  flex: 1;
+  flex-grow: 1;
   padding-top: 15px;
   padding-right: 15px;
   padding-left: 15px;
@@ -277,5 +435,46 @@ export default {
 }
 .history-empty-tip {
   color: #666666;
+}
+
+/* type ahead提示词 */
+.type-ahead-item {
+  width: 750px;
+  flex-direction: row;
+  align-items: center;
+  height: 60px;
+  padding-left: 20px;
+}
+.type-ahead-item-icon-wrapper {
+  width: 50px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+}
+.type-ahead-item-icon {
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+}
+.type-ahead-item-text-wrapper {
+  flex-direction: row;
+  flex-grow: 1;
+  align-items: center;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px;
+  border-bottom-color: #e3e3e3;
+  border-bottom-style: solid;
+}
+.type-ahead-item-text {
+  font-size: 28px;
+  line-height: 35px;
+  /* 必须设置width才能显示省略号 */
+  max-width: 660px;
+  lines: 1;
+  text-overflow: ellipsis;
 }
 </style>
