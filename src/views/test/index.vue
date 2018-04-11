@@ -122,6 +122,12 @@ export default {
           path: 'views/test/slider',
           description: 'Weex Slider测试',
         },
+        {
+          id: 'test-separator',
+          title: '分割线',
+          path: 'views/test/separator',
+          description: '分割线测试',
+        },
       ],
     };
   },

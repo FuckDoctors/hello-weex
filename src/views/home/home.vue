@@ -27,6 +27,16 @@
       <!-- shortcuts -->
       <shortcuts></shortcuts>
 
+      <!-- 分割线 -->
+      <separator text="推荐商家"
+                text-background-color="#f2f3f4"
+                font-size="36px"
+                :line-width="300"
+                line-color="#999999"
+                :line-size="3"
+                :height="60">
+      </separator>
+
     </scroller>
   </div>
 </template>
@@ -40,6 +50,7 @@ import {
 import TopArea from '@/components/top-area';
 import SearchBar from '@/components/search-bar';
 import WxSlider from '@/components/wx-slider';
+import Separator from '@/components/separator';
 
 import Shortcuts from '@/views/include/shortcuts';
 
@@ -62,6 +73,7 @@ export default {
     WxcIcon,
     WxSlider,
     Shortcuts,
+    Separator,
   },
   data() {
     return {
