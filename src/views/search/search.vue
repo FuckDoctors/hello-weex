@@ -407,7 +407,7 @@ export default {
   margin-bottom: 40px;
   /* padding-left: 30px; */
   padding-right: 30px;
-  flex-grow: 1;
+  flex: 1;
   flex-direction: row;
   flex-wrap: wrap;
 }
@@ -430,7 +430,7 @@ export default {
   text-overflow: ellipsis;
 }
 .history-empty {
-  flex-grow: 1;
+  flex: 1;
   padding-top: 15px;
   padding-right: 15px;
   padding-left: 15px;
@@ -446,7 +446,7 @@ export default {
   width: 750px;
   flex-direction: row;
   align-items: center;
-  height: 80px;
+  /* height: 80px; */
   padding-left: 20px;
   padding-right: 20px;
 }
@@ -467,7 +467,7 @@ export default {
   margin-left: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
-  border-bottom: 2px;
+  border-bottom-width: 2px;
   border-bottom-color: #e3e3e3;
   border-bottom-style: solid;
 }
@@ -483,6 +483,7 @@ export default {
   max-width: 460px;
   text-align: left;
   lines: 1;
+  font-size: 30px;
 }
 .type-ahead-shop-tag-container {
   flex-direction: row;
@@ -518,30 +519,32 @@ export default {
   width: 750px;
   flex-direction: row;
   align-items: center;
-  height: 60px;
+  /* height: 60px; */
   padding-left: 20px;
 }
 .type-ahead-item-icon-wrapper {
-  width: 50px;
-  height: 50px;
-  align-items: center;
-  justify-content: center;
-}
-.type-ahead-item-icon {
   width: 40px;
   height: 40px;
   align-items: center;
   justify-content: center;
 }
+.type-ahead-item-icon {
+  display: inline-block;
+  width: 34px;
+  height: 34px;
+  /* 设置line-height使之垂直居中 */
+  text-align: center;
+  line-height: 34px;
+}
 .type-ahead-item-text-wrapper {
   flex-direction: row;
-  flex-grow: 1;
+  flex: 1;
   align-items: center;
   margin-left: 20px;
   margin-right: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
-  border-bottom: 2px;
+  border-bottom-width: 2px;
   border-bottom-color: #e3e3e3;
   border-bottom-style: solid;
 }
