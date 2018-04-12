@@ -47,6 +47,9 @@ import {
   // BindEnv, // 引入这个就报错，而且报的错有点奇怪。。。
 } from 'weex-ui';
 
+// BindEnv改用下面的方式引用
+// import BindEnv from 'weex-ui/packages/utils/bind-env';
+
 import TopArea from '@/components/top-area';
 import SearchBar from '@/components/search-bar';
 import WxSlider from '@/components/wx-slider';
