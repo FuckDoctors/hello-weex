@@ -314,8 +314,10 @@ export default {
         this.isSearching = false;
       }
 
-      // type ahead数据
-      this.getInstantResult();
+      if (this.searchKey.length > 0) {
+        // type ahead数据
+        this.getInstantResult();
+      }
     }, 500),
     searchbarInputOnFocus() {
       if (this.isSearching) {
