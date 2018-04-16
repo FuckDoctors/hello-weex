@@ -82,7 +82,7 @@
         </div>
 
         <!-- 提示词 -->
-        <div class="type-ahead">
+        <div class="type-ahead-words">
           <div class="type-ahead-item" v-for="(word, index) in instantResult.words"
                 @click="clickTypeAhead(word)"
                 :key="index">
@@ -385,6 +385,12 @@ export default {
   flex: 1;
 }
 
+.history-area {
+  position: relative;
+}
+.hot-words-area {
+  position: relative;
+}
 .history-label-wrapper {
   font-size: 36px;
   font-weight: bold;
@@ -443,6 +449,9 @@ export default {
   color: #666666;
 }
 
+.instant-result {
+  position: relative;
+}
 /* type ahead 商店 */
 .type-ahead-shop-item {
   width: 750px;
@@ -517,6 +526,9 @@ export default {
 }
 
 /* type ahead提示词 */
+.type-ahead-words {
+  position: relative;
+}
 .type-ahead-item {
   width: 750px;
   flex-direction: row;
@@ -557,5 +569,9 @@ export default {
   max-width: 660px;
   lines: 1;
   text-overflow: ellipsis;
+}
+
+.result-list {
+  position: relative;
 }
 </style>
